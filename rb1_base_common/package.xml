@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package>
+  <name>rb1_base_common</name>
+  <version>1.0.0</version>
+  <description>The rb1_base_common package. It contains rb1 base common packages used for robot control and for simulation</description>
+  
+  <maintainer email="info@robotnik.es">Robotnik</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">http://wiki.ros.org/rb1_base_common</url>
+
+  <author email="info@robotnik.es">Robotnik</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <run_depend>rb1_base_description</run_depend>
+  <run_depend>rb1_base_pad</run_depend>
+
+  <export><metapackage/></export>
+
+</package>
