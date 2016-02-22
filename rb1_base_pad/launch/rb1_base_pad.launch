@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- joy node -->
+  <!-- node name="joy" pkg="joy" type="joy" respawn="true" -->
+  <node pkg="joy" type="joy_node" name="ps3_joy" output="screen" respawn="true">
+    <param name="dev" type="string" value="/dev/input/js0" />
+    <param name="deadzone" value="0.005" />
+    <param name="autorepeat_rate" value="10.0" type="double" />
+  </node>
+  
+  <!-- Parameters -->
+  <!-- param name="cmd_topic_vel" value="/rb1_base_controller/cmd_vel" type="string"/ -->
+  <!-- param name="cmd_topic_vel" value="/rb1/cmd_vel" type="string"/ -->
+  <param name="cmd_topic_vel" value="/pad_teleop/cmd_vel" type="string"/>
+  <param name="cmd_service_io" value="/modbus_io/write_digital_output" type="string"/>
+  <param name="cmd_topic_ptz" value="/cmd_ptz" type="string"/>
+  <rosparam command="load" file="$(find rb1_base_pad)/launch/ps3.yaml" />
+  <node name="rb1_base_pad" pkg="rb1_base_pad" type="rb1_base_pad" output="screen"/>
+   
+</launch>
+

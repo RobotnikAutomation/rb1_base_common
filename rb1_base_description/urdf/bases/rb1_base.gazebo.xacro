@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- ros control plugin -->
+  <!-- xacro:macro name="ros_control">
+    <gazebo>
+      <plugin name="ros_control" filename="libgazebo_ros_control.so">		
+        <robotNamespace>/rb1</robotNamespace>
+        <robotParam>robot_description</robotParam>
+        <controlPeriod>0.001</controlPeriod> 
+	    <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+      </plugin>
+    </gazebo>
+	</xacro:macro -->
+	
+	<!-- differential drive plugin -->
+	<xacro:macro name="diff_drive">
+    <gazebo>
+	<plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">    
+	    <alwaysOn>true</alwaysOn>
+        <updateRate>50.0</updateRate>
+        <!-- leftJoint>joint_left_wheel</leftJoint>
+        <rightJoint>joint_right_wheel</rightJoint -->
+        <leftJoint>joint_right_wheel</leftJoint>
+        <rightJoint>joint_left_wheel</rightJoint>
+		<!-- For V0 0.365 -->
+        <!-- wheelSeparation>0.365</wheelSeparation -->         
+        <wheelSeparation>0.433</wheelSeparation>         
+        <wheelDiameter>0.1524</wheelDiameter>
+        <commandTopic>/rb1/cmd_vel</commandTopic>
+        <odometryTopic>odom</odometryTopic>
+        <odometryFrame>odom</odometryFrame>
+        <robotBaseFrame>base_footprint</robotBaseFrame>
+        <!-- robotNamespace></robotNamespace -->	  
+        <rosDebugLevel>na</rosDebugLevel>
+        <publishWheelTF>false</publishWheelTF>  
+        <publishWheelJointState>false</publishWheelJointState>
+        <wheelAcceleration>0</wheelAcceleration>
+        <wheelTorque>5</wheelTorque>
+        <!-- odometrySource>encoder</odometrySource --> 
+        <odometrySource>world</odometrySource>        
+        <publishTf>1</publishTf>        
+	</plugin>
+	</gazebo>		
+    </xacro:macro>
+  
+  <gazebo reference="base_footprint">
+    <material>Gazebo/Green</material>
+  </gazebo>
+  
+</robot>
