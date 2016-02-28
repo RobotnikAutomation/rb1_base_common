@@ -33,7 +33,7 @@
         <xacro:if value="${hq}">
           <origin xyz="0 0 0" rpy="0 0 0" />
           <geometry>     
-				<mesh filename="package://rb1_base_description/meshes/wheels/rb1v2_omniwheel.dae" />
+				<mesh filename="package://rb1_base_description/meshes/wheels/wheel_omni_4inch.dae" />
           </geometry>         
         </xacro:if>
        <!-- LOW RESOLUTION WHEELS -->
