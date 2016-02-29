@@ -109,9 +109,14 @@
 		<origin xyz="-0.18 0.0 0.170" rpy="0 0 0"/>
 	</xacro:sensor_imu>
 
+    <!-- xacro:sensor_orbbec_astra name="orbbec_astra" parent="base_link">        
+        <origin xyz="0.234 0.0125 0.107" rpy="0 0 0"/>
+    </xacro:sensor_orbbec_astra -->  
+
     <xacro:sensor_orbbec_astra name="orbbec_astra" parent="base_link">        
-        <origin xyz="0.234 0.0 0.092" rpy="-1.5708 -1.5708 0"/>
+        <origin xyz="0.234 0.0125 0.107" rpy="0 0 0"/>
     </xacro:sensor_orbbec_astra>  
+
       
     <!-- xacro:sensor_kinect name="kinect" parent="base_link">
         <origin xyz="0.6 0.0 0.102" rpy="0 0 0"/> 
