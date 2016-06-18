@@ -56,6 +56,7 @@
 #define DEFAULT_SCALE_ANGULAR		2.0
 #define DEFAULT_SCALE_LINEAR_Z      1.0 
 
+#define ITERATIONS_AFTER_DEADMAN    3.0
     
 ////////////////////////////////////////////////////////////////////////
 //                               NOTE:                                //
@@ -262,6 +263,7 @@ void RB1BasePad::padCallback(const sensor_msgs::Joy::ConstPtr& joy)
 	geometry_msgs::Twist vel;
 	robotnik_msgs::ptz ptz;
         bool ptzEvent = false;
+        static int send_iterations_after_dead_man = 0;
 
 	vel.angular.x = 0.0;  vel.angular.y = 0.0; vel.angular.z = 0.0;
 	vel.linear.x = 0.0;   vel.linear.y = 0.0; vel.linear.z = 0.0;
@@ -396,15 +398,20 @@ void RB1BasePad::padCallback(const sensor_msgs::Joy::ConstPtr& joy)
 
 	sus_joy_freq->tick();	// Ticks the reception of joy events
 
-        // Publish 
-	// Only publishes if it's enabled
-        // Publish only with deadman button pushed
-	// if(bEnable){
+        // Publish only with deadman button pushed for twist use
         if (joy->buttons[dead_man_button_] == 1) {
+                send_iterations_after_dead_man = ITERATIONS_AFTER_DEADMAN;             
                 if (ptzEvent) ptz_pub_.publish(ptz);
 		vel_pub_.publish(vel);
 		pub_command_freq->tick();
 		}
+        else { // send some 0 if deadman is released
+          if (send_iterations_after_dead_man >0) {
+		send_iterations_after_dead_man--;
+                vel_pub_.publish(vel);
+		pub_command_freq->tick(); 
+	        }
+             }
 }
 
 
