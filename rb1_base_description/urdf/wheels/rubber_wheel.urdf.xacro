@@ -16,7 +16,7 @@
  
   <xacro:macro name="rubber_wheel" params="name parent *origin reflect hq">
   
-<!--WHEEL TIRE -->
+  <!--WHEEL TIRE -->
     <joint name="joint_${name}_wheel" type="continuous">
       <parent link="${parent}"/>
       <child link="${name}_wheel"/>
@@ -32,12 +32,12 @@
         <xacro:if value="${hq}">
           <origin xyz="0 0 0" rpy="0 0 0" />
           <geometry>     
-						<xacro:if value="${reflect}">
-							<mesh filename="package://rb1_base_description/meshes/wheels/wheel_rubber_6inch.dae" />
-						</xacro:if>
-						<xacro:unless value="${reflect}">
-							<mesh filename="package://rb1_base_description/meshes/wheels/wheel_rubber_6inch.dae" />
-						</xacro:unless>
+			<xacro:if value="${reflect}">
+				<mesh filename="package://rb1_base_description/meshes/wheels/wheel_rubber_6inch.dae" />
+			</xacro:if>
+			<xacro:unless value="${reflect}">
+				<mesh filename="package://rb1_base_description/meshes/wheels/wheel_rubber_6inch.dae" />
+			</xacro:unless>
           </geometry>         
         </xacro:if>
        <!-- LOW RESOLUTION WHEELS -->
@@ -67,12 +67,14 @@
     <transmission name="${name}_wheel_joint_trans">
       <type>transmission_interface/SimpleTransmission</type>
       <joint name="joint_${name}_wheel">
-          <hardwareInterface>EffortJointInterface</hardwareInterface>
+          <!-- for the gazebo plugin -->
+          <!-- hardwareInterface>EffortJointInterface</hardwareInterface -->
+          <!-- for ros control controller -->
+          <hardwareInterface>VelocityJointInterface</hardwareInterface>
       </joint>            
-      <actuator name="${name}_wheel_joint_motor">
-        <!-- hardwareInterface>EffortJointInterface</hardwareInterface -->
+      <actuator name="${name}_wheel_joint_motor">       
         <mechanicalReduction>1</mechanicalReduction>
-        <motorTorqueConstant>10</motorTorqueConstant>
+        <motorTorqueConstant>20</motorTorqueConstant>
       </actuator>
     </transmission>
 
