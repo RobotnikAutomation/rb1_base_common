@@ -5,6 +5,7 @@ project(rb1_base_pad)
 find_package(catkin REQUIRED COMPONENTS
   message_generation
   geometry_msgs
+  nav_msgs
   robotnik_msgs
   roscpp
   sensor_msgs
@@ -20,13 +21,14 @@ add_service_files(DIRECTORY srv
 
 generate_messages(
    DEPENDENCIES
-   robotnik_msgs sensor_msgs rb1_base_pad
+   nav_msgs robotnik_msgs sensor_msgs rb1_base_pad
  )
 
 
 catkin_package(
 
   CATKIN_DEPENDS 
+    nav_msgs 
     robotnik_msgs
     roscpp 
     sensor_msgs 
@@ -52,9 +54,4 @@ add_dependencies(rb1_base_pad rb1_base_pad_generate_messages_cpp)
 target_link_libraries(rb1_base_pad
    ${catkin_LIBRARIES}
  )
-
-install(
-  TARGETS rb1_base_pad
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
 
