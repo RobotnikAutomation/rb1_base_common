@@ -2,8 +2,8 @@
 Changelog for package rb1_base_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.0.1 (2016-07-06)
+------------------
 * deleted ~ files
 * Added rb1_base_common packages
 * removed gazebo plugin (in effort) and changed wheel controller to velocity
