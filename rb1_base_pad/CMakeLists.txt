@@ -20,7 +20,7 @@ add_service_files(DIRECTORY srv
 
 generate_messages(
    DEPENDENCIES
-   robotnik_msgs sensor_msgs rb1_base_pad
+   robotnik_msgs sensor_msgs
  )
 
 
@@ -40,9 +40,6 @@ include_directories(
   include 
   ${catkin_INCLUDE_DIRS} 
 )
-
-
-SET(CMAKE_BUILD_TYPE Debug)
 
 
 add_executable(rb1_base_pad src/rb1_base_pad.cpp)
