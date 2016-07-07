@@ -2,6 +2,11 @@
 Changelog for package rb1_base_pad
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Modified Cmake.lists rb1_base_pad
+* Contributors: AliquesTomas
+
 1.0.2 (2016-07-06)
 ------------------
 
