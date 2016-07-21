@@ -2,6 +2,14 @@
 Changelog for package rb1_base_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* rb1_base_common package added to kinetic
+* Contributors: AliquesTomas
+
+* rb1_base_common package added to kinetic
+* Contributors: AliquesTomas
+
 1.0.3 (2016-07-07)
 ------------------
 

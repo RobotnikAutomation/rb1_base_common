@@ -2,6 +2,9 @@
 Changelog for package rb1_base_pad
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 1.0.3 (2016-07-07)
 ------------------
 * Modified Cmake.lists rb1_base_pad
