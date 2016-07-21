@@ -9,23 +9,14 @@
 	<!-- First we import all posible elements defined in the urdf.xacro files. All these elements are defined as macro:xacros -->
 
 	<!-- Import RB1 base elements -->    
-    <xacro:include filename="$(find rb1_base_description)/urdf/bases/rb1_base.urdf.xacro" />
-    
-    <gazebo>
-      <plugin name="ros_control" filename="libgazebo_ros_control.so">		
-        <robotNamespace>/rb1</robotNamespace>
-        <robotParam>robot_description</robotParam>
-        <controlPeriod>0.001</controlPeriod> 
-	    <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
-      </plugin>
-    </gazebo>
+    	<xacro:include filename="$(find rb1_base_description)/urdf/bases/rb1_base.urdf.xacro" />
     	
 	<!-- Import RB1 wheels -->
 	<xacro:include filename="$(find rb1_base_description)/urdf/wheels/rubber_wheel.urdf.xacro" />	
 	<xacro:include filename="$(find rb1_base_description)/urdf/wheels/omni_wheel.urdf.xacro" />
     
 	<!-- Import all available sensors -->
-    <xacro:include filename="$(find robotnik_sensors)/urdf/all_sensors.urdf.xacro"/>
+    	<xacro:include filename="$(find robotnik_sensors)/urdf/all_sensors.urdf.xacro"/>
   
   
 	<!-- ***************** -->
@@ -93,9 +84,9 @@
 		<origin xyz="0.210 0.0 0.305" rpy="0 0 0"/>
 	</xacro:sensor_hokuyo_utm30lx -->
 
-    <!-- xacro:sensor_hokuyo_urg04lx name="hokuyo1" parent="base_link">
-        <origin xyz="0.220 0.0 0.170" rpy="0 3.1416 3.1416"/>
-    </xacro:sensor_hokuyo_urg04lx -->
+	<!-- xacro:sensor_hokuyo_urg04lx name="hokuyo1" parent="base_link">
+		<origin xyz="0.220 0.0 0.170" rpy="0 3.1416 3.1416"/>
+	</xacro:sensor_hokuyo_urg04lx -->
 
 	<!-- xacro:sensor_hokuyo_ust10lx name="hokuyo" parent="base_link">
 		<origin xyz="0.223 0.0 0.159" rpy="0 0 0"/>
@@ -109,18 +100,10 @@
 		<origin xyz="-0.18 0.0 0.170" rpy="0 0 0"/>
 	</xacro:sensor_imu>
 
-    <!-- xacro:sensor_orbbec_astra name="orbbec_astra" parent="base_link">        
-        <origin xyz="0.234 0.0125 0.107" rpy="0 0 0"/>
-    </xacro:sensor_orbbec_astra -->  
-
-    <xacro:sensor_orbbec_astra name="orbbec_astra" parent="base_link">        
-        <origin xyz="0.234 0.0125 0.107" rpy="0 0 0"/>
-    </xacro:sensor_orbbec_astra>  
-
-      
-    <!-- xacro:sensor_kinect name="kinect" parent="base_link">
-        <origin xyz="0.6 0.0 0.102" rpy="0 0 0"/> 
-    </xacro:sensor_kinect -->   
+	<xacro:sensor_orbbec_astra name="orbbec_astra" parent="base_link">        
+		<origin xyz="0.234 0.0125 0.107" rpy="0 0 0"/>
+	</xacro:sensor_orbbec_astra>  
+ 
   
 </robot>
 

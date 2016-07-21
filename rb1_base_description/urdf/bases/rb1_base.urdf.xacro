@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot name="rb1_base" xmlns:xacro="http://www.ros.org/wiki/xacro"> 
 
-  <!-- xacro:include filename="$(find rb1_base_description)/urdf/bases/rb1_base.gazebo.xacro" / -->
+  <xacro:include filename="$(find rb1_base_description)/urdf/bases/rb1_base.gazebo.xacro" />
 
   <xacro:macro name="rb1_base" params="name publish_bf hq">
 

@@ -2,7 +2,7 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
   <!-- ros control plugin -->
-  <!-- xacro:macro name="ros_control">
+  <xacro:macro name="ros_control">
     <gazebo>
       <plugin name="ros_control" filename="libgazebo_ros_control.so">		
         <robotNamespace>/rb1</robotNamespace>
@@ -11,7 +11,7 @@
 	    <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
       </plugin>
     </gazebo>
-	</xacro:macro -->
+  </xacro:macro>
 	
 	<!-- differential drive plugin -->
 	<xacro:macro name="diff_drive">
