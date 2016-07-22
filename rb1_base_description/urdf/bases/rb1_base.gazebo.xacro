@@ -19,8 +19,8 @@
 	<plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">    
 	    <alwaysOn>true</alwaysOn>
         <updateRate>50.0</updateRate>
-        <!-- leftJoint>joint_left_wheel</leftJoint>
-        <rightJoint>joint_right_wheel</rightJoint -->
+        <!--leftJoint>joint_left_wheel</leftJoint>
+        <rightJoint>joint_right_wheel</rightJoint-->
         <leftJoint>joint_right_wheel</leftJoint>
         <rightJoint>joint_left_wheel</rightJoint>
 		<!-- For V0 0.365 -->
@@ -33,13 +33,14 @@
         <robotBaseFrame>base_footprint</robotBaseFrame>
         <!-- robotNamespace></robotNamespace -->	  
         <rosDebugLevel>na</rosDebugLevel>
-        <publishWheelTF>false</publishWheelTF>  
+        <publishWheelTF>true</publishWheelTF>  
         <publishWheelJointState>false</publishWheelJointState>
         <wheelAcceleration>0</wheelAcceleration>
         <wheelTorque>5</wheelTorque>
         <!-- odometrySource>encoder</odometrySource --> 
         <odometrySource>world</odometrySource>        
-        <publishTf>1</publishTf>        
+        <publishTf>1</publishTf>    
+	<legacyMode>false</legacyMode>    
 	</plugin>
 	</gazebo>		
     </xacro:macro>
