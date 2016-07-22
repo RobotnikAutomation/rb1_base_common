@@ -2,8 +2,8 @@
 Changelog for package rb1_base_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.0.5 (2016-07-22)
+------------------
 * publishing wheels tf in diff drive gazebo plugin
 * Contributors: AliquesTomas
 
