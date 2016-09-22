@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>rb1_base_pad</name>
-  <version>1.0.5</version>
+  <version>1.1.0</version>
   <description>The rb1_base_pad package</description>
 
   <maintainer email="rguzman@robotnik.es">Roberto Guzmán</maintainer>
