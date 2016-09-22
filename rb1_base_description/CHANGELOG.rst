@@ -2,6 +2,11 @@
 Changelog for package rb1_base_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* rb1_base_description: added contact link
+* Contributors: Marc Bosch
+
 1.0.3 (2016-07-07)
 ------------------
 

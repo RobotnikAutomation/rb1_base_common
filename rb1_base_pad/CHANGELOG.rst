@@ -2,6 +2,11 @@
 Changelog for package rb1_base_pad
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* rb1_base_pad: adds missing install rule
+* Contributors: Jorge Arino
+
 1.0.3 (2016-07-07)
 ------------------
 * Modified Cmake.lists rb1_base_pad
