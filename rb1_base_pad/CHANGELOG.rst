@@ -2,8 +2,8 @@
 Changelog for package rb1_base_pad
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.0.4 (2016-09-22)
+------------------
 * rb1_base_pad: adds missing install rule
 * Contributors: Jorge Arino
 
