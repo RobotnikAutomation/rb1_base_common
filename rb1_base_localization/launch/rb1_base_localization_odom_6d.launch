@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+
+   <!-- launch complementary filter -->
+   <include file="$(find rb1_base_localization)/launch/imu_filter.launch"/>
+
+   <!-- launch robot_localization filter for odom -->
+   <include file="$(find rb1_base_localization)/launch/robot_localization_odom_6d.launch"/>
+
+   <!-- start the robot_localization_utils node to provide calibration services and reset odometry -->
+   <node pkg="rb1_base_localization" type="robot_localization_utils" name="robot_localization_utils" output="screen"/>
+   
+</launch>
