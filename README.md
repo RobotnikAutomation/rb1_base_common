@@ -1,8 +1,10 @@
-# rb1_base_common
-Common packages for the control and simulation of the RB1 BASE robot.
+rb1_base_common
+===============
 
-# rb1_base_description
-This package contains the RB1 base model (urdf, meshes, ...).
+Robot Common ROS packages for the Robotnik RB-1 Base,
+ - rb1_base_description : Contains URDF and mesh files to model RB1 Base.
+ - rb1_base_navigation : Contains the configuration and launch files to work with the ROS navigation stack along the real or simulated robot.
+ - rb1_base_localization : Contains the configuration and launch files to use the robot localiztion packages along the real or simulated robot.
+ - rb1_base_pad : Contains a node to control the RB1 Base with pad or joystick controllers.
 
-# rb1_base_pad
-This package is intended to control the RB1 base by a pad or joystick.
+<!-- For RB-1 instructions and tutorials, please see ... -->
