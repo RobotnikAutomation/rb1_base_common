@@ -3,7 +3,7 @@
 <node pkg="amcl" type="amcl" name="amcl" output="screen">
 
   <!-- remap from="scan" to="hokuyo_laser_topic" / -->
-  <remap from="scan" to="hokuyo/scan" />
+  <!--remap from="scan" to="hokuyo/scan" /-->
   <remap from="cmd_vel" to="cmd_vel" />
 
   <!-- Publish scans from best pose at a max of 10 Hz -->

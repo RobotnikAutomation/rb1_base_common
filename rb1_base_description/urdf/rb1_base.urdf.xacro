@@ -87,13 +87,16 @@
 		<!-- xacro:sensor_hokuyo_ust10lx name="front_laser" parent="base_link">
 			<origin xyz="0.223 0.0 0.159" rpy="0 0 0"/>
 		</xacro:sensor_hokuyo_ust10lx -->
+		
+		<!-- Name the components as base_front_laser or base_laser or front_laser or
+		a name which identify uniquely the component within the robot -->
 
-		<xacro:sensor_hokuyo_ust10lx name="front_laser" parent="base_link">
+		<xacro:sensor_hokuyo_ust10lx name="base_front_laser" parent="base_link">
 			<origin xyz="0.223 0.0 0.159" rpy="0 3.1416 3.1416"/>
 		</xacro:sensor_hokuyo_ust10lx> 	
 		
 		<!-- CAMERA -->
-		<xacro:sensor_orbbec_astra name="front_camera" parent="base_link">        
+		<xacro:sensor_orbbec_astra name="base_front_camera" parent="base_link">        
 			<origin xyz="0.234 0.0125 0.107" rpy="0 0 0"/>
 		</xacro:sensor_orbbec_astra>  
 
