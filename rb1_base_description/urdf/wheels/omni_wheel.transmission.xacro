@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+	<!-- Omni wheel transmission -->
+	<xacro:macro name="rubber_wheel_transmission" params="name">
+		<transmission name="${name}_wheel_joint_trans">
+			<type>transmission_interface/SimpleTransmission</type>
+			<joint name="${name}_wheel_joint" 
+				<hardwareInterface>hardware_interface/JointStateInterface</hardwareInterface>
+			</joint>
+			<actuator name="${name}_wheel_joint_motor">
+				<hardwareInterface>hardware_interface/JointStateInterface</hardwareInterface>
+				<mechanicalReduction>1.0</mechanicalReduction>
+			</actuator>
+		</transmission>
+	</xacro:macro>
+
+</robot>
