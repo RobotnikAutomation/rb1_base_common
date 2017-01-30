@@ -1,16 +1,19 @@
 <?xml version="1.0"?>
 <package>
   <name>rb1_base_common</name>
-  <version>1.0.0</version>
+  <version>1.0.6</version>
   <description>The rb1_base_common package. It contains rb1 base common packages used for robot control and for simulation</description>
   
-  <maintainer email="info@robotnik.es">Robotnik</maintainer>
+  <maintainer email="rguzman@robotnik.es">Roberto Guzmán</maintainer>
+  <maintainer email="rnavarro@robotnik.es">Roman Navarro Garcia </maintainer>
+  <maintainer email="aaliques@robotnik.com">Toni Aliques</maintainer>
+  <author email="rguzman@robotnik.es">Roberto Guzmán</author>
 
   <license>BSD</license>
 
   <url type="website">http://wiki.ros.org/rb1_base_common</url>
-
-  <author email="info@robotnik.es">Robotnik</author>
+  <url type="repository">https://github.com/RobotnikAutomation/rb1_base_common.git</url>
+  <url type="bugtracker">https://github.com/RobotnikAutomation/rb1_base_common/issues</url>
 
   <buildtool_depend>catkin</buildtool_depend>
   
