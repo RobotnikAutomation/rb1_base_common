@@ -9,7 +9,7 @@ global_costmap:
     rolling_window: true
     width: 30.0
     height: 30.0
-    resolution: 0.025
+    resolution: 0.05
     origin_x: 0.0
     origin_y: 0.0
     inflation_radius: 0.26  

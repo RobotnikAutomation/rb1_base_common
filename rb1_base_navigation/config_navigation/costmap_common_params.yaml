@@ -1,5 +1,5 @@
-obstacle_range: 2.5
-raytrace_range: 3.0
+obstacle_range: 5.0
+raytrace_range: 6.0
 footprint: [[0.25, 0.0], [0.177, 0.177], [0.0,0.25], [-0.177, 0.177], [-0.25, 0.0], [-0.177, -0.177], [0.0, -0.25], [0.177, -0.177] ]
 #footprint: [[0.260, 0.0], [0.187, 0.187], [0.0,0.260], [-0.187, 0.187], [-0.260, 0.0], [-0.187, -0.187], [0.0, -0.260], [0.187, -0.187] ]
 #inflation_radius: 0.55
@@ -7,4 +7,4 @@ footprint: [[0.25, 0.0], [0.177, 0.177], [0.0,0.25], [-0.177, 0.177], [-0.25, 0.
 
 obstacle_layer:
   observation_sources: base_front_laser
-  base_front_laser: {sensor_frame: base_front_laser_link, data_type: LaserScan, topic: /scan, marking: true, clearing: true}
+  base_front_laser: {data_type: LaserScan, topic: /scan, marking: true, clearing: true, observation_persistence: 1.0}
