@@ -1,0 +1,10 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: rb1_base_description
+    relative_path: robots/rb1_base_platform_kinova_j2n6a300.urdf.xacro
+  SRDF:
+    relative_path: config/rb1_base_platform.srdf
+  CONFIG:
+    author_name: Marc Bosch-Jorge
+    author_email: mbosch@robotnik.es
+    generated_timestamp: 1486377041
