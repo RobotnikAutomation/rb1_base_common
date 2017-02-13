@@ -17,7 +17,10 @@
 
 	<!-- IMPORT SENSORS -->
 	<xacro:include filename="$(find robotnik_sensors)/urdf/all_sensors.urdf.xacro"/>
-
+	
+	<!-- IMPORT ELEVATOR -->
+	<xacro:include filename="$(find rb1_base_description)/urdf/elevator/elevator.urdf.xacro"/>
+	
 	<!-- ***************** -->
 	<!-- GLOBAL PARAMETERS -->
 	<!-- ***************** -->  
@@ -39,6 +42,10 @@
 	<xacro:property name="omni_front_x" value="0.132" /> 
 	<xacro:property name="omni_front_y" value="0.1535" />  
 	<xacro:property name="omni_front_z" value="0.0258" />
+	
+	<xacro:property name="elevator_x" value="0.0" /> 
+	<xacro:property name="elevator_y" value="0.0" />  
+	<xacro:property name="elevator_z" value="0.0213" />
 	
 	<!-- *************** -->
 	<!-- ROBOT COMPONENTS -->
@@ -73,6 +80,11 @@
 		<xacro:omni_wheel name="omni_front_right" parent="base_link" hq="${hq}">
 			<origin xyz="${omni_front_x} -${omni_front_y} ${omni_front_z}" rpy="0 0 0"/>
 		</xacro:omni_wheel>
+		
+		<!-- ELEVATOR_PLATFORM -->
+		<xacro:elevator_platform parent="base_link" hq="${hq}">
+			<origin xyz="${omni_front_x} -${omni_front_y} ${omni_front_z}" rpy="0 0 0"/>
+		</xacro:elevator_platform>
 
 		<!-- SENSORS -->
 		<!-- LASER -->
