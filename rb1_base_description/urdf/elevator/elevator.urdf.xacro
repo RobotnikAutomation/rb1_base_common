@@ -2,7 +2,7 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro"> 
 	<!--xacro:include filename="$(find rb1_base_description)/urdf/bases/rb1_elevator.gazebo.xacro" /-->
 
-	<xacro:macro name="elevator_platform" params="parent hq origin">
+	<xacro:macro name="elevator_platform" params="parent hq *origin">
 	<!-- PARAMS: -->
 	<!-- name : name of the link: -->
 	<!-- hq: selects model in high quality (.dae) -->
@@ -25,7 +25,7 @@
 		<visual>
 			<origin xyz="0 0 0" rpy="0 0 0" />
 			<xacro:if value="${hq}">
-				<geomet
+				<geometry>
 					<mesh filename="package://rb1_base_description/meshes/elevator/rb1_elevator_base.dae"/>
 				</geometry>
 			</xacro:if>
@@ -48,11 +48,11 @@
 
 	<!-- ELEVATOR PLATFORM -->
 	<joint name="elevator_platform_joint" type="prismatic">
-			<origin xyz="0.0 0.0 0.0041" rpy="0 0 0 " />
+			<origin xyz="0.0 0.0 0.041" rpy="0 0 0 " />
 			<parent link="elevator_base_link"/>
 			<child link="elevator_platform_link" />
 			<axis xyz="0 0 1"/>
-			<limit lower="0.0" upper="0.0034" velocity="0.5"/>
+			<limit effort="1.0" lower="0.0" upper="0.034" velocity="0.5"/>
 	</joint> 
 	<link name="elevator_platform_link">
 		<!--inertial>
