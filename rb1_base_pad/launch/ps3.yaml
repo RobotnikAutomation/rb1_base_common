@@ -18,6 +18,9 @@ button_ptz_tilt_down: 6
 button_ptz_pan_right: 5
 button_ptz_pan_left: 7
 button_home: 8
+button_raise_elevator: 4
+button_lower_elevator: 6
+button_stop_elevator: 16
 tilt_increment: 5
 pan_increment: 5
 button_kinematic_mode: 9

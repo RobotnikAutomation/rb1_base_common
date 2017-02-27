@@ -46,6 +46,7 @@
 #include <robotnik_msgs/home.h>
 #include <diagnostic_updater/diagnostic_updater.h>
 #include <diagnostic_updater/publisher.h>
+#include <rb1_base_msgs/SetElevator.h>
 
 #define DEFAULT_NUM_OF_BUTTONS		16
 #define DEFAULT_AXIS_LINEAR_X		1
@@ -58,6 +59,9 @@
 
 #define ITERATIONS_AFTER_DEADMAN    3.0
     
+#define	DEFAULT_ELEVATOR_ACTION_RAISE	1 
+#define	DEFAULT_ELEVATOR_ACTION_LOWER	-1 
+#define	DEFAULT_ELEVATOR_ACTION_STOP	0 
 ////////////////////////////////////////////////////////////////////////
 //                               NOTE:                                //
 // This configuration is made for a THRUSTMASTER T-Wireless 3in1 Joy  //
@@ -87,6 +91,8 @@ class RB1BasePad
 	std::string cmd_topic_vel_;
 	//! Name of the service where it will be modifying the digital outputs
 	std::string cmd_service_io_;
+	//! Name of the service where to actuate the elevator
+	std::string elevator_service_name_;
 	//! Name of the topic where it will be publishing the pant-tilt values	
 	std::string cmd_topic_ptz_;
 	double current_vel;
@@ -95,6 +101,7 @@ class RB1BasePad
 	//! Number of the button for increase or decrease the speed max of the joystick	
 	int speed_up_button_, speed_down_button_;
 	int button_output_1_, button_output_2_;
+	int button_raise_elevator_, button_lower_elevator_, button_stop_elevator_;
 	int output_1_, output_2_;
 	bool bOutput1, bOutput2;
 	//! button to change kinematic mode
@@ -118,6 +125,8 @@ class RB1BasePad
 
 	//! Service to modify the digital outputs
 	ros::ServiceClient set_digital_outputs_client_;  
+	//! Service to activate the elevator
+	ros::ServiceClient set_elevator_client_;  
 	//! Number of buttons of the joystick
 	int num_of_buttons_;
 	//! Pointer to a vector for controlling the event when pushing the buttons
@@ -180,26 +189,18 @@ RB1BasePad::RB1BasePad():
     nh_.param("button_home", button_home_, button_home_);
 	nh_.param("pan_increment", pan_increment_, 1);
 	nh_.param("tilt_increment",tilt_increment_, 1);
+	nh_.param("button_lower_elevator",button_lower_elevator_, 6);
+	nh_.param("button_raise_elevator",button_raise_elevator_, 4);
+	nh_.param("button_stop_elevator",button_stop_elevator_, 16);
 
     nh_.param("cmd_service_home", cmd_home_, cmd_home_);
+    nh_.param<std::string>("elevator_service_name", elevator_service_name_, "/rb1_base_controller/set_elevation");
 	
 	ROS_INFO("RB1BasePad num_of_buttons_ = %d", num_of_buttons_);	
 	for(int i = 0; i < num_of_buttons_; i++){
 		bRegisteredButtonEvent[i] = false;
 		ROS_INFO("bREG %d", i);
 		}
-
-	/*ROS_INFO("Service I/O = [%s]", cmd_service_io_.c_str());
-	ROS_INFO("Topic PTZ = [%s]", cmd_topic_ptz_.c_str());
-	ROS_INFO("Service I/O = [%s]", cmd_topic_vel_.c_str());
-	ROS_INFO("Axis linear = %d", linear_);
-	ROS_INFO("Axis angular = %d", angular_);
-	ROS_INFO("Scale angular = %d", a_scale_);
-	ROS_INFO("Deadman button = %d", dead_man_button_);
-	ROS_INFO("OUTPUT1 button %d", button_output_1_);
-	ROS_INFO("OUTPUT2 button %d", button_output_2_);
-	ROS_INFO("OUTPUT1 button %d", button_output_1_);
-	ROS_INFO("OUTPUT2 button %d", button_output_2_);*/	
 
   	// Publish through the node handle Twist type messages to the guardian_controller/command topic
 	vel_pub_ = nh_.advertise<geometry_msgs::Twist>(cmd_topic_vel_, 1);
@@ -212,6 +213,8 @@ RB1BasePad::RB1BasePad():
 	
  	// Request service to activate / deactivate digital I/O
 	set_digital_outputs_client_ = nh_.serviceClient<robotnik_msgs::set_digital_output>(cmd_service_io_);
+	set_elevator_client_ = nh_.serviceClient<rb1_base_msgs::SetElevator>(elevator_service_name_);
+	
 	bOutput1 = bOutput2 = false;
 
     // Request service to start homing
@@ -311,84 +314,49 @@ void RB1BasePad::padCallback(const sensor_msgs::Joy::ConstPtr& joy)
 		vel.linear.y = current_vel*l_scale_*joy->axes[linear_y_];
 		vel.linear.z = current_vel*l_scale_z_*joy->axes[linear_z_];
 
-		// LIGHTS
-		if (joy->buttons[button_output_1_] == 1) {
+		// ELEVATOR
+		if (joy->buttons[button_stop_elevator_] == 1) {
 
-			if(!bRegisteredButtonEvent[button_output_1_]){
-				//ROS_INFO("RB1BasePad::padCallback: OUTPUT1 button %d", button_output_1_);
-				robotnik_msgs::set_digital_output write_do_srv;
-				write_do_srv.request.output = output_1_;
-				bOutput1=!bOutput1;
-				write_do_srv.request.value = bOutput1;
-				set_digital_outputs_client_.call( write_do_srv );
-				bRegisteredButtonEvent[button_output_1_] = true;
+			if(!bRegisteredButtonEvent[button_stop_elevator_]){
+				//ROS_INFO("RB1BasePad::padCallback: button %d", button_stop_elevator_);
+				rb1_base_msgs::SetElevator elevator_msg_srv;
+				
+				elevator_msg_srv.request.action = DEFAULT_ELEVATOR_ACTION_STOP;
+				
+				set_elevator_client_.call( elevator_msg_srv );
+				bRegisteredButtonEvent[button_stop_elevator_] = true;
 			}
 		}else{
-			bRegisteredButtonEvent[button_output_1_] = false;
+			bRegisteredButtonEvent[button_stop_elevator_] = false;
 		}
+		if (joy->buttons[button_raise_elevator_] == 1) {
 
-		if (joy->buttons[button_output_2_] == 1) {
-                        
-			if(!bRegisteredButtonEvent[button_output_2_]){                               
-				//ROS_INFO("RB1BasePad::padCallback: OUTPUT2 button %d", button_output_2_);
-				robotnik_msgs::set_digital_output write_do_srv;
-				write_do_srv.request.output = output_2_;
-				bOutput2=!bOutput2;
-				write_do_srv.request.value = bOutput2;
-				set_digital_outputs_client_.call( write_do_srv );
-				bRegisteredButtonEvent[button_output_2_] = true;
-			}                     		  	
-		}else{
-			bRegisteredButtonEvent[button_output_2_] = false;
-		}
-
-		// TILT-MOVEMENTS (RELATIVE POS)
-		ptz.pan = ptz.tilt = ptz.zoom = 0.0;
-		ptz.relative = true;
-		if (joy->buttons[ptz_tilt_up_] == 1) {		
-			if(!bRegisteredButtonEvent[ptz_tilt_up_]){
-				ptz.tilt = tilt_increment_;
-				//ROS_INFO("RB1BasePad::padCallback: TILT UP");
-				bRegisteredButtonEvent[ptz_tilt_up_] = true;
-				ptzEvent = true;
-			}
-		}else {
-			bRegisteredButtonEvent[ptz_tilt_up_] = false;
-		}
-
-		if (joy->buttons[ptz_tilt_down_] == 1) {
-			if(!bRegisteredButtonEvent[ptz_tilt_down_]){
-			  	ptz.tilt = -tilt_increment_;
-				//ROS_INFO("RB1BasePad::padCallback: TILT DOWN");
-				bRegisteredButtonEvent[ptz_tilt_down_] = true;
-				ptzEvent = true;
+			if(!bRegisteredButtonEvent[button_raise_elevator_]){
+				//ROS_INFO("RB1BasePad::padCallback: button %d", button_raise_elevator_);
+				rb1_base_msgs::SetElevator elevator_msg_srv;
+				
+				elevator_msg_srv.request.action = DEFAULT_ELEVATOR_ACTION_RAISE;
+				
+				set_elevator_client_.call( elevator_msg_srv );
+				bRegisteredButtonEvent[button_raise_elevator_] = true;
 			}
 		}else{
-			bRegisteredButtonEvent[ptz_tilt_down_] = false;
+			bRegisteredButtonEvent[button_raise_elevator_] = false;
 		}
-		 
-		// PAN-MOVEMENTS (RELATIVE POS)
-		if (joy->buttons[ptz_pan_left_] == 1) {			
-			if(!bRegisteredButtonEvent[ptz_pan_left_]){
-				ptz.pan = -pan_increment_;
-				//ROS_INFO("RB1BasePad::padCallback: PAN LEFT");
-				bRegisteredButtonEvent[ptz_pan_left_] = true;
-				ptzEvent = true;
-			}
-		}else{
-			bRegisteredButtonEvent[ptz_pan_left_] = false;
-		}
+		if (joy->buttons[button_lower_elevator_] == 1) {
 
-		if (joy->buttons[ptz_pan_right_] == 1) {
-			if(!bRegisteredButtonEvent[ptz_pan_right_]){
-			  	ptz.pan = pan_increment_;
-				//ROS_INFO("RB1BasePad::padCallback: PAN RIGHT");
-				bRegisteredButtonEvent[ptz_pan_right_] = true;
-				ptzEvent = true;
+			if(!bRegisteredButtonEvent[button_lower_elevator_]){
+				//ROS_INFO("RB1BasePad::padCallback: button %d", button_lower_elevator_);
+				rb1_base_msgs::SetElevator elevator_msg_srv;
+				
+				elevator_msg_srv.request.action = DEFAULT_ELEVATOR_ACTION_LOWER;
+				
+				set_elevator_client_.call( elevator_msg_srv );
+				bRegisteredButtonEvent[button_lower_elevator_] = true;
 			}
 		}else{
-			bRegisteredButtonEvent[ptz_pan_right_] = false;
-		}
+			bRegisteredButtonEvent[button_lower_elevator_] = false;
+		}	
 
 	}
    	else {
