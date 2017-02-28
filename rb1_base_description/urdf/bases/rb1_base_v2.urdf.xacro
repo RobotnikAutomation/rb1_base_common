@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot name="rb1_base" xmlns:xacro="http://www.ros.org/wiki/xacro"> 
 
-  <xacro:macro name="rb1_base" params="name publish_bf hq">
+  <xacro:macro name="rb1_base_v2" params="name publish_bf hq">
 
   <!-- Robot mechanical and motor parameters -->
   <xacro:property name="PI" value="3.1415926535897931"/>
@@ -100,7 +100,7 @@
      <child link="base_docking_contact" />
   </joint>    
 
-  <!-- FRONT COVER -->
+  <!-- DOCKING LINK -->
   <link name="base_docking_contact" />
 
   </xacro:macro>
