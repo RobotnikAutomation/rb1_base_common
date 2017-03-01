@@ -29,17 +29,17 @@
 	<!-- ***************** -->
 	<!-- FOR RUBBER WHEEL -->
 	<xacro:property name="wheel_offset_x" value="0.0" />    <!-- x,y,z in translation from base_link to the center of the wheel -->
-	<xacro:property name="wheel_offset_y" value="0.2165" />    
-	<xacro:property name="wheel_offset_z" value="0.0512" />
+	<xacro:property name="wheel_offset_y" value="0.217" />    
+	<xacro:property name="wheel_offset_z" value="0.051" />
 	
 	<!-- FOR OMNI WHEEL -->
 	<xacro:property name="omni_back_x" value="0.195" />
 	<xacro:property name="omni_back_y" value="0.0" />
-	<xacro:property name="omni_back_z" value="0.0258" />
+	<xacro:property name="omni_back_z" value="0.0265" />
 	
 	<xacro:property name="omni_front_x" value="0.133" /> 
 	<xacro:property name="omni_front_y" value="0.148" />  
-	<xacro:property name="omni_front_z" value="0.0258" />
+	<xacro:property name="omni_front_z" value="0.0265" />
 	
 	<!-- Flag to select the high or low quality model -->
 	<xacro:property name="hq" value="true" />
@@ -63,6 +63,7 @@
 	</xacro:rubber_wheel>
 	
 	<!-- OMNI WHEELS -->
+	<!-- -->
 	<xacro:omni_wheel name="omni_back" parent="base_link" hq="${hq}">
 		<origin xyz="-${omni_back_x} ${omni_back_y} ${omni_back_z}" rpy="0 0 0"/>
 	</xacro:omni_wheel>s
@@ -74,6 +75,7 @@
 	<xacro:omni_wheel name="omni_front_right" parent="base_link" hq="${hq}">
 		<origin xyz="${omni_front_x} -${omni_front_y} ${omni_front_z}" rpy="0 0 0"/>
 	</xacro:omni_wheel>
+	<!-- -->
 	
 	<!-- SENSORS -->
 	<!-- LASER -->
