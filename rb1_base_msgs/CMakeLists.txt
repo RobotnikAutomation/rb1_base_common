@@ -7,6 +7,8 @@ project(rb1_base_msgs)
 find_package(catkin REQUIRED COMPONENTS
   message_generation
   std_msgs
+  actionlib_msgs
+  actionlib
 )
 
 
@@ -23,11 +25,16 @@ add_message_files(
    SetElevator.srv
 )
 
-
+add_action_files(
+   DIRECTORY action
+   FILES
+   SetElevator.action 
+)
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
    DEPENDENCIES
    std_msgs
+   actionlib_msgs
 )
 
 
