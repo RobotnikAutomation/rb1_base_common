@@ -15,6 +15,7 @@
   <param name="cmd_service_io" value="/modbus_io/write_digital_output" type="string"/>
   <param name="cmd_topic_ptz" value="/cmd_ptz" type="string"/>
   <rosparam command="load" file="$(find rb1_base_pad)/launch/ps3.yaml" />
+  <!-- rosparam command="load" file="$(find rb1_base_pad)/launch/ps4.yaml" /-->
   <node name="rb1_base_pad" pkg="rb1_base_pad" type="rb1_base_pad" output="screen"/>
    
 </launch>
