@@ -3,7 +3,7 @@
   <node pkg="imu_complementary_filter" type="complementary_filter_node" name="complementary_filter_node" output="screen"> 
     <remap from="/imu/data_raw" to="/mavros/imu/data_raw"/> 
     <remap from="/imu/mag" to="/mavros/imu/mag"/> 
-    <param name="fixed_frame" value="fcu"/> 
+    <param name="fixed_frame" value="imu_link"/> 
     <param name="publish_tf" value="false"/> 
     <param name="publish_debug_topics" value="true"/> 
     <param name="do_bias_estimation" value="false"/> 
