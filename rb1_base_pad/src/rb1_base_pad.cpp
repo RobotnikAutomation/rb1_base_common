@@ -62,6 +62,7 @@
 #define	DEFAULT_ELEVATOR_ACTION_RAISE	1 
 #define	DEFAULT_ELEVATOR_ACTION_LOWER	-1 
 #define	DEFAULT_ELEVATOR_ACTION_STOP	0 
+#define JOY_ERROR_TIME					1.0
 ////////////////////////////////////////////////////////////////////////
 //                               NOTE:                                //
 // This configuration is made for a THRUSTMASTER T-Wireless 3in1 Joy  //
@@ -265,8 +266,12 @@ void RB1BasePad::padCallback(const sensor_msgs::Joy::ConstPtr& joy)
 {
 	geometry_msgs::Twist vel;
 	robotnik_msgs::ptz ptz;
-        bool ptzEvent = false;
-        static int send_iterations_after_dead_man = 0;
+	bool ptzEvent = false;
+	static int send_iterations_after_dead_man = 0;
+	
+	// Checks the ROS time to avoid noise in the pad
+	if((ros::Time::now() - joy->header.stamp).toSec() > JOY_ERROR_TIME)
+		return;
 
 	vel.angular.x = 0.0;  vel.angular.y = 0.0; vel.angular.z = 0.0;
 	vel.linear.x = 0.0;   vel.linear.y = 0.0; vel.linear.z = 0.0;
