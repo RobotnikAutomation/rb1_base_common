@@ -1,53 +1,57 @@
 <?xml version="1.0"?>
 <robot name="wheel" xmlns:xacro="http://www.ros.org/wiki/xacro">
+	
+	<xacro:include filename="$(find rb1_base_description)/urdf/wheels/rubber_wheel.transmission.xacro"/>
+	<xacro:include filename="$(find rb1_base_description)/urdf/wheels/rubber_wheel.gazebo.xacro"/>
 
-  <xacro:property name="M_PI" value="3.1415926535897931" />
-  <!-- Wheels -->
-  <property name="wheel_radius" value="0.076" /> 
-  <property name="wheel_height" value="0.025" />
-  <property name="wheel_mass" value="1.0" /> <!-- in kg-->
+
+	<xacro:property name="M_PI" value="3.1415926535897931" />
+	<!-- Wheels -->
+	<property name="wheel_radius" value="0.076" /> 
+	<property name="wheel_height" value="0.025" />
+	<property name="wheel_mass" value="1.0" /> <!-- in kg-->
  
  
-  <xacro:macro name="cylinder_inertia" params="m r h">
-    <inertia  ixx="${m*(3*r*r+h*h)/12}" ixy = "0" ixz = "0"
-              iyy="${m*(3*r*r+h*h)/12}" iyz = "0"
-              izz="${m*r*r/2}" /> 
-  </xacro:macro>
+	<xacro:macro name="cylinder_inertia" params="m r h">
+		<inertia	ixx="${m*(3*r*r+h*h)/12}" ixy = "0" ixz = "0"
+					iyy="${m*(3*r*r+h*h)/12}" iyz = "0"
+					izz="${m*r*r/2}" /> 
+	</xacro:macro>
  
-  <xacro:macro name="rubber_wheel" params="name parent *origin reflect hq">
+	<xacro:macro name="rubber_wheel" params="name parent *origin reflect hq">
   
-  <!--WHEEL TIRE -->
-    <joint name="joint_${name}_wheel" type="continuous">
-      <parent link="${parent}"/>
-      <child link="${name}_wheel"/>
-      <insert_block name="origin" />
-      <axis xyz="0 1 0" rpy="0 0 0" />
-      <limit effort="100" velocity="100"/>
-      <joint_properties damping="0.0" friction="0.0"/>
-    </joint>
+	<!--WHEEL TIRE -->
+	<joint name="${name}_wheel_joint" type="continuous">
+		<parent link="${parent}"/>
+		<child link="${name}_wheel_link"/>
+		<insert_block name="origin" />
+		<axis xyz="0 1 0" rpy="0 0 0" />
+		<limit effort="100" velocity="100"/>
+		<joint_properties damping="0.0" friction="0.0"/>
+	</joint>
   
-    <link name="${name}_wheel">
-      <visual>
-        <!-- HIGH RESOLUTION WHEELS -->
-        <xacro:if value="${hq}">
-          <origin xyz="0 0 0" rpy="0 0 0" />
-          <geometry>     
-			<xacro:if value="${reflect}">
-				<mesh filename="package://rb1_base_description/meshes/wheels/wheel_rubber_6inch.dae" />
-			</xacro:if>
-			<xacro:unless value="${reflect}">
-				<mesh filename="package://rb1_base_description/meshes/wheels/wheel_rubber_6inch.dae" />
-			</xacro:unless>
-          </geometry>         
-        </xacro:if>
-       <!-- LOW RESOLUTION WHEELS -->
-        <xacro:unless value="${hq}">
-          <origin xyz="0 0 0" rpy="${M_PI/2} 0 0" />
-          <geometry>           
-            <cylinder length="${wheel_height}" radius="${wheel_radius}" />
-          </geometry>      
-        </xacro:unless>
-      </visual>
+	<link name="${name}_wheel_link">
+		<visual>
+		<!-- HIGH RESOLUTION WHEELS -->
+		<xacro:if value="${hq}">
+			<origin xyz="0 0 0" rpy="0 0 0" />
+			<geometry>     
+				<xacro:if value="${reflect}">
+					<mesh filename="package://rb1_base_description/meshes/wheels/wheel_rubber_6inch.dae" />
+				</xacro:if>
+				<xacro:unless value="${reflect}">
+					<mesh filename="package://rb1_base_description/meshes/wheels/wheel_rubber_6inch.dae" />
+				</xacro:unless>
+			</geometry>         
+		</xacro:if>
+		<!-- LOW RESOLUTION WHEELS -->
+		<xacro:unless value="${hq}">
+			<origin xyz="0 0 0" rpy="${M_PI/2} 0 0" />
+			<geometry>           
+				<cylinder length="${wheel_height}" radius="${wheel_radius}" />
+			</geometry>      
+		</xacro:unless>
+		</visual>
       
       <collision>
 		<origin xyz="0 0 0" rpy="${M_PI/2} 0 0" />
@@ -63,29 +67,8 @@
     </link>
 
     
-    <!-- Transmission is important to link the joints and the controller (see rb1_control/config/rb1_control.yaml)-->
-    <transmission name="${name}_wheel_joint_trans">
-      <type>transmission_interface/SimpleTransmission</type>
-      <joint name="joint_${name}_wheel">
-          <!-- for the gazebo plugin -->
-          <!-- hardwareInterface>EffortJointInterface</hardwareInterface -->
-          <!-- for ros control controller -->
-          <hardwareInterface>VelocityJointInterface</hardwareInterface>
-      </joint>            
-      <actuator name="${name}_wheel_joint_motor">       
-        <mechanicalReduction>1</mechanicalReduction>
-        <motorTorqueConstant>20</motorTorqueConstant>
-      </actuator>
-    </transmission>
-
-    <gazebo reference="${name}_wheel">
-			<mu1 value="5.0"/>
-			<mu2 value="0.5"/>
-			<kp value="10000000.0" />
-			<kd value="1.0" />
-			<fdir1 value="1 0 0"/>
-      <turnGravityOff>false</turnGravityOff>
-    </gazebo>
+	<xacro:rubber_wheel_transmission name="${name}" />
+	<xacro:rubber_wheel_gazebo name="${name}" />
     
    
   </xacro:macro>

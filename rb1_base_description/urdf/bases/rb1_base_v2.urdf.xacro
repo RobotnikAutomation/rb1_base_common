@@ -100,7 +100,7 @@
      <child link="base_docking_contact" />
   </joint>    
 
-  <!-- FRONT COVER -->
+  <!-- DOCKING LINK -->
   <link name="base_docking_contact" />
 
   </xacro:macro>
