@@ -80,7 +80,7 @@
 
 	<!-- SENSORS -->    
     
-	<xacro:sensor_hokuyo_ust10lx name="hokuyo" parent="base_link">
+	<xacro:sensor_hokuyo_ust10lx name="front_laser" parent="base_link">
 		<origin xyz="0.220 0.0 0.1686" rpy="0 3.1416 3.1416"/>
 	</xacro:sensor_hokuyo_ust10lx>    
     
@@ -88,7 +88,7 @@
 		<origin xyz="0.002 0.053 0.1485" rpy="0 0 0"/>
 	</xacro:sensor_imu>
     
-    	<xacro:sensor_orbbec_astra name="orbbec_astra" parent="base_link">        
+    	<xacro:sensor_orbbec_astra name="front_camera" parent="base_link">        
         	<origin xyz="0.234 0.0125 0.1055" rpy="0 0 0"/>
     	</xacro:sensor_orbbec_astra>  
       
