@@ -7,9 +7,9 @@
 
 	<xacro:property name="M_PI" value="3.1415926535897931" />
 	<!-- Wheels -->
-	<property name="wheel_radius" value="0.076" /> 
-	<property name="wheel_height" value="0.025" />
-	<property name="wheel_mass" value="1.0" /> <!-- in kg-->
+	<xacro:property name="wheel_radius" value="0.076" /> 
+	<xacro:property name="wheel_height" value="0.025" />
+	<xacro:property name="wheel_mass" value="1.0" /> <!-- in kg-->
  
  
 	<xacro:macro name="cylinder_inertia" params="m r h">
@@ -24,7 +24,7 @@
 	<joint name="${name}_wheel_joint" type="continuous">
 		<parent link="${parent}"/>
 		<child link="${name}_wheel_link"/>
-		<insert_block name="origin" />
+		<xacro:insert_block name="origin" />
 		<axis xyz="0 1 0" rpy="0 0 0" />
 		<limit effort="100" velocity="100"/>
 		<joint_properties damping="0.0" friction="0.0"/>

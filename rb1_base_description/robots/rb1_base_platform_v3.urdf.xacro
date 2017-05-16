@@ -53,9 +53,6 @@
 	<!-- Gazebo ros control plugins -->
 	<xacro:ros_control/>
 	
-	<!-- Gazebo skid steering plugins -->
-	<xacro:diff_drive/>
-    
 	<!-- WHEELS -->
 	<xacro:rubber_wheel name="right" parent="base_link" reflect="false" hq="${hq}">
 		<origin xyz="${wheel_offset_x} -${wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0"/>

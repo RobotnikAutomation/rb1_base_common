@@ -11,7 +11,7 @@
 	<joint name="elevator_base_joint" type="fixed">
 		<parent link="${parent}"/>
 		<child link="elevator_base_link"/>
-		<insert_block name="origin" />
+		<xacro:insert_block name="origin" />
 	</joint> 
 	
 	<link name="elevator_base_link">
