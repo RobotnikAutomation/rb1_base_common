@@ -18,6 +18,9 @@
 	<!-- Import all available sensors -->
 	<xacro:include filename="$(find robotnik_sensors)/urdf/all_sensors.urdf.xacro" />
   
+    <!-- Import Gazebo Stuff -->
+    <xacro:include filename="$(find rb1_base_description)/urdf/common.gazebo.xacro" />
+
   
 	<!-- ***************** -->
 	<!-- Global parameters -->
