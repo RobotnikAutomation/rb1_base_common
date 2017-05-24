@@ -2,7 +2,10 @@
 <launch>
   
   <remap from="cmd_vel" to="move_base/cmd_vel" />  
+  <remap from="scan" to="front_laser/scan" />
+
   <!-- Run move_base -->
+
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
     <remap from="odom" to="odom"/>
     <rosparam file="$(find rb1_base_navigation)/config_navigation/move_base_params.yaml" command="load" />
