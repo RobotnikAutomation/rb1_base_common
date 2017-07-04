@@ -1,13 +1,11 @@
 <?xml version="1.0"?>
 <launch>
+  <arg name="version" default="v2" />
 
-  <param name="robot_description" command="$(find xacro)/xacro.py '$(find rb1_base_description)/robots/rb1_base_platform_standalone.urdf.xacro'" />
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find rb1_base_description)/robots/rb1_base_$(arg version).urdf.xacro'" />
 
   <!-- publish tfs through the robot_state_publisher -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
-  <!-- node pkg="robot_state_publisher" type="state_publisher" name="rob_st_pub" >
-      <remap from="/robot_description" to="/different_robot_description" />
-      <remap from="/joint_states" to="/different_joint_states" />
-  </node -->
+
 </launch>
 

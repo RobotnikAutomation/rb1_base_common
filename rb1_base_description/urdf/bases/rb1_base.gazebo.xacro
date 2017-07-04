@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
+<<<<<<< HEAD
   <!-- ros control plugin -->
   <xacro:macro name="ros_control">
     <gazebo>
@@ -48,5 +49,50 @@
   <gazebo reference="base_footprint">
     <material>Gazebo/Green</material>
   </gazebo>
+=======
+	<!-- DIFFERENCIAL DRIVE GAZEBO PLUGIN -->
+	<xacro:macro name="gazebo_differencial_drive">
+		<gazebo>
+			<plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">    
+				<!--alwaysOn>true</alwaysOn-->
+				<updateRate>50.0</updateRate>
+				<leftJoint>left_wheel_joint</leftJoint>
+				<rightJoint>right_wheel_joint</rightJoint>
+				<!--leftJoint>joint_right_wheel</leftJoint>
+				<rightJoint>joint_left_wheel</rightJoint-->
+				<!-- For V0 0.365 -->
+				<!-- wheelSeparation>0.365</wheelSeparation -->         
+				<wheelSeparation>0.433</wheelSeparation>         
+				<wheelDiameter>0.1524</wheelDiameter>
+				<commandTopic>rb1/cmd_vel</commandTopic>
+				<odometryTopic>odom</odometryTopic>
+				<odometryFrame>odom</odometryFrame>
+				<robotBaseFrame>base_link</robotBaseFrame>
+				<!-- robotNamespace></robotNamespace -->  
+				<rosDebugLevel>na</rosDebugLevel>
+				<publishWheelTF>false</publishWheelTF>  
+				<publishWheelJointState>true</publishWheelJointState>
+				<wheelAcceleration>0</wheelAcceleration>
+				<wheelTorque>5</wheelTorque>
+				<!-- odometrySource>encoder</odometrySource --> 
+				<odometrySource>encoder</odometrySource>  
+				<legacyMode>false</legacyMode>      
+				<publishTf>1</publishTf>
+			</plugin>
+		</gazebo>
+	</xacro:macro>
+
+	<gazebo reference="base_footprint">
+		<material>Gazebo/Green</material>
+	</gazebo>
+	
+	<gazebo reference="base_link">
+		<material>Gazebo/Grey</material>
+	</gazebo>
+	
+	<gazebo reference="front_cover_link">
+		<material>Gazebo/Black</material>
+	</gazebo>
+>>>>>>> indigo-devel
   
 </robot>

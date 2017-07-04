@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<launch>
+  
+  <remap from="cmd_vel" to="move_base/cmd_vel" />  
+  <remap from="scan" to="front_laser/scan" />
+
+  <!-- Run move_base -->
+
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <remap from="odom" to="odom"/>
+    <rosparam file="$(find rb1_base_navigation)/config_navigation/move_base_params.yaml" command="load" />
+    <rosparam file="$(find rb1_base_navigation)/config_navigation/base_local_planner_params.yaml" command="load" />
+    <rosparam file="$(find rb1_base_navigation)/config_navigation/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find rb1_base_navigation)/config_navigation/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find rb1_base_navigation)/config_navigation/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find rb1_base_navigation)/config_navigation/global_costmap_params_map.yaml" command="load" />
+  </node>
+</launch>

@@ -2,11 +2,16 @@
 Changelog for package rb1_base_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+<<<<<<< HEAD
 1.1.0 (2016-09-22)
+=======
+1.0.6 (2016-09-22)
+>>>>>>> indigo-devel
 ------------------
 * rb1_base_description: added contact link
 * Contributors: Marc Bosch
 
+<<<<<<< HEAD
 1.0.5 (2016-07-22)
 ------------------
 * publishing wheels tf in diff drive gazebo plugin
@@ -20,6 +25,8 @@ Changelog for package rb1_base_description
 * rb1_base_common package added to kinetic
 * Contributors: AliquesTomas
 
+=======
+>>>>>>> indigo-devel
 1.0.3 (2016-07-07)
 ------------------
 

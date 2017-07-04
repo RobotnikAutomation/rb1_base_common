@@ -1,8 +1,11 @@
 <?xml version="1.0"?>
 <robot name="rb1_base" xmlns:xacro="http://www.ros.org/wiki/xacro"> 
 
+<<<<<<< HEAD
   <xacro:include filename="$(find rb1_base_description)/urdf/bases/rb1_base.gazebo.xacro" />
 
+=======
+>>>>>>> indigo-devel
   <xacro:macro name="rb1_base" params="name publish_bf hq">
 
   <!-- Robot mechanical and motor parameters -->
@@ -38,7 +41,7 @@
        <origin xyz="0 0 0" rpy="0 0 0" />
        <xacro:if value="${hq}">
        <geometry>
-	     <mesh filename="package://rb1_base_description/meshes/bases/rb1v2_base.dae"/>
+         <mesh filename="package://rb1_base_description/meshes/bases/rb1v2_base.dae"/>
        </geometry>
        </xacro:if>
        <xacro:unless value="${hq}">

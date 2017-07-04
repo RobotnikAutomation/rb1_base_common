@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+
+ <node pkg="topic_tools" type="throttle" name="throttle_imu1" args="messages /mavros/imu/data 1.0 /mavros/imu/data_1"/>
+
+ <node pkg="topic_tools" type="throttle" name="throttle_imu2" args="messages /mavros/imu/data_raw 1.0 /mavros/imu/data_raw_1"/>
+
+ <node pkg="topic_tools" type="throttle" name="throttle_euler" args="messages /euler 1.0 /euler_1"/>
+
+ <node pkg="topic_tools" type="throttle" name="throttle_temp" args="messages /mavros/imu/temperature 1.0 /mavros/imu/temperature_1"/>
+
+</launch>

@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<robot name="tayg_box" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:property name="box_mass" value="1.0"/>
+ 
+  <xacro:macro name="tayg_box" params="prefix parent *origin">
+   
+    <joint name="${prefix}box_joint" type="fixed">
+      <parent link="${parent}"/>
+      <child link="${prefix}box_link"/>
+      <xacro:insert_block name="origin" />
+      <axis xyz="0 0 1" rpy="0 0 0" />
+    </joint>
+  
+    <link name="${prefix}box_link">
+      <visual>
+       	  <origin xyz="0 0 0" rpy="0 0 0" />
+		  <geometry>     
+			<mesh filename="package://rb1_base_description/meshes/others/tayg_box_6415.stl" />
+		  </geometry>
+		<material name="blue">    
+		<color rgba="0 0 1 1"/>     
+      </material>
+      </visual>
+      
+      <collision>
+		<origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://rb1_base_description/meshes/others/tayg_box_6415.stl" />
+        </geometry>
+      </collision>    
+      <inertial>
+        <mass value="${box_mass}" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1" ixy="0.0" ixz="0.0" iyy="1" iyz="0.0" izz="1"/>
+      </inertial>
+    </link>
+
+  </xacro:macro>
+
+</robot>

@@ -1,9 +1,7 @@
 <?xml version="1.0"?>
 <robot name="rb1_base" xmlns:xacro="http://www.ros.org/wiki/xacro"> 
 
-  <xacro:include filename="$(find rb1_base_description)/urdf/bases/rb1_base.gazebo.xacro" />
-
-  <xacro:macro name="rb1_base" params="name publish_bf hq">
+  <xacro:macro name="rb1_base_v0" params="name publish_bf hq">
 
   <!-- Robot mechanical and motor parameters -->
   <xacro:property name="PI" value="3.1415926535897931"/>
@@ -38,12 +36,12 @@
        <origin xyz="0 0 0" rpy="0 0 0" />
        <xacro:if value="${hq}">
        <geometry>
-	     <mesh filename="package://rb1_base_description/meshes/bases/rb1_base_v0.dae"/>
+         <mesh filename="package://rb1_base_description/meshes/bases/rb1v0_base.dae"/>
        </geometry>
        </xacro:if>
        <xacro:unless value="${hq}">
        <geometry>
-       <mesh filename="package://rb1_base_description/meshes/bases/rb1_base_v0.stl"/>
+       <mesh filename="package://rb1_base_description/meshes/bases/rb1v0_base.stl"/>
        </geometry>
        </xacro:unless>
        <material name="darkgrey">
@@ -53,7 +51,7 @@
     <collision>
        <origin xyz="0 0 0" rpy="0 0 0 " />
        <geometry>
-         <mesh filename="package://rb1_base_description/meshes/bases/rb1_base_v0.dae"/>
+         <mesh filename="package://rb1_base_description/meshes/bases/rb1v0_base.dae"/>
        </geometry>
     </collision>
   </link>
