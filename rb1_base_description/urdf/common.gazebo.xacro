@@ -2,15 +2,28 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 <!-- ROS CONTROL GAZEBO PLUGIN -->
-	<xacro:macro name="ros_control">
-		<gazebo>
-			<plugin name="ros_control" filename="libgazebo_ros_control.so">
-				<robotNamespace>/</robotNamespace	>
-				<!--robotParam>robot_description</robotParam-->
-				<!--controlPeriod>0.001</controlPeriod-->
-				<robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
-			</plugin>
+	<xacro:macro name="ros_control" params="prefix_frame prefix_topic">
+	   <gazebo>
+      <plugin name="ros_control" filename="libgazebo_ros_control.so">		
+        <!--robotNamespace>/rb1</robotNamespace-->
+        <robotParam>robot_description</robotParam>
+        <controlPeriod>0.001</controlPeriod> 
+	    <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+      </plugin>
+   </gazebo>
+   </xacro:macro>
+   
+   <xacro:macro name="gazebo_colors" params="prefix_frame prefix_topic">
+		<gazebo reference="$(arg prefix_frame)base_footprint">
+			<material>Gazebo/Green</material>
+		</gazebo>
+
+		<gazebo reference="$(arg prefix_frame)base_link">
+			<material>Gazebo/Grey</material>
+		</gazebo>
+
+		<gazebo reference="$(arg prefix_frame)front_cover_link">
+			<material>Gazebo/Black</material>
 		</gazebo>
 	</xacro:macro>
-
 </robot>

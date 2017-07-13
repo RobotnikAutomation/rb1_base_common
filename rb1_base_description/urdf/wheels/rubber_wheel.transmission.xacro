@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://ros.org/wiki/xacro">
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 	<!-- Rubber wheel transmission -->
 	<xacro:macro name="rubber_wheel_transmission" params="name">
@@ -10,7 +10,7 @@
 				<!-- for the gazebo plugin -->
 				<!--hardwareInterface>EffortJointInterface</hardwareInterface-->
 				<!-- for ros control controller -->
-				<hardwareInterface>VelocityJointInterface</hardwareInterface>
+				<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
 			</joint>            
 			<actuator name="${name}_wheel_joint_motor">       
 				<mechanicalReduction>1</mechanicalReduction>

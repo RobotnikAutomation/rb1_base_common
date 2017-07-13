@@ -9,17 +9,10 @@
 	
    <!-- First we import all posible elements defined in the urdf.xacro files. All these elements are defined as macro:xacros -->
 
+   <!-- gazebo elements -->    
+   <xacro:include filename="$(find rb1_base_description)/urdf/common.gazebo.xacro" />
    <!-- Import RB1 base elements -->    
-   <xacro:include filename="$(find rb1_base_description)/urdf/bases/rb1_base.urdf.xacro" />
-    
-   <gazebo>
-      <plugin name="ros_control" filename="libgazebo_ros_control.so">		
-        <!-- robotNamespace>/rb1</robotNamespace -->
-        <robotParam>robot_description</robotParam>
-        <controlPeriod>0.001</controlPeriod> 
-	    <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
-      </plugin>
-   </gazebo>
+   <xacro:include filename="$(find rb1_base_description)/urdf/bases/rb1_base.urdf.xacro" />   
     	
    <!-- Import RB1 wheels -->
    <xacro:include filename="$(find rb1_base_description)/urdf/wheels/rubber_wheel.urdf.xacro" />	
@@ -51,6 +44,8 @@
 
 	<!-- Flag to select the high or low quality model -->
 	<xacro:property name="hq" value="true" />
+	<xacro:arg name="prefix_topic" default=""/>
+	<xacro:arg name="prefix_frame" default="rb1_"/>
 
 	<!-- *************** -->
 	<!-- Robots Elements -->
@@ -59,33 +54,35 @@
 	<!-- Here we create the robot elements using the xacro:macros imported at the beggining of this file -->
 
 	<!-- RB-1 base -->
-	<xacro:rb1_base name="rb1_base" publish_bf="true" hq="${hq}" />
+	<xacro:rb1_base prefix_frame="$(arg prefix_frame)" publish_bf="true" hq="${hq}" />
   
-	<!-- Gazebo ros control plugins -->
-	<xacro:ros_control/>
+	<!-- Gazebo ros control pluggins -->
+	<xacro:ros_control prefix_topic="$(arg prefix_topic)" prefix_frame="$(arg prefix_frame)"/>
+	
+	<xacro:gazebo_colors prefix_topic="$(arg prefix_topic)" prefix_frame="$(arg prefix_frame)"/>
 	
 	<!-- Gazebo skid steering plugins -->
 	<!-- xacro:diff_drive/ -->
     
 	<!-- WHEELS -->
-	<xacro:rubber_wheel name="right" parent="base_link" reflect="false" hq="${hq}">
+	<xacro:rubber_wheel name="$(arg prefix_frame)right" parent="$(arg prefix_frame)base_link" reflect="false" hq="${hq}">
 		<origin xyz="${wheel_offset_x} -${wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0"/>
 	</xacro:rubber_wheel>
   
-	<xacro:rubber_wheel name="left" parent="base_link" reflect="true" hq="${hq}">
+	<xacro:rubber_wheel name="$(arg prefix_frame)left" parent="$(arg prefix_frame)base_link" reflect="true" hq="${hq}">
 		<origin xyz="${wheel_offset_x} ${wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0"/>
 	</xacro:rubber_wheel>
     
     <!-- OMNI DIRECTIONAL WHEELS -->
-	<xacro:omni_wheel name="omni_back" parent="base_link" hq="${hq}">
+	<xacro:omni_wheel name="$(arg prefix_frame)omni_back" parent="$(arg prefix_frame)base_link" hq="${hq}">
 		<origin xyz="-${omni_back_x} ${omni_back_y} ${omni_back_z}" rpy="0 0 0"/>
 	</xacro:omni_wheel>
 
-	<xacro:omni_wheel name="omni_front_left" parent="base_link" hq="${hq}">
+	<xacro:omni_wheel name="$(arg prefix_frame)omni_front_left" parent="$(arg prefix_frame)base_link" hq="${hq}">
 		<origin xyz="${omni_front_x} ${omni_front_y} ${omni_front_z}" rpy="0 0 0"/>
 	</xacro:omni_wheel>
 
-	<xacro:omni_wheel name="omni_front_right" parent="base_link" hq="${hq}">
+	<xacro:omni_wheel name="$(arg prefix_frame)omni_front_right" parent="$(arg prefix_frame)base_link" hq="${hq}">
 		<origin xyz="${omni_front_x} -${omni_front_y} ${omni_front_z}" rpy="0 0 0"/>
 	</xacro:omni_wheel>
 
@@ -102,11 +99,11 @@
 		<origin xyz="0.223 0.0 0.159" rpy="0 0 0"/>
 	</xacro:sensor_hokuyo_ust10lx -->
 
-	<xacro:sensor_hokuyo_ust10lx name="hokuyo" parent="base_link">
+	<xacro:sensor_hokuyo_ust10lx name="hokuyo" prefix_frame="$(arg prefix_frame)" prefix_topic="$(arg prefix_topic)" parent="$(arg prefix_frame)base_link">
 		<origin xyz="0.223 0.0 0.159" rpy="0 3.1416 3.1416"/>
 	</xacro:sensor_hokuyo_ust10lx> 	
     
-	<xacro:sensor_imu name="imu" parent="base_link">
+	<xacro:sensor_imu name="imu" prefix_frame="$(arg prefix_frame)" prefix_topic="$(arg prefix_topic)" parent="$(arg prefix_frame)base_link">
 		<origin xyz="-0.18 0.0 0.170" rpy="0 0 0"/>
 	</xacro:sensor_imu>
 
@@ -114,7 +111,7 @@
         <origin xyz="0.234 0.0125 0.107" rpy="0 0 0"/>
     </xacro:sensor_orbbec_astra -->  
 
-    <xacro:sensor_orbbec_astra name="orbbec_astra" parent="base_link">        
+    <xacro:sensor_orbbec_astra name="orbbec_astra" prefix_frame="$(arg prefix_frame)" prefix_topic="$(arg prefix_topic)" parent="$(arg prefix_frame)base_link">        
         <origin xyz="0.234 0.0125 0.107" rpy="0 0 0"/>
     </xacro:sensor_orbbec_astra>  
 

@@ -2,19 +2,19 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro"> 
 	<!--xacro:include filename="$(find rb1_base_description)/urdf/bases/rb1_elevator.gazebo.xacro" /-->
 
-	<xacro:macro name="elevator_platform" params="parent hq *origin">
+	<xacro:macro name="elevator_platform" params="name parent hq *origin">
 	<!-- PARAMS: -->
 	<!-- name : name of the link: -->
 	<!-- hq: selects model in high quality (.dae) -->
 
 	<!-- ELEVATOR_BASE_LINK -->
-	<joint name="elevator_base_joint" type="fixed">
+	<joint name="${name}_base_joint" type="fixed">
 		<parent link="${parent}"/>
-		<child link="elevator_base_link"/>
+		<child link="${name}_base_link"/>
 		<xacro:insert_block name="origin" />
 	</joint> 
 	
-	<link name="elevator_base_link">
+	<link name="${name}_base_link">
 		<!--inertial>
 			<mass value="25.0" />
 			<origin xyz="0 0 0" />
@@ -47,14 +47,14 @@
 	</link>
 
 	<!-- ELEVATOR PLATFORM -->
-	<joint name="elevator_platform_joint" type="prismatic">
+	<joint name="${name}_platform_joint" type="prismatic">
 			<origin xyz="0.0 0.0 0.041" rpy="0 0 0 " />
-			<parent link="elevator_base_link"/>
-			<child link="elevator_platform_link" />
+			<parent link="${name}_base_link"/>
+			<child link="${name}_platform_link" />
 			<axis xyz="0 0 1"/>
 			<limit effort="1.0" lower="0.0" upper="0.034" velocity="0.5"/>
 	</joint> 
-	<link name="elevator_platform_link">
+	<link name="${name}_platform_link">
 		<!--inertial>
 			<mass value="0.25" />
 			<origin xyz="0 0 0" />

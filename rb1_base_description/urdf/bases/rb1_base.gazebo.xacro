@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://ros.org/wiki/xacro">
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 	<!-- DIFFERENCIAL DRIVE GAZEBO PLUGIN -->
 	<xacro:macro name="gazebo_differencial_drive">
@@ -7,8 +7,8 @@
 			<plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">    
 				<!--alwaysOn>true</alwaysOn-->
 				<updateRate>50.0</updateRate>
-				<leftJoint>left_wheel_joint</leftJoint>
-				<rightJoint>right_wheel_joint</rightJoint>
+				<leftJoint>$(prefix_frame)rb1_a_left_wheel_joint</leftJoint>
+				<rightJoint>$(prefix_frame)rb1_a_right_wheel_joint</rightJoint>
 				<!--leftJoint>joint_right_wheel</leftJoint>
 				<rightJoint>joint_left_wheel</rightJoint-->
 				<!-- For V0 0.365 -->
@@ -17,8 +17,8 @@
 				<wheelDiameter>0.1524</wheelDiameter>
 				<commandTopic>rb1/cmd_vel</commandTopic>
 				<odometryTopic>odom</odometryTopic>
-				<odometryFrame>odom</odometryFrame>
-				<robotBaseFrame>base_link</robotBaseFrame>
+				<odometryFrame>$(prefix_frame)odom</odometryFrame>
+				<robotBaseFrame>$(prefix_frame)base_link</robotBaseFrame>
 				<!-- robotNamespace></robotNamespace -->  
 				<rosDebugLevel>na</rosDebugLevel>
 				<publishWheelTF>false</publishWheelTF>  
@@ -32,6 +32,17 @@
 			</plugin>
 		</gazebo>
 	</xacro:macro>
+	
+	<xacro:macro name="ros_control" params="prefix_frame prefix_topic">
+	   <gazebo>
+      <plugin name="ros_control" filename="libgazebo_ros_control.so">		
+        <!--robotNamespace>/rb1</robotNamespace-->
+        <robotParam>robot_description</robotParam>
+        <controlPeriod>0.001</controlPeriod> 
+	    <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+      </plugin>
+   </gazebo>
+   </xacro:macro>
 
 	<gazebo reference="base_footprint">
 		<material>Gazebo/Green</material>
