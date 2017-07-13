@@ -1,31 +1,33 @@
 <?xml version="1.0"?>
 <launch>
-
-  <!-- Run the map server -->
-  <node name="map_server" pkg="map_server" type="map_server" args="$(find rb1_base_navigation)/maps/willow_garage/willow_garage.yaml"/>
+	
+  <arg name="prefix_frame" default="rb1_base"/> 
+  <arg name="x_init_pose" default="0"/>
+  <arg name="y_init_pose" default="0"/>
+  <arg name="z_init_pose" default="0"/>
 
   <!--- Run AMCL -->
-  <include file="$(find rb1_base_navigation)/launch/navigation_amcl/amcl_rb1_base.launch" />
-  <remap from="cmd_vel" to="cmd_vel" />
-
-  <!--- Run EFK Filter -->
-<!--
-	<include file="$(find rb1_base_navigation)/rb1_base_ekf.launch" />
--->
-  
+  <include file="$(find rb1_base_navigation)/launch/navigation_amcl/amcl_rb1_base.launch" >
+	  <arg name="prefix_frame" value="$(arg prefix_frame)"/>
+	  <arg name="x_init_pose" value="$(arg x_init_pose)"/>
+      <arg name="y_init_pose" value="$(arg y_init_pose)"/>
+      <arg name="z_init_pose" value="$(arg z_init_pose)"/>
+  </include>
+ 
   <!-- Run move_base -->
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-	<remap from="odom" to="odom"/>
-	<rosparam file="$(find rb1_base_navigation)/config_navigation/move_base_params.yaml" command="load" />
-	<rosparam file="$(find rb1_base_navigation)/config_navigation/base_local_planner_params.yaml" command="load" />
-    <rosparam file="$(find rb1_base_navigation)/config_navigation/costmap_common_params.yaml" command="load" ns="global_costmap" />
-    <rosparam file="$(find rb1_base_navigation)/config_navigation/costmap_common_params.yaml" command="load" ns="local_costmap" />
-    <rosparam file="$(find rb1_base_navigation)/config_navigation/local_costmap_params.yaml" command="load" />
-    <rosparam file="$(find rb1_base_navigation)/config_navigation/global_costmap_params_map.yaml" command="load" />
+	<rosparam file="$(find rb1_base_navigation)/$(arg prefix_frame)config_navigation/move_base_params.yaml" command="load" />
+	<rosparam file="$(find rb1_base_navigation)/$(arg prefix_frame)config_navigation/base_local_planner_params.yaml" command="load" />
+    <rosparam file="$(find rb1_base_navigation)/$(arg prefix_frame)config_navigation/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find rb1_base_navigation)/$(arg prefix_frame)config_navigation/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find rb1_base_navigation)/$(arg prefix_frame)config_navigation/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find rb1_base_navigation)/$(arg prefix_frame)config_navigation/global_costmap_params_map.yaml" command="load" />
+    <param name="controller_frequency" value="5.0" />
+    <param name="controller_patience" value="15.0" /> 
+    <remap from="cmd_vel" to="mobile_base_controller/cmd_vel" /> 
+    <remap from="odom" to="mobile_base_controller/odom" />    
+    <remap from="map" to="/map"/>
   </node>
   
-  
-  <!-- Rviz -->
-  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find rb1_base_navigation)/config_rviz/move_base.rviz"/>
   
 </launch>
