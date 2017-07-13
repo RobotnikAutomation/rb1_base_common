@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot name="rb1_base" xmlns:xacro="http://www.ros.org/wiki/xacro"> 
 
-  <xacro:macro name="rb1_base" params="prefix_frame publish_bf hq">
+  <xacro:macro name="rb1_base" params="prefix publish_bf hq">
 
   <!-- Robot mechanical and motor parameters -->
   <xacro:property name="PI" value="3.1415926535897931"/>
@@ -9,7 +9,7 @@
 
   <!-- BASE FOOTPRINT -->
   <xacro:if value="${publish_bf}">
-    <link name="${prefix_frame}base_footprint">
+    <link name="${prefix}base_footprint">
       <visual>
           <origin xyz="0 0 0" rpy="0 0 0" />
           <geometry>
@@ -18,15 +18,15 @@
       </visual>
     </link>
 
-    <joint name="base_footprint_joint" type="fixed">
+    <joint name="${prefix}base_footprint_joint" type="fixed">
        <origin xyz="0 0 ${wheel_radius - wheel_offset_z}" rpy="0 0 0" />
-      <parent link="${prefix_frame}base_footprint"/>
-      <child link="${prefix_frame}base_link" />
+      <parent link="${prefix}base_footprint"/>
+      <child link="${prefix}base_link" />
     </joint>    
   </xacro:if>
 
   <!-- BASE_LINK -->
-  <link name="${prefix_frame}base_link">
+  <link name="${prefix}base_link">
     <inertial>
       <mass value="25.0" />
       <origin xyz="0 0 0" />
@@ -56,14 +56,14 @@
     </collision>
   </link>
   
-  <joint name="front_cover_joint" type="fixed">
+  <joint name="${prefix}front_cover_joint" type="fixed">
      <origin xyz="0.220 0.0 0.004" rpy="0 0 0 " />
-     <parent link="${prefix_frame}base_link"/>
-     <child link="${prefix_frame}front_cover_link" />
+     <parent link="${prefix}base_link"/>
+     <child link="${prefix}front_cover_link" />
   </joint>    
 
   <!-- FRONT COVER -->
-  <link name="${prefix_frame}front_cover_link">
+  <link name="${prefix}front_cover_link">
     <inertial>
       <mass value="0.25" />
       <origin xyz="0 0 0" />
@@ -94,14 +94,14 @@
   </link>
   
   <!-- DOCKING CONTACTS -->
-  <joint name="base_docking_joint" type="fixed">
+  <joint name="${prefix}base_docking_joint" type="fixed">
      <origin xyz="0.030 0.000 0.068" rpy="0 0 0 " />
-     <parent link="${prefix_frame}front_cover_link"/>
-     <child link="${prefix_frame}base_docking_contact" />
+     <parent link="${prefix}front_cover_link"/>
+     <child link="${prefix}base_docking_contact" />
   </joint>    
 
   <!-- FRONT COVER -->
-  <link name="${prefix_frame}base_docking_contact" />
+  <link name="${prefix}base_docking_contact" />
 
   </xacro:macro>
 </robot>

@@ -18,19 +18,19 @@
 					izz="${m*r*r/2}" /> 
 	</xacro:macro>
  
-	<xacro:macro name="rubber_wheel" params="name parent *origin reflect hq">
+	<xacro:macro name="rubber_wheel" params="prefix parent *origin reflect hq">
   
 	<!--WHEEL TIRE -->
-	<joint name="${name}_wheel_joint" type="continuous">
+	<joint name="${prefix}_wheel_joint" type="continuous">
 		<parent link="${parent}"/>
-		<child link="${name}_wheel_link"/>
+		<child link="${prefix}_wheel_link"/>
 		<xacro:insert_block name="origin" />
 		<axis xyz="0 1 0" rpy="0 0 0" />
 		<limit effort="100" velocity="100"/>
 		<joint_properties damping="0.0" friction="0.0"/>
 	</joint>
   
-	<link name="${name}_wheel_link">
+	<link name="${prefix}_wheel_link">
 		<visual>
 		<!-- HIGH RESOLUTION WHEELS -->
 		<xacro:if value="${hq}">
@@ -67,8 +67,8 @@
     </link>
 
     
-	<xacro:rubber_wheel_transmission name="${name}" />
-	<xacro:rubber_wheel_gazebo name="${name}" />
+	<xacro:rubber_wheel_transmission prefix="${prefix}" />
+	<xacro:rubber_wheel_gazebo prefix="${prefix}" />
     
    
   </xacro:macro>

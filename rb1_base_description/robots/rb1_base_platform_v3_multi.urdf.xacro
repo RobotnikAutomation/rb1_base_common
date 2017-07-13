@@ -51,49 +51,48 @@
 	<!-- Here we create the robot elements using the xacro:macros imported at the beggining of this file -->
 
 	<!-- RB-1 base -->
-	<xacro:rb1_base prefix_frame="$(arg prefix_frame)" publish_bf="true" hq="${hq}" />
+	<xacro:rb1_base prefix="$(arg prefix)" publish_bf="true" hq="${hq}" />
   	
-	<xacro:arg name="prefix_topic" default=""/>
-	<xacro:arg name="prefix_frame" default="rb1_"/>
+	<xacro:arg name="prefix" default="rb1_"/>
   
 	<!-- Gazebo ros control pluggins -->
-	<xacro:ros_control prefix_topic="$(arg prefix_topic)" prefix_frame="$(arg prefix_frame)"/>
+	<xacro:ros_control/>
 	
-	<xacro:gazebo_colors prefix_topic="$(arg prefix_topic)" prefix_frame="$(arg prefix_frame)"/>
+	<xacro:gazebo_colors prefix="$(arg prefix)"/>
 	
 	<!-- WHEELS -->
-	<xacro:rubber_wheel name="$(arg prefix_frame)right" parent="$(arg prefix_frame)base_link" reflect="false" hq="${hq}">
+	<xacro:rubber_wheel prefix="$(arg prefix)right" parent="$(arg prefix)base_link" reflect="false" hq="${hq}">
 		<origin xyz="${wheel_offset_x} -${wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0"/>
 	</xacro:rubber_wheel>
   
-	<xacro:rubber_wheel name="$(arg prefix_frame)left" parent="$(arg prefix_frame)base_link" reflect="true" hq="${hq}">
+	<xacro:rubber_wheel prefix="$(arg prefix)left" parent="$(arg prefix)base_link" reflect="true" hq="${hq}">
 		<origin xyz="${wheel_offset_x} ${wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0"/>
 	</xacro:rubber_wheel>
     
     <!-- OMNI DIRECTIONAL WHEELS -->
-	<xacro:omni_wheel name="$(arg prefix_frame)omni_back" parent="$(arg prefix_frame)base_link" hq="${hq}">
+	<xacro:omni_wheel prefix="$(arg prefix)omni_back" parent="$(arg prefix)base_link" hq="${hq}">
 		<origin xyz="-${omni_back_x} ${omni_back_y} ${omni_back_z}" rpy="0 0 0"/>
 	</xacro:omni_wheel>
 
-	<xacro:omni_wheel name="$(arg prefix_frame)omni_front_left" parent="$(arg prefix_frame)base_link" hq="${hq}">
+	<xacro:omni_wheel prefix="$(arg prefix)omni_front_left" parent="$(arg prefix)base_link" hq="${hq}">
 		<origin xyz="${omni_front_x} ${omni_front_y} ${omni_front_z}" rpy="0 0 0"/>
 	</xacro:omni_wheel>
 
-	<xacro:omni_wheel name="$(arg prefix_frame)omni_front_right" parent="$(arg prefix_frame)base_link" hq="${hq}">
+	<xacro:omni_wheel prefix="$(arg prefix)omni_front_right" parent="$(arg prefix)base_link" hq="${hq}">
 		<origin xyz="${omni_front_x} -${omni_front_y} ${omni_front_z}" rpy="0 0 0"/>
 	</xacro:omni_wheel>
 
 	<!-- SENSORS -->    
     
-	<xacro:sensor_sick_tim551 name="laser_sick" prefix_frame="$(arg prefix_frame)" prefix_topic="$(arg prefix_topic)" parent="$(arg prefix_frame)base_link">
+	<xacro:sensor_sick_tim551 prefix="$(arg prefix)laser_sick" parent="$(arg prefix)base_link">
 		<origin xyz="0.220 0.0 0.1686" rpy="0 3.1416 3.1416"/>
 	</xacro:sensor_sick_tim551>    
     
-	<xacro:sensor_imu name="imu" prefix_frame="$(arg prefix_frame)" prefix_topic="$(arg prefix_topic)" parent="$(arg prefix_frame)base_link">
+	<xacro:sensor_imu prefix="$(arg prefix)imu" parent="$(arg prefix)base_link">
 		<origin xyz="0.002 0.053 0.1485" rpy="0 0 0"/>
 	</xacro:sensor_imu>
     
-    <xacro:sensor_orbbec_astra name="orbbec_astra" prefix_frame="$(arg prefix_frame)" prefix_topic="$(arg prefix_topic)" parent="$(arg prefix_frame)base_link">        
+    <xacro:sensor_orbbec_astra prefix="$(arg prefix)orbbec_astra" parent="$(arg prefix)base_link">        
         <origin xyz="0.234 0.0125 0.107" rpy="0 0 0"/>
     </xacro:sensor_orbbec_astra>  
       

@@ -15,20 +15,20 @@
      /> 
   </xacro:macro>
  
-  <xacro:macro name="omni_wheel" params="name parent *origin hq">
+  <xacro:macro name="omni_wheel" params="prefix parent *origin hq">
   
 <!--WHEEL TIRE -->
     <!-- joint name="joint_${name}_wheel" type="continuous" -->
-    <joint name="joint_${name}_wheel" type="fixed">
+    <joint name="${prefix}wheel_joint" type="fixed">
       <parent link="${parent}"/>
-      <child link="${name}_wheel"/>
+      <child link="${prefix}wheel_link"/>
       <xacro:insert_block name="origin" />
       <axis xyz="0 1 0" rpy="0 0 0" />
       <limit effort="100" velocity="100"/>
       <joint_properties damping="0.0" friction="0.0"/>
     </joint>
   
-    <link name="${name}_wheel">
+    <link name="${prefix}wheel_link">
       <visual>
         <!-- HIGH RESOLUTION WHEELS -->
         <xacro:if value="${hq}">
@@ -78,7 +78,7 @@
       </actuator>
     </transmission -->
 
-    <gazebo reference="${name}_wheel">
+    <gazebo reference="${prefix}wheel">
 		<mu1 value="0"/>
 		<mu2 value="0"/>
 		<kp value="10000000.0" />
