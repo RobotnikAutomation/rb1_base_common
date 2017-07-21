@@ -20,6 +20,7 @@ button_ptz_pan_right: 6
 button_ptz_pan_left: 6
 button_ptz_zoom_wide: 9 
 button_ptz_zoom_tele: 8
+axis_elevator: 10
 button_home: 6
 tilt_increment: 5
 pan_increment: 5

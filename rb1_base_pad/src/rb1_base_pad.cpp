@@ -102,7 +102,7 @@ class RB1BasePad
 	//! Number of the button for increase or decrease the speed max of the joystick	
 	int speed_up_button_, speed_down_button_;
 	int button_output_1_, button_output_2_;
-	int button_raise_elevator_, button_lower_elevator_, button_stop_elevator_;
+    int button_raise_elevator_, button_lower_elevator_, button_stop_elevator_,axis_elevator_;
 	int output_1_, output_2_;
 	bool bOutput1, bOutput2;
 	//! button to change kinematic mode
@@ -194,14 +194,16 @@ RB1BasePad::RB1BasePad():
 	nh_.param("button_raise_elevator",button_raise_elevator_, 4);
 	nh_.param("button_stop_elevator",button_stop_elevator_, 16);
 
+    nh_.param("axis_elevator",axis_elevator_, 7);
+
     nh_.param("cmd_service_home", cmd_home_, cmd_home_);
-    nh_.param<std::string>("elevator_service_name", elevator_service_name_, "/rb1_base_controller/set_elevation");
+    nh_.param<std::string>("elevator_service_name", elevator_service_name_, "/set_elevator");
 	
 	ROS_INFO("RB1BasePad num_of_buttons_ = %d", num_of_buttons_);	
 	for(int i = 0; i < num_of_buttons_; i++){
 		bRegisteredButtonEvent[i] = false;
 		ROS_INFO("bREG %d", i);
-		}
+    }
 
   	// Publish through the node handle Twist type messages to the guardian_controller/command topic
 	vel_pub_ = nh_.advertise<geometry_msgs::Twist>(cmd_topic_vel_, 1);
@@ -281,7 +283,6 @@ void RB1BasePad::padCallback(const sensor_msgs::Joy::ConstPtr& joy)
 		//ROS_ERROR("RB1BasePad::padCallback: DEADMAN button %d", dead_man_button_);
 		// Set the current velocity level
 		if ( joy->buttons[speed_down_button_] == 1 ){
-
 			if(!bRegisteredButtonEvent[speed_down_button_]) 
 				if(current_vel > 0.1){
 		  			current_vel = current_vel - 0.1;
@@ -320,10 +321,29 @@ void RB1BasePad::padCallback(const sensor_msgs::Joy::ConstPtr& joy)
 		vel.linear.z = current_vel*l_scale_z_*joy->axes[linear_z_];
 
 		// ELEVATOR
+
+        if (joy->axes[axis_elevator_]>0.9){
+            //ROS_INFO("RB1BasePad::padCallback: button %d", button_stop_elevator_);
+            rb1_base_msgs::SetElevator elevator_msg_srv;
+
+            elevator_msg_srv.request.action = DEFAULT_ELEVATOR_ACTION_RAISE;
+            set_elevator_client_.call( elevator_msg_srv );
+        }
+
+        if (joy->axes[axis_elevator_]<-0.9){
+            //ROS_INFO("RB1BasePad::padCallback: button %d", button_stop_elevator_);
+            rb1_base_msgs::SetElevator elevator_msg_srv;
+
+            elevator_msg_srv.request.action = DEFAULT_ELEVATOR_ACTION_LOWER;
+            set_elevator_client_.call( elevator_msg_srv );
+        }
+
+
+        /*
 		if (joy->buttons[button_stop_elevator_] == 1) {
 
 			if(!bRegisteredButtonEvent[button_stop_elevator_]){
-				//ROS_INFO("RB1BasePad::padCallback: button %d", button_stop_elevator_);
+                ROS_INFO("RB1BasePad::padCallback: button %d", button_stop_elevator_);
 				rb1_base_msgs::SetElevator elevator_msg_srv;
 				
 				elevator_msg_srv.request.action = DEFAULT_ELEVATOR_ACTION_STOP;
@@ -335,9 +355,8 @@ void RB1BasePad::padCallback(const sensor_msgs::Joy::ConstPtr& joy)
 			bRegisteredButtonEvent[button_stop_elevator_] = false;
 		}
 		if (joy->buttons[button_raise_elevator_] == 1) {
-
 			if(!bRegisteredButtonEvent[button_raise_elevator_]){
-				//ROS_INFO("RB1BasePad::padCallback: button %d", button_raise_elevator_);
+                ROS_INFO("RB1BasePad::padCallback: button %d", button_raise_elevator_);
 				rb1_base_msgs::SetElevator elevator_msg_srv;
 				
 				elevator_msg_srv.request.action = DEFAULT_ELEVATOR_ACTION_RAISE;
@@ -351,7 +370,7 @@ void RB1BasePad::padCallback(const sensor_msgs::Joy::ConstPtr& joy)
 		if (joy->buttons[button_lower_elevator_] == 1) {
 
 			if(!bRegisteredButtonEvent[button_lower_elevator_]){
-				//ROS_INFO("RB1BasePad::padCallback: button %d", button_lower_elevator_);
+                ROS_INFO("RB1BasePad::padCallback: button %d", button_lower_elevator_);
 				rb1_base_msgs::SetElevator elevator_msg_srv;
 				
 				elevator_msg_srv.request.action = DEFAULT_ELEVATOR_ACTION_LOWER;
@@ -359,10 +378,10 @@ void RB1BasePad::padCallback(const sensor_msgs::Joy::ConstPtr& joy)
 				set_elevator_client_.call( elevator_msg_srv );
 				bRegisteredButtonEvent[button_lower_elevator_] = true;
 			}
-		}else{
+        } else{
 			bRegisteredButtonEvent[button_lower_elevator_] = false;
 		}	
-
+        */
 	}
    	else {
 		vel.angular.x = 0.0;	vel.angular.y = 0.0; vel.angular.z = 0.0;
@@ -373,18 +392,17 @@ void RB1BasePad::padCallback(const sensor_msgs::Joy::ConstPtr& joy)
 
         // Publish only with deadman button pushed for twist use
         if (joy->buttons[dead_man_button_] == 1) {
-                send_iterations_after_dead_man = ITERATIONS_AFTER_DEADMAN;             
-                if (ptzEvent) ptz_pub_.publish(ptz);
-		vel_pub_.publish(vel);
-		pub_command_freq->tick();
-		}
-        else { // send some 0 if deadman is released
-          if (send_iterations_after_dead_man >0) {
-		send_iterations_after_dead_man--;
+            send_iterations_after_dead_man = ITERATIONS_AFTER_DEADMAN;
+            if (ptzEvent) ptz_pub_.publish(ptz);
+            vel_pub_.publish(vel);
+            pub_command_freq->tick();
+        } else { // send some 0 if deadman is released
+            if (send_iterations_after_dead_man >0) {
+                send_iterations_after_dead_man--;
                 vel_pub_.publish(vel);
-		pub_command_freq->tick(); 
-	        }
-             }
+                pub_command_freq->tick();
+            }
+        }
 }
 
 
