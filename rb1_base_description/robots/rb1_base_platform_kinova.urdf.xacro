@@ -9,9 +9,6 @@
 	<!-- First we import all posible elements defined in the urdf.xacro files. All these elements are defined as macro:xacros -->
 
 	<!-- Import RB1 base elements -->    
-<<<<<<< HEAD:rb1_base_description/robots/rb1_base_platform_standalone.urdf.xacro
-    	<xacro:include filename="$(find rb1_base_description)/urdf/bases/rb1_base.urdf.xacro" />
-=======
     <xacro:include filename="$(find rb1_base_description)/urdf/bases/rb1_base.urdf.xacro" />
     <xacro:include filename="$(find rb1_base_description)/urdf/others/kinova_base.urdf.xacro" />
     
@@ -23,7 +20,6 @@
 	    <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
       </plugin>
     </gazebo>
->>>>>>> indigo-devel:rb1_base_description/robots/rb1_base_platform_kinova.urdf.xacro
     	
 	<!-- Import RB1 wheels -->
 	<xacro:include filename="$(find rb1_base_description)/urdf/wheels/rubber_wheel.urdf.xacro" />	
@@ -114,12 +110,6 @@
 		<origin xyz="-0.18 0.0 0.170" rpy="0 0 0"/>
 	</xacro:sensor_imu>
 
-<<<<<<< HEAD:rb1_base_description/robots/rb1_base_platform_standalone.urdf.xacro
-	<xacro:sensor_orbbec_astra name="orbbec_astra" parent="base_link">        
-		<origin xyz="0.234 0.0125 0.107" rpy="0 0 0"/>
-	</xacro:sensor_orbbec_astra>  
- 
-=======
     <!-- xacro:sensor_orbbec_astra name="orbbec_astra" parent="base_link">        
         <origin xyz="0.234 0.0125 0.107" rpy="0 0 0"/>
     </xacro:sensor_orbbec_astra -->  
@@ -136,6 +126,5 @@
     <!-- xacro:sensor_kinect name="kinect" parent="base_link">
         <origin xyz="0.6 0.0 0.102" rpy="0 0 0"/> 
     </xacro:sensor_kinect -->   
->>>>>>> indigo-devel:rb1_base_description/robots/rb1_base_platform_kinova.urdf.xacro
   
 </robot>
