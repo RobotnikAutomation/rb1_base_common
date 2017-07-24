@@ -26,4 +26,4 @@ pan_increment: 5
 zoom_increment: 300
 button_kinematic_mode: 7
 joystick_dead_zone: "true" #useful for x-wam
-cmd_service_home:  /rb1_base_controller/home
+cmd_service_home:  rb1_base_controller/home
