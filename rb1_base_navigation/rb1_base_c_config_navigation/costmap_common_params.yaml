@@ -8,5 +8,5 @@ footprint: [[0.25, 0.0], [0.177, 0.177], [0.0,0.25], [-0.177, 0.177], [-0.25, 0.
 obstacle_layer:
   observation_sources:  base_front_laser
   base_front_laser: {data_type: LaserScan, topic: scan, marking: true, clearing: true, observation_persistence: 1.0}
-base_front_camera: {data_type: PointCloud2, topic: /orbbec_astra/depth/points, marking: true, clearing: true, observation_persistence: 1.0, min_obstacle_height: 0.1}
+base_front_camera: {data_type: PointCloud2, topic: rb1_base_c_front_camera/depth/points, marking: true, clearing: true, observation_persistence: 1.0, min_obstacle_height: 0.1}
 
