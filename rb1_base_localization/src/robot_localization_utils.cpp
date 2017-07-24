@@ -90,7 +90,7 @@ LocalizationUtils::LocalizationUtils(ros::NodeHandle nh): nh_(nh), private_nh_("
   
   set_odometry_ = nh_.serviceClient<robotnik_msgs::set_odometry>("/set_odometry");
   set_pose_ = nh_.serviceClient<robot_localization::SetPose>("/set_pose");
-  reset_odom_=nh_.advertiseService("/reset_odometry",&LocalizationUtils::resetOdomCallback,this);
+  reset_odom_=nh_.advertiseService("reset_odometry",&LocalizationUtils::resetOdomCallback,this);
 }
 
 bool LocalizationUtils::calGyroCallback(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &resp){
