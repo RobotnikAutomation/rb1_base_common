@@ -99,7 +99,7 @@
 		<origin xyz="0.210 0.0 0.199" rpy="3.1415 0 0"/>
 	</xacro:sensor_rplidar_a2--> 	
 	
-	<!-- CAMERA -->
+	<!-- ORBBEC ASTRA CAMERA -->
 	<xacro:sensor_orbbec_astra prefix="$(arg prefix)front_camera" parent="$(arg prefix)base_link">        
 		<origin xyz="0.234 0.0125 0.107" rpy="0 0 0"/>
 	</xacro:sensor_orbbec_astra>  
