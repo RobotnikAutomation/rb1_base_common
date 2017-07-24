@@ -1,18 +1,20 @@
 <?xml version="1.0"?>
 <launch>
   
-  <remap from="cmd_vel" to="move_base/cmd_vel" />  
-  <remap from="scan" to="front_laser/scan" />
+  <arg name="prefix" default="rb1_base"/> 
 
   <!-- Run move_base -->
-
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-    <remap from="odom" to="odom"/>
-    <rosparam file="$(find rb1_base_navigation)/config_navigation/move_base_params.yaml" command="load" />
-    <rosparam file="$(find rb1_base_navigation)/config_navigation/base_local_planner_params.yaml" command="load" />
-    <rosparam file="$(find rb1_base_navigation)/config_navigation/costmap_common_params.yaml" command="load" ns="global_costmap" />
-    <rosparam file="$(find rb1_base_navigation)/config_navigation/costmap_common_params.yaml" command="load" ns="local_costmap" />
-    <rosparam file="$(find rb1_base_navigation)/config_navigation/local_costmap_params.yaml" command="load" />
-    <rosparam file="$(find rb1_base_navigation)/config_navigation/global_costmap_params_map.yaml" command="load" />
+	<rosparam file="$(find rb1_base_navigation)/$(arg prefix)config_navigation/move_base_params.yaml" command="load" />
+	<rosparam file="$(find rb1_base_navigation)/$(arg prefix)config_navigation/base_local_planner_params.yaml" command="load" />
+    <rosparam file="$(find rb1_base_navigation)/$(arg prefix)config_navigation/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find rb1_base_navigation)/$(arg prefix)config_navigation/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find rb1_base_navigation)/$(arg prefix)config_navigation/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find rb1_base_navigation)/$(arg prefix)config_navigation/global_costmap_params_map.yaml" command="load" />
+    <param name="controller_frequency" value="5.0" />
+    <param name="controller_patience" value="15.0" /> 
+    <remap from="cmd_vel" to="move_base/cmd_vel" /> 
+    <remap from="odom" to="rb1_base_control/odom" />    
+    <remap from="map" to="/map"/>
   </node>
 </launch>
