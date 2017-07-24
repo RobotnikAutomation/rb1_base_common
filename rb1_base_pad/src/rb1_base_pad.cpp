@@ -195,6 +195,7 @@ RB1BasePad::RB1BasePad():
 	nh_.param("button_stop_elevator",button_stop_elevator_, 16);
 
     nh_.param("cmd_service_home", cmd_home_, cmd_home_);
+    
     nh_.param<std::string>("elevator_service_name", elevator_service_name_, "rb1_base_controller/set_elevation");
 	
 	ROS_INFO("RB1BasePad num_of_buttons_ = %d", num_of_buttons_);	
