@@ -2,58 +2,64 @@
 <launch>
 <!-- rb1_base_docking -->
 
-    <arg name="marker_size" default="12.0" />
-    <arg name="max_new_marker_error" default="0.08" />
-    <arg name="max_track_error" default="0.2" />
-    <arg name="cam_image_topic" default="/front_camera/rgb/image_raw" />
-    <arg name="cam_info_topic" default="/front_camera/rgb/camera_info" />
-    <arg name="output_frame" default="front_camera_rgb_optical_frame" />
+	<arg name="id_robot" default="rb1_base"/>
+		
+	<group ns="$(arg id_robot)">
+		
+		<arg name="prefix" value="$(arg id_robot)_"/>
 
-    <node name="ar_track_alvar" pkg="ar_track_alvar" type="individualMarkersNoKinect" respawn="false" output="screen">
-        <param name="marker_size" type="double" value="$(arg marker_size)"/>
-        <param name="max_new_marker_error" type="double" value="$(arg max_new_marker_error)"/>
-        <param name="max_track_error" type="double" value="$(arg max_track_error)"/>
-        <param name="output_frame" type="string" value="$(arg output_frame)"/>
-        <remap from="camera_image" to="$(arg cam_image_topic)"/>
-        <remap from="camera_info" to="$(arg cam_info_topic)"/>
-    </node>
+		<arg name="marker_size" default="12.0" />
+		<arg name="max_new_marker_error" default="0.08" />
+		<arg name="max_track_error" default="0.2" />
+		<arg name="cam_image_topic" default="rb1_base_front_camera/rgb/image_raw" />
+		<arg name="cam_info_topic" default="rb1_base_front_camera/rgb/camera_info" />
+		<arg name="output_frame" default="$(arg prefix)front_camera_rgb_optical_frame_link" />
 
-
-    <node name="marker2contact" pkg="tf" type="static_transform_publisher" args="-0.275 0.0 0 0 0 0 docking_station_marker docking_station_contact 100" />
-
-    <node name="tf_robotnik_pose_filter" pkg="robotnik_pose_filter" type="tf_pose_filter_node" respawn="false" output="screen">
-        <param name="filter_position_sensitivity"       type="double" value="0.5" />
-        <param name="filter_orientation_sensitivity"    type="double" value="0.8" />
-        <param name="unfiltered_source_frame" type="string" value="front_camera_rgb_optical_frame" />
-        <param name="unfiltered_target_frame" type="string" value="ar_marker_1" />
-        <param name="source_frame" type="string" value="odom" />
-        <param name="target_frame" type="string" value="docking_station_marker" />
-        <param name="two_d_mode" type="bool" value="true" />
-    </node>
+		<node name="ar_track_alvar" pkg="ar_track_alvar" type="individualMarkersNoKinect" respawn="false" output="screen">
+			<param name="marker_size" type="double" value="$(arg marker_size)"/>
+			<param name="max_new_marker_error" type="double" value="$(arg max_new_marker_error)"/>
+			<param name="max_track_error" type="double" value="$(arg max_track_error)"/>
+			<param name="output_frame" type="string" value="$(arg output_frame)"/>
+			<remap from="camera_image" to="$(arg cam_image_topic)"/>
+			<remap from="camera_info" to="$(arg cam_info_topic)"/>
+		</node>
 
 
-    <node name="docker" pkg="robotnik_docker" type="diff_docker_node" respawn="false" output="screen">
-        <param name="robot_base_frame" type="string" value="base_footprint" />
-        
-        <param name="fixed_frame" type="string" value="odom" />
-        
-        <param name="gain_linear_velocity_x" value="0.5" />
-        <param name="gain_angular_velocity_z" value="2.0" />
-        
-        <param name="maximum_linear_velocity_x" value="0.4" />
-        <param name="maximum_angular_velocity_z" value="0.7" />
-        
-        <param name="threshold_linear_velocity_x" value="0.002" />
-        <param name="threshold_linear_velocity_y" value="0.002" />
-        <param name="threshold_angular_velocity_z" value="0.05" />
+		<node name="marker2contact" pkg="tf" type="static_transform_publisher" args="-0.275 0.0 0 0 0 0 $(arg prefix)docking_station_marker $(arg prefix)docking_station_contact 100" />
 
-        <param name="initial_maximum_distance_x" value="2.5" />
-        <param name="initial_minimum_distance_x" value="0.1" />
+		<node name="tf_robotnik_pose_filter" pkg="robotnik_pose_filter" type="tf_pose_filter_node" respawn="false" output="screen">
+			<param name="filter_position_sensitivity"       type="double" value="0.5" />
+			<param name="filter_orientation_sensitivity"    type="double" value="0.8" />
+			<param name="unfiltered_source_frame" type="string" value="$(arg prefix)front_camera_rgb_optical_frame_link" />
+			<param name="unfiltered_target_frame" type="string" value="$(arg prefix)ar_marker_1" />
+			<param name="source_frame" type="string" value="$(arg prefix)odom" />
+			<param name="target_frame" type="string" value="$(arg prefix)docking_station_marker" />
+			<param name="two_d_mode" type="bool" value="true" />
+		</node>
 
-        <param name="initial_maximum_arc" value="1" />
-        <param name="initial_maximum_yaw" value="1" />
 
-        <!-- remap from="~cmd_vel" to="cmd_vel" / -->
-    </node>
+		<node name="docker" pkg="robotnik_docker" type="diff_docker_node" respawn="false" output="screen">
+			<param name="robot_base_frame" type="string" value="$(arg prefix)base_footprint" />
+			
+			<param name="fixed_frame" type="string" value="$(arg prefix)odom" />
+			
+			<param name="gain_linear_velocity_x" value="0.5" />
+			<param name="gain_angular_velocity_z" value="2.0" />
+			
+			<param name="maximum_linear_velocity_x" value="0.4" />
+			<param name="maximum_angular_velocity_z" value="0.7" />
+			
+			<param name="threshold_linear_velocity_x" value="0.002" />
+			<param name="threshold_linear_velocity_y" value="0.002" />
+			<param name="threshold_angular_velocity_z" value="0.05" />
 
+			<param name="initial_maximum_distance_x" value="2.5" />
+			<param name="initial_minimum_distance_x" value="0.1" />
+
+			<param name="initial_maximum_arc" value="1" />
+			<param name="initial_maximum_yaw" value="1" />
+
+			<!-- remap from="~cmd_vel" to="cmd_vel" / -->
+		</node>
+	</group>
 </launch>
