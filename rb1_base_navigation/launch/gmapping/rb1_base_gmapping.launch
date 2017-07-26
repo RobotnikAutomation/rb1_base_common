@@ -6,11 +6,7 @@
 
 <launch>
 	
-	<arg name="id_robot" default="rb1_base"/>
-		
-	<group ns="$(arg id_robot)">
-
-		<arg name="prefix" value="$(arg id_robot)_"/>
+	<arg name="prefix" default="rb1_base"/>
 	
 		<node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
 		  <!-- remap from="scan" to="/hokuyo/scan" / -->
@@ -52,5 +48,4 @@
 		  <param name="lasamplestep" value="0.005"/>
 		</node>
     
-    </group>
 </launch>
