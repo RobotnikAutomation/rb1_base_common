@@ -3,7 +3,7 @@
   <arg name="version" default="v3" />
   <arg name="prefix" default="rb1_base"/>
 
-  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find rb1_base_description)/robots/$(arg version).urdf.xacro' prefix:=$(arg prefix)" />
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find rb1_base_description)/robots/$(arg version)_elevator.urdf.xacro' prefix:=$(arg prefix)" />
 
   <!-- publish tfs through the robot_state_publisher -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
