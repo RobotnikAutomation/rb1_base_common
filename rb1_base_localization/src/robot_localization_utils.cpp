@@ -10,6 +10,7 @@
 #include <mavros_msgs/CommandLong.h>
 
 #define MAVLINK_CALIBRATION_COMMAND 241
+#define MAVLINK_PREFLIGHT_MODE_COMMAND 176
 
 /* Provide tools and ROS Services for the Summit series mobile robots dead-reckoning. Namely:
    - /reset_odometry. ROS Service to reset both the state estimation of the ekf_localization_node and 
@@ -37,6 +38,7 @@ public:
   bool calAccCallback(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &resp);
   bool calMagCallback(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &resp);
   bool calOffCallback(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &resp);
+  bool setPreflightModeCallback(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &resp);
   
 private:
   ros::NodeHandle nh_;
@@ -50,6 +52,7 @@ private:
   ros::ServiceServer calib_acc_srv_;
   ros::ServiceServer calib_mag_srv_;
   ros::ServiceServer calib_off_srv_;
+  ros::ServiceServer set_preflight_mode_srv_;
   ros::ServiceClient mavcmd_client_;
   
   ros::Subscriber odom_sub_;
@@ -87,6 +90,7 @@ LocalizationUtils::LocalizationUtils(ros::NodeHandle nh): nh_(nh), private_nh_("
   calib_acc_srv_= nh_.advertiseService("calibrate_imu_acc", &LocalizationUtils::calAccCallback, this);
   calib_mag_srv_= nh_.advertiseService("calibrate_imu_mag", &LocalizationUtils::calMagCallback, this);
   calib_off_srv_= nh_.advertiseService("calibrate_imu_off", &LocalizationUtils::calOffCallback, this);
+  set_preflight_mode_srv_= nh_.advertiseService("set_preflight_mode", &LocalizationUtils::setPreflightModeCallback, this);
   
   set_odometry_ = nh_.serviceClient<robotnik_msgs::set_odometry>("set_odometry");
   set_pose_ = nh_.serviceClient<robot_localization::SetPose>("set_pose");
@@ -166,6 +170,14 @@ bool LocalizationUtils::calOffCallback(std_srvs::Trigger::Request &req, std_srvs
   mavros_msgs::CommandLong::Response resp_mavros;
 
   req_mavros.command=MAVLINK_CALIBRATION_COMMAND;
+bool LocalizationUtils::setPreflightModeCallback(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &resp)
+{
+  mavros_msgs::CommandLong::Request req_mavros;
+  mavros_msgs::CommandLong::Response resp_mavros;
+
+  // see http://mavlink.org/messages/common for message explanation (section MAV_CMD)
+  req_mavros.command=MAVLINK_PREFLIGHT_MODE_COMMAND;
+  req_mavros.broadcast = false;
   req_mavros.confirmation=1;
   req_mavros.param1=0;
   req_mavros.param2=0;
