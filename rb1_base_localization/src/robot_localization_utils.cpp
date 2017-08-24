@@ -104,6 +104,7 @@ bool LocalizationUtils::calGyroCallback(std_srvs::Trigger::Request &req, std_srv
   mavros_msgs::CommandLong::Response resp_mavros;
 
   req_mavros.command=MAVLINK_CALIBRATION_COMMAND;
+  req_mavros.broadcast = false;
   req_mavros.confirmation=1;
   req_mavros.param1=1;
   req_mavros.param2=0;
@@ -128,6 +129,7 @@ bool LocalizationUtils::calAccCallback(std_srvs::Trigger::Request &req, std_srvs
   mavros_msgs::CommandLong::Response resp_mavros;
 
   req_mavros.command=MAVLINK_CALIBRATION_COMMAND;
+  req_mavros.broadcast = false;
   req_mavros.confirmation=1;
   req_mavros.param1=0;
   req_mavros.param2=0;
@@ -149,6 +151,7 @@ bool LocalizationUtils::calMagCallback(std_srvs::Trigger::Request &req, std_srvs
   mavros_msgs::CommandLong::Response resp_mavros;
 
   req_mavros.command=MAVLINK_CALIBRATION_COMMAND;
+  req_mavros.broadcast = false;
   req_mavros.confirmation=1;
   req_mavros.param1=0;
   req_mavros.param2=1;
@@ -170,6 +173,8 @@ bool LocalizationUtils::calOffCallback(std_srvs::Trigger::Request &req, std_srvs
   mavros_msgs::CommandLong::Response resp_mavros;
 
   req_mavros.command=MAVLINK_CALIBRATION_COMMAND;
+  req_mavros.broadcast = false;
+  req_mavros.confirmation=1;
 bool LocalizationUtils::setPreflightModeCallback(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &resp)
 {
   mavros_msgs::CommandLong::Request req_mavros;
