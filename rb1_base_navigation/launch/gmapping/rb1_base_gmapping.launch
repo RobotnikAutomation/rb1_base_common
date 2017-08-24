@@ -16,7 +16,7 @@
 
 		  <!-- remap from="scan" to="/hokuyo/scan" / -->
 		  <!--remap from="scan" to="front_laser/scan" /-->      
-		  <param name="map_frame" value="/map" />
+		  <param name="map_frame" value="$(arg prefix)map" />
 		  <param name="base_frame" value="$(arg prefix)base_footprint" />
 		  <param name="odom_frame" value="$(arg prefix)odom" />
 		  <param name="map_udpate_interval" value="2.0"/>

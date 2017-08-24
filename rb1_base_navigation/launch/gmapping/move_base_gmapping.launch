@@ -19,7 +19,7 @@
 		<param name="controller_patience" value="15.0" /> 
 		<remap from="cmd_vel" to="move_base/cmd_vel" /> 
 		<remap from="odom" to="rb1_base_control/odom" />    
-		<remap from="map" to="/map"/>
+		<!--remap from="map" to="/map"/-->
 	  </node>
   
   </group>
