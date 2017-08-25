@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <launch>
+	
+   <group ns="$(arg id_robot)">
 
+	 <arg name="prefix" default="$(arg id_robot)_"/> 
   <!-- Run the map server -->
   <node name="map_server" pkg="map_server" type="map_server" args="$(find rb1_base_navigation)/maps/obstacle/obstacle.yaml">
      <param name="frame_id" value="/map" />
@@ -16,16 +19,17 @@
                 <remap from="odom" to="odom" />
 
 		<!-- move_base params -->
-		<rosparam file="$(find rb1_base_navigation)/config_navigation/move_base_params.yaml" command="load" />
-		<rosparam file="$(find rb1_base_navigation)/config_navigation/teb_local_planner_params.yaml" command="load" />
-		<!-- rosparam file="$(find rb1_base_navigation)/config_navigation/base_local_planner_params.yaml" command="load" /-->
-		<rosparam file="$(find rb1_base_navigation)/config_navigation/costmap_common_params.yaml" command="load" ns="global_costmap" />
-		<rosparam file="$(find rb1_base_navigation)/config_navigation/costmap_common_params.yaml" command="load" ns="local_costmap" />
-		<rosparam file="$(find rb1_base_navigation)/config_navigation/local_costmap_params.yaml" command="load" />		
+		<rosparam file="$(find rb1_base_navigation)/$(arg prefix)config_navigation/move_base_params.yaml" command="load" />
+		<rosparam file="$(find rb1_base_navigation)/$(arg prefix)config_navigation/teb_local_planner_params.yaml" command="load" />
+		<!-- rosparam file="$(find rb1_base_navigation)/$(arg prefix)config_navigation/base_local_planner_params.yaml" command="load" /-->
+		<rosparam file="$(find rb1_base_navigation)/$(arg prefix)config_navigation/costmap_common_params.yaml" command="load" ns="global_costmap" />
+		<rosparam file="$(find rb1_base_navigation)/$(arg prefix)config_navigation/costmap_common_params.yaml" command="load" ns="local_costmap" />
+		<rosparam file="$(find rb1_base_navigation)/$(arg prefix)config_navigation/local_costmap_params.yaml" command="load" />		
 		<!-- move_base local params -->
 		<rosparam file="$(find rb1_base_navigation)/config_navigation/global_costmap_params_obstacle.yaml" command="load" />
 	</node>
     
 	<!-- Rviz -->
 	<node pkg="rviz" type="rviz" name="rviz" args="-d $(find rb1_base_navigation)/config_rviz/move_base_local.rviz"/>
+	</group>
 </launch>
