@@ -5,7 +5,7 @@
 
 	 <arg name="prefix" default="$(arg id_robot)_"/> 
 	  <!-- Run the map server -->
-	  <node name="map_server" pkg="map_server" type="map_server" args="$(find rb1_base_navigation)/maps/empty/map_empty.yaml"  
+	  <node name="map_server" pkg="map_server" type="map_server" args="$(find rb1_base_navigation)/maps/empty/map_empty.yaml">
 		<param name="frame_id" value="$(arg prefix)map"/>
 	  </node>
 
