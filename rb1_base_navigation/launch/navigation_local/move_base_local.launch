@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
+<arg name="id_robot" default="rb1_base"/>
    <group ns="$(arg id_robot)">
 
      <arg name="prefix" default="$(arg id_robot)_"/> 
