@@ -16,8 +16,8 @@
         <!-- for moving -->
         <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
             <!--remap from="scan" to="hokuyo/scan"/-->
-            <remap from="cmd_vel" to="move_base/cmd_vel" />     <!-- use topic for gazebo plugin -->
-                    <remap from="odom" to="odom" />
+            <remap from="cmd_vel" to="~cmd_vel" />     <!-- use topic for gazebo plugin -->
+            <remap from="odom" to="odom" />
 
             <!-- move_base params -->
             <rosparam file="$(find rb1_base_navigation)/$(arg prefix)config_navigation/move_base_params.yaml" command="load" />
