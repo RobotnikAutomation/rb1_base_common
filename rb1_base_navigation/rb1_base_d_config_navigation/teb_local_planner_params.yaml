@@ -16,10 +16,10 @@ TebLocalPlannerROS:
   # Robot
           
   max_vel_x: 1.0
-  max_vel_x_backwards: 0.1
+  max_vel_x_backwards: 1.0
   max_vel_theta: 1.0
-  acc_lim_x: 1.0
-  acc_lim_theta: 1.0
+  acc_lim_x: 0.4
+  acc_lim_theta: 0.4
   min_turning_radius: 0.0
   wheelbase: 0.0
   cmd_angle_instead_rotvel: false
