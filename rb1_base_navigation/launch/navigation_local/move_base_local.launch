@@ -16,9 +16,6 @@
         <!-- for moving -->
         <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
             <!--remap from="scan" to="hokuyo/scan"/-->
-            <remap from="cmd_vel" to="~cmd_vel" />     <!-- use topic for gazebo plugin -->
-            <remap from="odom" to="odom" />
-
             <!-- move_base params -->
             <rosparam file="$(find rb1_base_navigation)/$(arg prefix)config_navigation/move_base_params.yaml" command="load" />
             <rosparam file="$(find rb1_base_navigation)/$(arg prefix)config_navigation/teb_local_planner_params.yaml" command="load" />
@@ -28,7 +25,23 @@
             <rosparam file="$(find rb1_base_navigation)/$(arg prefix)config_navigation/local_costmap_params.yaml" command="load" />     
             <!-- move_base local params -->
             <rosparam file="$(find rb1_base_navigation)/$(arg prefix)config_navigation/global_costmap_params_no_map.yaml" command="load" />
-        </node>
+            
+            <!-- reset frame_id parameters using user input data -->
+			<param name="global_costmap/obstacle_layer/base_front_laser/sensor_frame" value="$(arg prefix)front_laser_link"/>
+			<param name="local_costmap/obstacle_layer/base_front_laser/sensor_frame" value="$(arg prefix)front_laser_link"/>
+			<param name="local_costmap/global_frame" value="$(arg prefix)odom"/>
+			<param name="local_costmap/robot_base_frame" value="$(arg prefix)base_footprint"/>
+			<param name="global_costmap/global_frame" value="$(arg prefix)odom"/>
+			<param name="global_costmap/robot_base_frame" value="$(arg prefix)base_footprint"/>
+
+			<param name="TebLocalPlannerROS/map_frame" value="$(arg prefix)map"/>
+			<param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" /> 
+			<param name="controller_frequency" value="5.0" />
+			<param name="controller_patience" value="15.0" /> 
+			<remap from="cmd_vel" to="~cmd_vel" /> 
+			<remap from="odom" to="rb1_base_control/odom" />    
+            
+        </node>           
         
     </group>
     
