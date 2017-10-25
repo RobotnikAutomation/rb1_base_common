@@ -49,7 +49,7 @@
        </material>
     </visual>  
     <collision>
-       <origin xyz="0 0 0" rpy="0 0 0 " />
+       <origin xyz="0 0 0" rpy="0 0 0" />
        <geometry>
          <mesh filename="package://rb1_base_description/meshes/bases/rb1_base_v3.stl"/>
        </geometry>
@@ -57,7 +57,7 @@
   </link>
   
   <joint name="front_cover_joint" type="fixed">
-     <origin xyz="0.220 0.0 0.004" rpy="0 0 0 " />
+     <origin xyz="0.220 0.0 0.004" rpy="0 0 0" />
      <parent link="base_link"/>
      <child link="front_cover_link" />
   </joint>    
@@ -86,7 +86,7 @@
        </material>
     </visual>  
     <collision>
-       <origin xyz="0 0 0" rpy="0 0 0 " />
+       <origin xyz="0 0 0" rpy="0 0 0" />
        <geometry>
          <mesh filename="package://rb1_base_description/meshes/bases/rb1_front_cover_v3.stl"/>
        </geometry>
@@ -94,7 +94,7 @@
   </link>
 
   <joint name="top_covert_joint" type="fixed">
-     <origin xyz="0.0 0.0 0.243" rpy="0 0 0 " />
+     <origin xyz="0.0 0.0 0.243" rpy="0 0 0" />
      <parent link="base_footprint"/>
      <child link="top_cover_link" />
   </joint>    
@@ -123,7 +123,7 @@
        </material>
     </visual>  
     <collision>
-       <origin xyz="0 0 0" rpy="0 0 0 " />
+       <origin xyz="0 0 0" rpy="0 0 0" />
        <geometry>
          <mesh filename="package://rb1_base_description/meshes/bases/rb1_top_cover_v3.stl"/>
        </geometry>
@@ -134,7 +134,7 @@
  
   <!-- DOCKING CONTACTS -->
   <joint name="base_docking_joint" type="fixed">
-     <origin xyz="0.030 0.000 0.068" rpy="0 0 0 " />
+     <origin xyz="0.030 0.000 0.068" rpy="0 0 0" />
      <parent link="front_cover_link"/>
      <child link="base_docking_contact" />
   </joint>    

@@ -84,11 +84,11 @@
 		<origin xyz="0.220 0.0 0.1686" rpy="0 3.1416 3.1416"/>
 	</xacro:sensor_sick_tim551>    
     
-	<xacro:sensor_imu name="imu" parent="base_link">
+	<xacro:sensor_imu prefix="imu" parent="base_link">
 		<origin xyz="0.002 0.053 0.1485" rpy="0 0 0"/>
 	</xacro:sensor_imu>
     
-    	<xacro:sensor_orbbec_astra name="front_camera" parent="base_link">        
+    	<xacro:sensor_orbbec_astra prefix="front_camera" parent="base_link">        
         	<origin xyz="0.234 0.0125 0.1055" rpy="0 0 0"/>
     	</xacro:sensor_orbbec_astra>  
       

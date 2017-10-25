@@ -90,31 +90,31 @@
 	</xacro:omni_wheel>
 
 	<!-- SENSORS -->    
-	<!-- xacro:sensor_hokuyo_utm30lx name="hokuyo" parent="base_link">
+	<!-- xacro:sensor_hokuyo_utm30lx prefix="hokuyo" parent="base_link">
 		<origin xyz="0.210 0.0 0.305" rpy="0 0 0"/>
 	</xacro:sensor_hokuyo_utm30lx -->
 
-    <!-- xacro:sensor_hokuyo_urg04lx name="hokuyo1" parent="base_link">
+    <!-- xacro:sensor_hokuyo_urg04lx prefix="hokuyo1" parent="base_link">
         <origin xyz="0.220 0.0 0.170" rpy="0 3.1416 3.1416"/>
     </xacro:sensor_hokuyo_urg04lx -->
 
-	<!-- xacro:sensor_hokuyo_ust10lx name="hokuyo" parent="base_link">
+	<!-- xacro:sensor_hokuyo_ust10lx prefix="hokuyo" parent="base_link">
 		<origin xyz="0.223 0.0 0.159" rpy="0 0 0"/>
 	</xacro:sensor_hokuyo_ust10lx -->
 
-	<xacro:sensor_hokuyo_ust10lx name="hokuyo" parent="base_link">
+	<xacro:sensor_hokuyo_ust10lx prefix="hokuyo" parent="base_link">
 		<origin xyz="0.223 0.0 0.159" rpy="0 3.1416 3.1416"/>
 	</xacro:sensor_hokuyo_ust10lx> 	
     
-	<xacro:sensor_imu name="imu" parent="base_link">
+	<xacro:sensor_imu prefix="imu" parent="base_link">
 		<origin xyz="-0.18 0.0 0.170" rpy="0 0 0"/>
 	</xacro:sensor_imu>
 
-    <!-- xacro:sensor_orbbec_astra name="orbbec_astra" parent="base_link">        
+    <!-- xacro:sensor_orbbec_astra prefix="orbbec_astra" parent="base_link">        
         <origin xyz="0.234 0.0125 0.107" rpy="0 0 0"/>
     </xacro:sensor_orbbec_astra -->  
 
-    <xacro:sensor_orbbec_astra name="orbbec_astra" parent="base_link">        
+    <xacro:sensor_orbbec_astra prefix="orbbec_astra" parent="base_link">        
         <origin xyz="0.234 0.0125 0.107" rpy="0 0 0"/>
     </xacro:sensor_orbbec_astra>  
    
@@ -123,7 +123,7 @@
     </xacro:kinova_base>  
 
       
-    <!-- xacro:sensor_kinect name="kinect" parent="base_link">
+    <!-- xacro:sensor_kinect prefix="kinect" parent="base_link">
         <origin xyz="0.6 0.0 0.102" rpy="0 0 0"/> 
     </xacro:sensor_kinect -->   
   

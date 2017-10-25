@@ -49,7 +49,7 @@
        </material>
     </visual>  
     <collision>
-       <origin xyz="0 0 0" rpy="0 0 0 " />
+       <origin xyz="0 0 0" rpy="0 0 0" />
        <geometry>
          <mesh filename="package://rb1_base_description/meshes/bases/rb1v0_base.dae"/>
        </geometry>
