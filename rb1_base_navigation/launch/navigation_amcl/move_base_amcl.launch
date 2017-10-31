@@ -50,7 +50,7 @@
           <arg name="id_robot" value="$(arg id_robot)"/>
           <arg name="x_init_pose" value="$(arg x_init_pose)"/>
           <arg name="y_init_pose" value="$(arg y_init_pose)"/>
-          <arg name="z_init_pose" value="$(arg z_init_pose)"/>
+          <arg name="z_init_pose" value="$(arg z_init_pose)"/>          
       </include>
   
 </launch>
