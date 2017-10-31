@@ -2,8 +2,8 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro"> 
 	
 	
-	<!--xacro:include filename="$(find rb1_base_description)/urdf/elevator/elevator.transmission.xacro"/>
-	<xacro:include filename="$(find rb1_base_description)/urdf/elevator/elevator.gazebo.xacro"/-->
+	<xacro:include filename="$(find rb1_base_description)/urdf/elevator/elevator.transmission.xacro"/>
+	<xacro:include filename="$(find rb1_base_description)/urdf/elevator/elevator.gazebo.xacro"/>
 	
 	<xacro:macro name="elevator_platform" params="prefix parent hq *origin">
 	<!-- PARAMS: -->
