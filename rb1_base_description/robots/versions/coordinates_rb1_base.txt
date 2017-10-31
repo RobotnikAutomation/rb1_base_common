@@ -1,0 +1,50 @@
+Coordinates
+
+Current version = V3
+
+V3:
+Traction wheels (0 , 218 , 51.2); (0 , 218 , 51.2)
+Omni Wheels (132 , 153.5 , 25.8);(132 , -153.5 , 25.8); (-195 , 0 , 25.8)  (*) 0.5 mm higher for friction reduction
+Front Cover: (220 , 0 , 4)
+RPLidar (210 , 0 , 199) + rotX(180º)  
+
+<xacro:sensor_hokuyo_utm30lx prefix="$(arg prefix)front_laser" parent="$(arg prefix)base_link">
+	<origin xyz="0.210 0.0 0.305" rpy="0 0 0"/>
+</xacro:sensor_hokuyo_utm30lx>
+<xacro:sensor_hokuyo_urg04lx prefix="$(arg prefix)front_laser" parent="$(arg prefix)base_link">
+	<origin xyz="0.220 0.0 0.170" rpy="0 3.1416 3.1416"/>
+</xacro:sensor_hokuyo_urg04lx>
+<xacro:sensor_hokuyo_ust10lx prefix="$(arg prefix)front_laser" parent="$(arg prefix)base_link">
+	<origin xyz="0.223 0.0 0.159" rpy="0 3.1416 3.1416"/>
+</xacro:sensor_hokuyo_ust10lx>
+<xacro:sensor_hokuyo_ust20lx prefix="$(arg prefix)front_laser" parent="$(arg prefix)base_link">
+	<origin xyz="0.223 0.0 0.159" rpy="0 3.1416 3.1416"/>
+</xacro:sensor_hokuyo_ust20lx>
+<xacro:sensor_rplidar_a2 prefix="$(arg prefix)base_front_laser" parent="$(arg prefix)base_link">
+	<origin xyz="0.210 0.0 0.199" rpy="3.1415 0 0"/>
+</xacro:sensor_rplidar_a2>
+<xacro:sensor_sick_tim571 prefix="$(arg prefix)front_laser" parent="$(arg prefix)base_link">
+	<origin xyz="0.223 0.0 0.159" rpy="0 3.1416 3.1416"/>
+</xacro:sensor_sick_tim571>
+<xacro:sensor_kinect prefix="$(arg prefix)front_camera" parent="$(arg prefix)base_link">
+	<origin xyz="0.6 0.0 0.102" rpy="0 0 0"/> 
+</xacro:sensor_kinect>  
+
+
+
+V2:
+Traction wheels (0 , 216.5 , 51.2); (0 , -216.5 , 51.2)
+Omni Wheels (133 , 148 , 25.8);(133 , -148 , 25.8); (-195 , 0 , 25.8)  (*) 0.5 mm higher for friction reduction
+Front Cover: (220 , 0 , 4)
+Hokuyo (223 , 0 , 209)  [z-50: (223, 0, 159)]  + rotX(180º)  
+Orbbec: (234 , 0 , 122) + rotX(180º)
+
+V1:
+Traction wheels (0 , 216.5 , 51.2); (0 , -216.5 , 51.2)
+Omni Wheels (133 , 144 , 25.8);(133 , -144 , 25.8); (-195 , 0 , 25.8)  (*) 0.5 mm higher for friction reduction
+Hokuyo (223 , 0 , 209)  [z-50: (223, 0, 159)]
+
+V0:
+Traction wheels (0, 182.5, 51.2); (0, -182.5, 51.2)
+Omni wheels (133, -142, 25.8); (133, 142, 25.8); (-185, 0, 25.8)
+Hokuyo (220, 0, 222.5)
