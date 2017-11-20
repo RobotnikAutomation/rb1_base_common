@@ -7,18 +7,20 @@
 <launch>
 	
   <arg name="id_robot" default="rb1_base"/>
+  <arg name="prefix" default="$(arg id_robot)_"/>
+  <arg name="scan_topic" default="front_laser/scan"/>
+  <arg name="map_frame" default="$(arg prefix)map"/> 
+  <arg name="odom_frame" default="$(arg prefix)odom"/> 
+  <arg name="base_frame" default="$(arg prefix)base_link"/> 
 			  
   <group ns="$(arg id_robot)">
-	  
-	    <arg name="prefix" value="$(arg id_robot)_"/>	
-	  		  
+		  
 		<node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
 
-		  <!-- remap from="scan" to="/hokuyo/scan" / -->
-		  <!--remap from="scan" to="front_laser/scan" /-->      
-		  <param name="map_frame" value="$(arg prefix)map" />
-		  <param name="base_frame" value="$(arg prefix)base_footprint" />
-		  <param name="odom_frame" value="$(arg prefix)odom" />
+		  <remap from="scan" to="$(arg scan_topic)" />     
+		  <param name="map_frame" value="$(arg map_frame)" />
+		  <param name="base_frame" value="$(arg base_frame)" />
+		  <param name="odom_frame" value="$(arg odom_frame)" />
 		  <param name="map_udpate_interval" value="2.0"/>
 		  <param name="maxUrange" value="30.0"/> <!-- for utm30lx laser -->
 		  <!--param name="maxUrange" value="5.0"/--> <!-- for urg04lx laser -->
