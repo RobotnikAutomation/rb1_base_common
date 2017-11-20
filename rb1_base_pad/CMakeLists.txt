@@ -6,6 +6,7 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   geometry_msgs
   robotnik_msgs
+  rb1_base_msgs
   roscpp
   sensor_msgs
   diagnostic_updater
