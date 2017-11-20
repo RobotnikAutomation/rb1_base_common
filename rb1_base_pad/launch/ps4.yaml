@@ -29,4 +29,4 @@ joystick_dead_zone: "true" #useful for x-wam
 cmd_service_home:  rb1_base_controller/home
 
 axis_elevator: 10
-elevator_service_name: set_elevator
+elevator_service_name: rb1_base_control/set_elevator
