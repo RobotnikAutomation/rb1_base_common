@@ -44,7 +44,7 @@ include_directories(
 
 add_executable(rb1_base_pad src/rb1_base_pad.cpp)
 
-add_dependencies(rb1_base_pad rb1_base_pad_generate_messages_cpp)
+add_dependencies(rb1_base_pad rb1_base_pad_generate_messages_cpp robotnik_msgs_generate_messages_cpp)
 
 target_link_libraries(rb1_base_pad
    ${catkin_LIBRARIES}
