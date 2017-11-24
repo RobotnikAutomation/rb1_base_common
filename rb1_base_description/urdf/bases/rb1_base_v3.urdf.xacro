@@ -51,7 +51,7 @@
     <collision>
        <origin xyz="0 0 0" rpy="0 0 0 " />
        <geometry>
-         <mesh filename="package://rb1_base_description/meshes/bases/rb1_base_v3.stl"/>
+         <mesh filename="package://rb1_base_description/meshes/bases/rb1_base_v3.dae"/>
        </geometry>
     </collision>
   </link>
@@ -88,7 +88,7 @@
     <collision>
        <origin xyz="0 0 0" rpy="0 0 0 " />
        <geometry>
-         <mesh filename="package://rb1_base_description/meshes/bases/rb1_front_cover_v3.stl"/>
+         <mesh filename="package://rb1_base_description/meshes/bases/rb1_front_cover_v3.dae"/>
        </geometry>
     </collision>
   </link>
@@ -109,14 +109,14 @@
     <visual>
        <origin xyz="0 0 0" rpy="0 0 0" />
        <xacro:if value="${hq}">
-       <geometry>
-	     <mesh filename="package://rb1_base_description/meshes/bases/rb1_top_cover_v3.stl"/>
-       </geometry>
+		   <geometry>
+			 <mesh filename="package://rb1_base_description/meshes/bases/rb1_top_cover_v3.stl"/>
+		   </geometry>
        </xacro:if>
        <xacro:unless value="${hq}">
-       <geometry>
-       <mesh filename="package://rb1_base_description/meshes/bases/rb1_top_cover_v3.stl"/>
-       </geometry>
+		   <geometry>
+		   <mesh filename="package://rb1_base_description/meshes/bases/rb1_top_cover_v3.stl"/>
+		   </geometry>
        </xacro:unless>
        <material name="black">
          <color rgba="0.0 0.0 0.0 1"/>
@@ -125,12 +125,11 @@
     <collision>
        <origin xyz="0 0 0" rpy="0 0 0 " />
        <geometry>
-         <mesh filename="package://rb1_base_description/meshes/bases/rb1_top_cover_v3.stl"/>
+         <mesh filename="package://rb1_base_description/meshes/bases/rb1_top_cover_v3.dae"/>
        </geometry>
     </collision>
   </link>
 	
-
  
   <!-- DOCKING CONTACTS -->
   <joint name="${prefix}base_docking_joint" type="fixed">
