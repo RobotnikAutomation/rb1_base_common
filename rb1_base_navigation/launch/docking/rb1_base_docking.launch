@@ -11,9 +11,9 @@
 		<arg name="marker_size" default="12.0" />
 		<arg name="max_new_marker_error" default="0.08" />
 		<arg name="max_track_error" default="0.2" />
-		<arg name="cam_image_topic" default="rb1_base_front_camera/rgb/image_raw" />
-		<arg name="cam_info_topic" default="rb1_base_front_camera/rgb/camera_info" />
-		<arg name="output_frame" default="$(arg prefix)front_camera_rgb_optical_frame_link" />
+		<arg name="cam_image_topic" default="front_rgbd_camera/rgb/image_raw" />
+		<arg name="cam_info_topic" default="front_rgbd_camera/rgb/camera_info" />
+		<arg name="output_frame" default="$(arg prefix)front_rgbd_camera_rgb_optical_frame" />
 
 		<node name="ar_track_alvar" pkg="ar_track_alvar" type="individualMarkersNoKinect" respawn="false" output="screen">
 			<param name="marker_size" type="double" value="$(arg marker_size)"/>
@@ -25,16 +25,19 @@
 		</node>
 
 
-		<node name="marker2contact" pkg="tf" type="static_transform_publisher" args="-0.275 0.0 0 0 0 0 $(arg prefix)docking_station_marker $(arg prefix)docking_station_contact 100" />
+		<node name="marker2contact" pkg="tf" type="static_transform_publisher" args="-0.28 0.0 0 0 0 0 $(arg prefix)docking_station_marker $(arg prefix)docking_station_contact 100" />
 
 		<node name="tf_robotnik_pose_filter" pkg="robotnik_pose_filter" type="tf_pose_filter_node" respawn="false" output="screen">
-			<param name="filter_position_sensitivity"       type="double" value="0.5" />
-			<param name="filter_orientation_sensitivity"    type="double" value="0.8" />
-			<param name="unfiltered_source_frame" type="string" value="$(arg prefix)front_camera_rgb_optical_frame_link" />
-			<param name="unfiltered_target_frame" type="string" value="$(arg prefix)ar_marker_1" />
-			<param name="source_frame" type="string" value="$(arg prefix)odom" />
-			<param name="target_frame" type="string" value="$(arg prefix)docking_station_marker" />
+			<param name="filter_position_sensitivity"       type="double" value="0.8" />
+			<param name="filter_orientation_sensitivity"    type="double" value="0.2" />
+			<param name="source_frame" type="string" value="$(arg prefix)front_rgbd_camera_rgb_optical_frame" />
+			<param name="target_frame" type="string" value="ar_marker_1" /> <!-- should be prefixed with robot tf prefix, 
+			but ar_track does not allow to set a prefix... value="$(arg prefix)ar_marker_1" /-->
+			<param name="filtered_source_frame" type="string" value="$(arg prefix)odom" />
+			<param name="filtered_target_frame" type="string" value="$(arg prefix)docking_station_marker" />
 			<param name="two_d_mode" type="bool" value="true" />
+			<rosparam param="apply_transform">[0.0, 0.0, 0.0, 0.0, 1.5707, 1.5707]</rosparam>
+			<!-- if not set, does not apply a transform. transform is xyz-rpy, 6 parameters. remember that rotation is applied in reverse order (ypr) -->
 		</node>
 
 
@@ -54,12 +57,17 @@
 			<param name="threshold_angular_velocity_z" value="0.05" />
 
 			<param name="initial_maximum_distance_x" value="2.5" />
-			<param name="initial_minimum_distance_x" value="0.1" />
+			<param name="initial_minimum_distance_x" value="0.5" />
 
-			<param name="initial_maximum_arc" value="1" />
+			<param name="initial_maximum_arc" value="0.7" />
 			<param name="initial_maximum_yaw" value="1" />
+			<param name="offset_for_heading_adjustment" value="0.5"/>
 
 			<!-- remap from="~cmd_vel" to="cmd_vel" / -->
+			<param name="check_robot_is_moving_to_goal" value="true" />
+			<param name="robot_moving_to_goal_delay" value="3" />
+			<param name="robot_moving_to_goal_averaging_time" value="0.5" />
+
 		</node>
 	</group>
 </launch>
