@@ -96,6 +96,8 @@ class RB1BasePad
 	std::string elevator_service_name_;
 	//! Name of the topic where it will be publishing the pant-tilt values	
 	std::string cmd_topic_ptz_;
+	//! If it is True, it will check the timeout message
+	bool check_message_timeout_;
 	double current_vel;
 	//! Number of the DEADMAN button
 	int dead_man_button_;
@@ -197,6 +199,8 @@ RB1BasePad::RB1BasePad():
     nh_.param("axis_elevator",axis_elevator_, 1);
 
     nh_.param("cmd_service_home", cmd_home_, cmd_home_);
+
+	nh_.param("check_message_timeout", check_message_timeout_, check_message_timeout_);
     
     nh_.param<std::string>("elevator_service_name", elevator_service_name_, "set_elevator");
 	
@@ -273,7 +277,7 @@ void RB1BasePad::padCallback(const sensor_msgs::Joy::ConstPtr& joy)
 	static int send_iterations_after_dead_man = 0;
 	
 	// Checks the ROS time to avoid noise in the pad
-	if((ros::Time::now() - joy->header.stamp).toSec() > JOY_ERROR_TIME)
+	if(check_message_timeout_ && ((ros::Time::now() - joy->header.stamp).toSec() > JOY_ERROR_TIME))
 		return;
 
 	vel.angular.x = 0.0;  vel.angular.y = 0.0; vel.angular.z = 0.0;

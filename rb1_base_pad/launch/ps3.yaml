@@ -26,3 +26,4 @@ tilt_increment: 5
 pan_increment: 5
 button_kinematic_mode: 9
 cmd_service_home:  /rb1_base_controller/home
+check_message_timeout: true
