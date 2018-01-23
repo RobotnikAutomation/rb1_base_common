@@ -6,7 +6,7 @@
 
      <arg name="prefix" default="$(arg id_robot)_"/> 
       <!-- Run the map server -->
-      <node name="map_server" pkg="map_server" type="map_server" args="$(find rb1_base_navigation)/maps/empty/map_empty.yaml">
+      <node name="map_server" pkg="map_server" type="map_server" args="$(find rb1_base_localization)/maps/empty/map_empty.yaml">
         <param name="frame_id" value="$(arg prefix)map"/>
       </node>
 
@@ -17,14 +17,14 @@
         <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
             <!--remap from="scan" to="hokuyo/scan"/-->
             <!-- move_base params -->
-            <rosparam file="$(find rb1_base_navigation)/$(arg prefix)config_navigation/move_base_params.yaml" command="load" />
-            <rosparam file="$(find rb1_base_navigation)/$(arg prefix)config_navigation/teb_local_planner_params.yaml" command="load" />
+            <rosparam file="$(find rb1_base_navigation)/config/move_base_params.yaml" command="load" />
+            <rosparam file="$(find rb1_base_navigation)/config/teb_local_planner_params.yaml" command="load" />
             <!-- rosparam file="$(find rb1_base_navigation)/$(arg prefix)config_navigation/base_local_planner_params.yaml" command="load" /-->
-            <rosparam file="$(find rb1_base_navigation)/$(arg prefix)config_navigation/costmap_common_params.yaml" command="load" ns="global_costmap" />
-            <rosparam file="$(find rb1_base_navigation)/$(arg prefix)config_navigation/costmap_common_params.yaml" command="load" ns="local_costmap" />
-            <rosparam file="$(find rb1_base_navigation)/$(arg prefix)config_navigation/local_costmap_params.yaml" command="load" />     
+            <rosparam file="$(find rb1_base_navigation)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+            <rosparam file="$(find rb1_base_navigation)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+            <rosparam file="$(find rb1_base_navigation)/config/local_costmap_params.yaml" command="load" />     
             <!-- move_base local params -->
-            <rosparam file="$(find rb1_base_navigation)/$(arg prefix)config_navigation/global_costmap_params_no_map.yaml" command="load" />
+            <rosparam file="$(find rb1_base_navigation)/config/global_costmap_params_no_map.yaml" command="load" />
             
             <!-- reset frame_id parameters using user input data -->
 			<param name="global_costmap/obstacle_layer/base_front_laser/sensor_frame" value="$(arg prefix)front_laser_link"/>
@@ -39,7 +39,7 @@
 			<param name="controller_frequency" value="5.0" />
 			<param name="controller_patience" value="15.0" /> 
 			<remap from="cmd_vel" to="~cmd_vel" /> 
-			<remap from="odom" to="rb1_base_control/odom" />    
+			<remap from="odom" to="robotnik_base_control/odom" />    
             
         </node>           
         

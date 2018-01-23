@@ -4,7 +4,7 @@
   <arg name="id_robot" default="rb1_base"/>
   <arg name="prefix" default="$(arg id_robot)_"/>
   <arg name="cmd_vel_topic" default="move_base/cmd_vel"/> <!-- using twist mux -->
-  <arg name="odom_topic" default="rb1_base_control/odom"/> 
+  <arg name="odom_topic" default="robotnik_base_control/odom"/> 
   <arg name="scan_topic" default="front_laser/scan"/>
   <arg name="global_frame" default="$(arg prefix)map"/> 
   <arg name="odom_frame" default="$(arg prefix)odom"/> 
@@ -15,12 +15,12 @@
 	  <!-- Run move_base -->
 	  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
 
-		<rosparam file="$(find rb1_base_navigation)/$(arg prefix)config_navigation/move_base_params.yaml" command="load" />
-		<rosparam file="$(find rb1_base_navigation)/$(arg prefix)config_navigation/base_local_planner_params.yaml" command="load" />
-		<rosparam file="$(find rb1_base_navigation)/$(arg prefix)config_navigation/costmap_common_params.yaml" command="load" ns="global_costmap" />
-		<rosparam file="$(find rb1_base_navigation)/$(arg prefix)config_navigation/costmap_common_params.yaml" command="load" ns="local_costmap" />
-		<rosparam file="$(find rb1_base_navigation)/$(arg prefix)config_navigation/local_costmap_params.yaml" command="load" />
-		<rosparam file="$(find rb1_base_navigation)/$(arg prefix)config_navigation/global_costmap_params_map.yaml" command="load" />
+		<rosparam file="$(find rb1_base_navigation)/config/move_base_params.yaml" command="load" />
+		<rosparam file="$(find rb1_base_navigation)/config/base_local_planner_params.yaml" command="load" />
+		<rosparam file="$(find rb1_base_navigation)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+		<rosparam file="$(find rb1_base_navigation)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+		<rosparam file="$(find rb1_base_navigation)/config/local_costmap_params.yaml" command="load" />
+		<rosparam file="$(find rb1_base_navigation)/config/global_costmap_params_map.yaml" command="load" />
 		<param name="global_costmap/obstacle_layer/scan/sensor_frame" value="$(arg prefix)front_laser_link"/>
 		<param name="local_costmap/obstacle_layer/scan/sensor_frame" value="$(arg prefix)front_laser_link"/>
 		<param name="global_costmap/obstacle_layer/scan/topic" value="$(arg scan_topic)"/>
