@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="sim" default="false"/>
+  <arg name="cmd_vel" default="robotnik_base_control/cmd_vel"/>
+  <arg name="prefix" default="rb1_base_"/>
+  <arg name="launch_robot_localization" default="false"/>
+  <arg name="has_elevator" default="false"/>
+  
+  <!-- Robot - Load joint controller configurations from YAML file to parameter server -->
+  <group unless="$(arg sim)">	
+	<!-- Load joint controller configurations from YAML file to parameter server -->
+	<rosparam file="$(find rb1_base_control)/config/rb1_base_control.yaml" command="load"/>
+	<param name="robotnik_base_control/left_wheel" value="$(arg prefix)left_wheel_joint"/>
+	<param name="robotnik_base_control/right_wheel" value="$(arg prefix)right_wheel_joint"/>
+	<param name="robotnik_base_control/base_frame_id" value="$(arg prefix)base_footprint"/>
+	<param name="robotnik_base_control/odom_frame_id" value="$(arg prefix)odom"/>
+	
+	<!-- load the controllers -->
+	<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+		output="screen" args="
+						  robotnik_base_control
+						  joint_read_state_controller 
+						  --shutdown-timeout 1
+						  ">
+	</node>
+  </group>
+
+	<!-- Simulation - Load joint controller configurations from YAML file to parameter server -->
+  <group if="$(arg sim)">	
+
+	<!-- Load joint controller configurations from YAML file to parameter server -->
+	<rosparam file="$(find rb1_base_control)/config/rb1_base_diffdrive_control.yaml" command="load"/>
+    <param name="robotnik_base_control/left_wheel" value="$(arg prefix)left_wheel_joint"/>
+	<param name="robotnik_base_control/right_wheel" value="$(arg prefix)right_wheel_joint"/>
+	<param name="robotnik_base_control/base_frame_id" value="$(arg prefix)base_footprint"/>
+	<param name="robotnik_base_control/odom_frame_id" value="$(arg prefix)odom"/>
+	<!-- if robot_localization node is launched the controller must not publish the odom tf-->
+	<!--param if="$(arg launch_robot_localization)" name="robotnik_base_control/enable_odom_tf" value="false"/-->
+	
+	
+	<!-- load the controllers -->
+	<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+		output="screen" args="
+						  robotnik_base_control
+						  joint_read_state_controller
+						  --shutdown-timeout 1
+						  ">
+	</node>
+	<!-- load elevator controller -->
+	<node if="$(arg has_elevator)" name="elevator_controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+	   output="screen" ns="/$(arg id_robot)" args="--shutdown-time 1 
+					  elevator_controller"/>	
+
+  </group>
+
+  <node pkg="twist_mux" type="twist_mux" name="twist_mux">
+    <rosparam command="load" file="$(find rb1_base_control)/config/twist_mux.yaml" />
+    <remap from="cmd_vel_out" to="robotnik_base_control/cmd_vel" />
+  </node>
+  
+</launch>
