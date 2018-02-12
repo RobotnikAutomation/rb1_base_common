@@ -44,7 +44,8 @@ robotnik_base_control:
   elevator_digital_output_up: 3
   elevator_digital_output_down: 2 
   elevator_digital_input_up: 3
-  elevator_digital_input_down: 2 
+  elevator_digital_input_down: 2
+  reverse_logic: true # Make sure what logic is your robot using
 
 joint_read_state_controller:
   type: joint_state_controller/JointStateController 
