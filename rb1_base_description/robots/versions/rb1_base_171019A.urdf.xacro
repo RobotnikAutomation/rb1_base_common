@@ -47,6 +47,14 @@
 	<!-- Flag to select the high or low quality model -->
 	<xacro:property name="hq" value="true" />
 
+	<!-- ******************* -->
+	<!-- ELEVATOR PARAMETERS -->
+	<!-- ******************* -->
+	
+	<xacro:property name="elevator_x" value="0.0" /> 
+	<xacro:property name="elevator_y" value="0.0" />  
+	<xacro:property name="elevator_z" value="0.213" />
+
 	<!-- *************** -->
 	<!-- Robots Elements -->
 	<!-- *************** -->
@@ -84,6 +92,11 @@
 	<xacro:omni_wheel prefix="$(arg prefix)omni_front_right" parent="$(arg prefix)base_link" hq="${hq}">
 		<origin xyz="${omni_front_x} -${omni_front_y} ${omni_front_z}" rpy="0 0 0"/>
 	</xacro:omni_wheel>
+
+	<!-- ELEVATOR_PLATFORM -->
+	<xacro:elevator_platform prefix="$(arg prefix)elevator" parent="$(arg prefix)base_link" hq="${hq}">
+		<origin xyz="${elevator_x} -${elevator_y} ${elevator_z}" rpy="0 0 0"/>
+	</xacro:elevator_platform>
 
 	<!-- SENSORS -->    
     
