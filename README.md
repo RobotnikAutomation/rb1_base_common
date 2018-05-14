@@ -3,8 +3,10 @@ rb1_base_common
 Common packages of the RB1 base: URDF description of the RB1 Base, platform messages and other files for simulation.
 
 <p align="center">
-  <img src="https://www.robotnik.eu/web/wp-content/uploads/2015/11/RB-1-BASE-frontal.png" width="300" />
-  <img src="https://www.robotnik.eu/web/wp-content/uploads/2015/11/RB-1-BASE-arriba.png" width="300" /> 
+  <img src="https://www.roscomponents.com/760-big_default/rb-1-base.jpg" width="275" />
+  <img src="  https://www.roscomponents.com/761-thickbox_default/rb-1-base.jpg
+" width="275" />
+  <img src="https://www.roscomponents.com/759-thickbox_default/rb-1-base.jpg" width="275" /> 
 </p>
 
 <h1>Packages</h1>
