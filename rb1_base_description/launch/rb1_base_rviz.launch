@@ -1,9 +1,10 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="version" default="platform_kinova_j2n6a300" />
+  <arg name="version" default="rb1_base_std.urdf.xacro" />
+  <arg name="prefix" default="robot_0_"/>
+  <arg name="rviz_config" default="$(find rb1_base_gazebo)/rviz/rb1_base_a_std.rviz"/>
   
-  <arg name="urdf_file" default="$(find xacro)/xacro.py '$(find rb1_base_description)/robots/rb1_base_$(arg version).urdf.xacro'" />
-  <param name="robot_description" command="$(arg urdf_file)" />
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find rb1_base_description)/robots/$(arg version)' prefix:=$(arg prefix)" />
 
   <!-- send fake joint values -->
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
@@ -14,7 +15,8 @@
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
 
   <!-- Show in Rviz   -->
-  <node name="rviz" pkg="rviz" type="rviz"/> 
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rviz_config)"/> 
+  
   
 </launch>
 
