@@ -46,7 +46,8 @@
 #include <robotnik_msgs/home.h>
 #include <diagnostic_updater/diagnostic_updater.h>
 #include <diagnostic_updater/publisher.h>
-#include <rb1_base_msgs/SetElevator.h>
+#include <robotnik_msgs/SetElevator.h>
+#include <robotnik_msgs/ElevatorAction.h>
 
 #define DEFAULT_NUM_OF_BUTTONS		16
 #define DEFAULT_AXIS_LINEAR_X		1
@@ -58,16 +59,15 @@
 #define DEFAULT_SCALE_LINEAR_Z      1.0 
 
 #define ITERATIONS_AFTER_DEADMAN    3.0
-    
-#define	DEFAULT_ELEVATOR_ACTION_RAISE	1 
-#define	DEFAULT_ELEVATOR_ACTION_LOWER	-1 
-#define	DEFAULT_ELEVATOR_ACTION_STOP	0 
+
 #define JOY_ERROR_TIME					1.0
-////////////////////////////////////////////////////////////////////////
-//                               NOTE:                                //
-// This configuration is made for a THRUSTMASTER T-Wireless 3in1 Joy  //
-//   please feel free to modify to adapt for your own joystick.       //   
-// 								      //
+
+//!//////////////////////////////////////////////////////////////////////
+//!                               NOTE:                                //
+//! This configuration is made for a PS4 Dualshock                     //
+//!   please feel free to modify to adapt for your own joystick.       //
+//! 								       //
+//!//////////////////////////////////////////////////////////////////////
 
 
 class RB1BasePad
@@ -96,6 +96,8 @@ class RB1BasePad
 	std::string elevator_service_name_;
 	//! Name of the topic where it will be publishing the pant-tilt values	
 	std::string cmd_topic_ptz_;
+	//! If it is True, it will check the timeout message
+	bool check_message_timeout_;
 	double current_vel;
 	//! Number of the DEADMAN button
 	int dead_man_button_;
@@ -193,11 +195,10 @@ RB1BasePad::RB1BasePad():
 	nh_.param("button_lower_elevator",button_lower_elevator_, 6);
 	nh_.param("button_raise_elevator",button_raise_elevator_, 4);
 	nh_.param("button_stop_elevator",button_stop_elevator_, 16);
-
-    nh_.param("axis_elevator",axis_elevator_, 7);
-
+    nh_.param("axis_elevator",axis_elevator_, 1);
     nh_.param("cmd_service_home", cmd_home_, cmd_home_);
-    nh_.param<std::string>("elevator_service_name", elevator_service_name_, "/set_elevator");
+	nh_.param("check_message_timeout", check_message_timeout_, check_message_timeout_); 
+    nh_.param<std::string>("elevator_service_name", elevator_service_name_, "set_elevator");
 	
 	ROS_INFO("RB1BasePad num_of_buttons_ = %d", num_of_buttons_);	
 	for(int i = 0; i < num_of_buttons_; i++){
@@ -216,7 +217,7 @@ RB1BasePad::RB1BasePad():
 	
  	// Request service to activate / deactivate digital I/O
 	set_digital_outputs_client_ = nh_.serviceClient<robotnik_msgs::set_digital_output>(cmd_service_io_);
-	set_elevator_client_ = nh_.serviceClient<rb1_base_msgs::SetElevator>(elevator_service_name_);
+	set_elevator_client_ = nh_.serviceClient<robotnik_msgs::SetElevator>(elevator_service_name_);
 	
 	bOutput1 = bOutput2 = false;
 
@@ -272,7 +273,7 @@ void RB1BasePad::padCallback(const sensor_msgs::Joy::ConstPtr& joy)
 	static int send_iterations_after_dead_man = 0;
 	
 	// Checks the ROS time to avoid noise in the pad
-	if((ros::Time::now() - joy->header.stamp).toSec() > JOY_ERROR_TIME)
+	if(check_message_timeout_ && ((ros::Time::now() - joy->header.stamp).toSec() > JOY_ERROR_TIME))
 		return;
 
 	vel.angular.x = 0.0;  vel.angular.y = 0.0; vel.angular.z = 0.0;
@@ -321,67 +322,22 @@ void RB1BasePad::padCallback(const sensor_msgs::Joy::ConstPtr& joy)
 		vel.linear.z = current_vel*l_scale_z_*joy->axes[linear_z_];
 
 		// ELEVATOR
+        if (joy->axes[axis_elevator_]>0.99){
+            //ROS_INFO("RB1BasePad::padCallback: button %d calling service:%s RAISE", button_stop_elevator_,elevator_service_name_.c_str());
+            robotnik_msgs::SetElevator elevator_msg_srv;
 
-        if (joy->axes[axis_elevator_]>0.9){
-            //ROS_INFO("RB1BasePad::padCallback: button %d", button_stop_elevator_);
-            rb1_base_msgs::SetElevator elevator_msg_srv;
-
-            elevator_msg_srv.request.action = DEFAULT_ELEVATOR_ACTION_RAISE;
+            elevator_msg_srv.request.action.action = robotnik_msgs::ElevatorAction::RAISE;
             set_elevator_client_.call( elevator_msg_srv );
+
         }
 
-        if (joy->axes[axis_elevator_]<-0.9){
-            //ROS_INFO("RB1BasePad::padCallback: button %d", button_stop_elevator_);
-            rb1_base_msgs::SetElevator elevator_msg_srv;
+        if (joy->axes[axis_elevator_]<-0.99){
+            //ROS_INFO("RB1BasePad::padCallback: button %d calling service:%s LOWER", button_stop_elevator_,elevator_service_name_.c_str());
+            robotnik_msgs::SetElevator elevator_msg_srv;
 
-            elevator_msg_srv.request.action = DEFAULT_ELEVATOR_ACTION_LOWER;
+            elevator_msg_srv.request.action.action = robotnik_msgs::ElevatorAction::LOWER;
             set_elevator_client_.call( elevator_msg_srv );
         }
-
-
-        /*
-		if (joy->buttons[button_stop_elevator_] == 1) {
-
-			if(!bRegisteredButtonEvent[button_stop_elevator_]){
-                ROS_INFO("RB1BasePad::padCallback: button %d", button_stop_elevator_);
-				rb1_base_msgs::SetElevator elevator_msg_srv;
-				
-				elevator_msg_srv.request.action = DEFAULT_ELEVATOR_ACTION_STOP;
-				
-				set_elevator_client_.call( elevator_msg_srv );
-				bRegisteredButtonEvent[button_stop_elevator_] = true;
-			}
-		}else{
-			bRegisteredButtonEvent[button_stop_elevator_] = false;
-		}
-		if (joy->buttons[button_raise_elevator_] == 1) {
-			if(!bRegisteredButtonEvent[button_raise_elevator_]){
-                ROS_INFO("RB1BasePad::padCallback: button %d", button_raise_elevator_);
-				rb1_base_msgs::SetElevator elevator_msg_srv;
-				
-				elevator_msg_srv.request.action = DEFAULT_ELEVATOR_ACTION_RAISE;
-				
-				set_elevator_client_.call( elevator_msg_srv );
-				bRegisteredButtonEvent[button_raise_elevator_] = true;
-			}
-		}else{
-			bRegisteredButtonEvent[button_raise_elevator_] = false;
-		}
-		if (joy->buttons[button_lower_elevator_] == 1) {
-
-			if(!bRegisteredButtonEvent[button_lower_elevator_]){
-                ROS_INFO("RB1BasePad::padCallback: button %d", button_lower_elevator_);
-				rb1_base_msgs::SetElevator elevator_msg_srv;
-				
-				elevator_msg_srv.request.action = DEFAULT_ELEVATOR_ACTION_LOWER;
-				
-				set_elevator_client_.call( elevator_msg_srv );
-				bRegisteredButtonEvent[button_lower_elevator_] = true;
-			}
-        } else{
-			bRegisteredButtonEvent[button_lower_elevator_] = false;
-		}	
-        */
 	}
    	else {
 		vel.angular.x = 0.0;	vel.angular.y = 0.0; vel.angular.z = 0.0;

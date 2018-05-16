@@ -1,18 +1,44 @@
 <?xml version="1.0"?>
 <launch>
+    
+  <arg name="id_robot" default="rb1_base"/>
+  <arg name="prefix" default="$(arg id_robot)_"/>
+  <arg name="cmd_vel_topic" default="move_base/cmd_vel"/> <!-- using twist mux -->
+  <arg name="odom_topic" default="robotnik_base_control/odom"/> 
+  <arg name="scan_topic" default="front_laser/scan"/>
+  <arg name="global_frame" default="$(arg prefix)map"/> 
+  <arg name="odom_frame" default="$(arg prefix)odom"/> 
+  <arg name="base_frame" default="$(arg prefix)base_link"/>
   
-  <remap from="cmd_vel" to="move_base/cmd_vel" />  
-  <remap from="scan" to="front_laser/scan" />
+  <group ns="$(arg id_robot)">
 
-  <!-- Run move_base -->
+	  <!-- Run move_base -->
+	  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
 
-  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-    <remap from="odom" to="odom"/>
-    <rosparam file="$(find rb1_base_navigation)/config_navigation/move_base_params.yaml" command="load" />
-    <rosparam file="$(find rb1_base_navigation)/config_navigation/base_local_planner_params.yaml" command="load" />
-    <rosparam file="$(find rb1_base_navigation)/config_navigation/costmap_common_params.yaml" command="load" ns="global_costmap" />
-    <rosparam file="$(find rb1_base_navigation)/config_navigation/costmap_common_params.yaml" command="load" ns="local_costmap" />
-    <rosparam file="$(find rb1_base_navigation)/config_navigation/local_costmap_params.yaml" command="load" />
-    <rosparam file="$(find rb1_base_navigation)/config_navigation/global_costmap_params_map.yaml" command="load" />
-  </node>
+		<rosparam file="$(find rb1_base_navigation)/config/move_base_params.yaml" command="load" />
+		<rosparam file="$(find rb1_base_navigation)/config/base_local_planner_params.yaml" command="load" />
+		<rosparam file="$(find rb1_base_navigation)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+		<rosparam file="$(find rb1_base_navigation)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+		<rosparam file="$(find rb1_base_navigation)/config/local_costmap_params.yaml" command="load" />
+		<rosparam file="$(find rb1_base_navigation)/config/global_costmap_params_map.yaml" command="load" />
+		<param name="global_costmap/obstacle_layer/scan/sensor_frame" value="$(arg prefix)front_laser_link"/>
+		<param name="local_costmap/obstacle_layer/scan/sensor_frame" value="$(arg prefix)front_laser_link"/>
+		<param name="global_costmap/obstacle_layer/scan/topic" value="$(arg scan_topic)"/>
+		<param name="local_costmap/obstacle_layer/scan/topic" value="$(arg scan_topic)"/>
+		<param name="local_costmap/global_frame" value="$(arg odom_frame)"/>
+		<param name="local_costmap/robot_base_frame" value="$(arg base_frame)"/>
+		<param name="global_costmap/global_frame" value="$(arg global_frame)"/>
+		<param name="global_costmap/robot_base_frame" value="$(arg base_frame)"/>
+		<param name="DWAPlannerROS/global_frame_id" value="$(arg odom_frame)"/>
+		<param name="TebLocalPlannerROS/map_frame" value="$(arg global_frame)"/>
+		<param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />    
+		<param name="controller_frequency" value="5.0" />
+		<param name="controller_patience" value="15.0" /> 
+		<remap from="cmd_vel" to="$(arg cmd_vel_topic)" /> 
+		<remap from="odom" to="$(arg odom_topic)" />   
+		<!--remap from="map" to="$(arg map_frame)"/-->
+	  </node>
+  
+  </group>
+  
 </launch>

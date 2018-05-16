@@ -1,29 +1,48 @@
 <?xml version="1.0"?>
 <launch>
 
-  <!-- Run the map server -->
-  <node name="map_server" pkg="map_server" type="map_server" args="$(find rb1_base_navigation)/maps/empty/map_empty.yaml"/>
+<arg name="id_robot" default="rb1_base"/>
+   <group ns="$(arg id_robot)">
 
-	<!-- Throttle the voxel grid that is being published for rviz -->
-	<node ns="move_base_node/local_costmap" name="voxel_grid_throttle" pkg="topic_tools" type="throttle" args="messages voxel_grid 3.0 voxel_grid_throttled" />
+     <arg name="prefix" default="$(arg id_robot)_"/> 
+      <!-- Run the map server -->
+      <node name="map_server" pkg="map_server" type="map_server" args="$(find rb1_base_localization)/maps/empty/map_empty.yaml">
+        <param name="frame_id" value="$(arg prefix)map"/>
+      </node>
 
-	<!-- for moving -->
-	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-		<!--remap from="scan" to="hokuyo/scan"/-->
-		<remap from="cmd_vel" to="move_base/cmd_vel" />     <!-- use topic for gazebo plugin -->
-                <remap from="odom" to="odom" />
+        <!-- Throttle the voxel grid that is being published for rviz -->
+        <node ns="move_base_node/local_costmap" name="voxel_grid_throttle" pkg="topic_tools" type="throttle" args="messages voxel_grid 3.0 voxel_grid_throttled" />
 
-		<!-- move_base params -->
-		<rosparam file="$(find rb1_base_navigation)/config_navigation/move_base_params.yaml" command="load" />
-		<rosparam file="$(find rb1_base_navigation)/config_navigation/teb_local_planner_params.yaml" command="load" />
-		<!-- rosparam file="$(find rb1_base_navigation)/config_navigation/base_local_planner_params.yaml" command="load" /-->
-		<rosparam file="$(find rb1_base_navigation)/config_navigation/costmap_common_params.yaml" command="load" ns="global_costmap" />
-		<rosparam file="$(find rb1_base_navigation)/config_navigation/costmap_common_params.yaml" command="load" ns="local_costmap" />
-		<rosparam file="$(find rb1_base_navigation)/config_navigation/local_costmap_params.yaml" command="load" />		
-		<!-- move_base local params -->
-		<rosparam file="$(find rb1_base_navigation)/config_navigation/global_costmap_params_no_map.yaml" command="load" />
-	</node>
+        <!-- for moving -->
+        <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+            <!--remap from="scan" to="hokuyo/scan"/-->
+            <!-- move_base params -->
+            <rosparam file="$(find rb1_base_navigation)/config/move_base_params.yaml" command="load" />
+            <rosparam file="$(find rb1_base_navigation)/config/teb_local_planner_params.yaml" command="load" />
+            <!-- rosparam file="$(find rb1_base_navigation)/$(arg prefix)config_navigation/base_local_planner_params.yaml" command="load" /-->
+            <rosparam file="$(find rb1_base_navigation)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+            <rosparam file="$(find rb1_base_navigation)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+            <rosparam file="$(find rb1_base_navigation)/config/local_costmap_params.yaml" command="load" />     
+            <!-- move_base local params -->
+            <rosparam file="$(find rb1_base_navigation)/config/global_costmap_params_no_map.yaml" command="load" />
+            
+            <!-- reset frame_id parameters using user input data -->
+			<param name="global_costmap/obstacle_layer/base_front_laser/sensor_frame" value="$(arg prefix)front_laser_link"/>
+			<param name="local_costmap/obstacle_layer/base_front_laser/sensor_frame" value="$(arg prefix)front_laser_link"/>
+			<param name="local_costmap/global_frame" value="$(arg prefix)odom"/>
+			<param name="local_costmap/robot_base_frame" value="$(arg prefix)base_footprint"/>
+			<param name="global_costmap/global_frame" value="$(arg prefix)odom"/>
+			<param name="global_costmap/robot_base_frame" value="$(arg prefix)base_footprint"/>
+
+			<param name="TebLocalPlannerROS/map_frame" value="$(arg prefix)map"/>
+			<param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" /> 
+			<param name="controller_frequency" value="5.0" />
+			<param name="controller_patience" value="15.0" /> 
+			<remap from="cmd_vel" to="~cmd_vel" /> 
+			<remap from="odom" to="robotnik_base_control/odom" />    
+            
+        </node>           
+        
+    </group>
     
-	<!-- Rviz -->
-	<node pkg="rviz" type="rviz" name="rviz" args="-d $(find rb1_base_navigation)/config_rviz/move_base_local.rviz"/>
 </launch>

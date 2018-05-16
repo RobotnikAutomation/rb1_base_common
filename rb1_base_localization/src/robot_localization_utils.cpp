@@ -10,6 +10,7 @@
 #include <mavros_msgs/CommandLong.h>
 
 #define MAVLINK_CALIBRATION_COMMAND 241
+#define MAVLINK_PREFLIGHT_MODE_COMMAND 176
 
 /* Provide tools and ROS Services for the Summit series mobile robots dead-reckoning. Namely:
    - /reset_odometry. ROS Service to reset both the state estimation of the ekf_localization_node and 
@@ -33,10 +34,11 @@ public:
   void imuCallback (const sensor_msgs::ImuConstPtr& msg);
   bool resetOdomCallback(robotnik_msgs::set_odometry::Request &req, robotnik_msgs::set_odometry::Response &resp);
 
-  bool calGyroCallback(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &resp);
-  bool calAccCallback(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &resp);
-  bool calMagCallback(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &resp);
-  bool calOffCallback(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &resp);
+  bool calibrateGyroscopesCallback(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &resp);
+  bool calibrateAccelerometersCallback(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &resp);
+  bool calibrateMagnetometersCallback(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &resp);
+  bool calibrateLevelHorizonCallback(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &resp);
+  bool setPreflightModeCallback(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &resp);
   
 private:
   ros::NodeHandle nh_;
@@ -50,6 +52,7 @@ private:
   ros::ServiceServer calib_acc_srv_;
   ros::ServiceServer calib_mag_srv_;
   ros::ServiceServer calib_off_srv_;
+  ros::ServiceServer set_preflight_mode_srv_;
   ros::ServiceClient mavcmd_client_;
   
   ros::Subscriber odom_sub_;
@@ -70,10 +73,10 @@ private:
 LocalizationUtils::LocalizationUtils(ros::NodeHandle nh): nh_(nh), private_nh_("~"), 
 				    			  in_motion_(false), angular_vel_(0.0)
 {
-  private_nh_.param<string>("odom_topic", odom_topic_, "/odom");
-  private_nh_.param<string>("imu_topic", imu_topic_, "/mavros/imu/data");
+  private_nh_.param<string>("odom_topic", odom_topic_, "odom");
+  private_nh_.param<string>("imu_topic", imu_topic_, "mavros/imu/data");
   private_nh_.param<string>("dynamic_imu_covariance", dynamic_imu_covariance_, "false");
-  private_nh_.param<string>("imu_outpur_topic", imu_output_topic_, "/mavros/imu/data_adapted");
+  private_nh_.param<string>("imu_outpur_topic", imu_output_topic_, "mavros/imu/data_adapted");
 
   if (dynamic_imu_covariance_ == "true"){
 	ROS_INFO("[LocalizationUtils]: using dynamic Imu covariance");
@@ -82,23 +85,27 @@ LocalizationUtils::LocalizationUtils(ros::NodeHandle nh): nh_(nh), private_nh_("
   	imu_pub_=nh_.advertise<sensor_msgs::Imu>(imu_output_topic_,10);
   }
 
-  mavcmd_client_=nh_.serviceClient<mavros_msgs::CommandLong>("/mavros/cmd/command");
-  calib_gyro_srv_= nh_.advertiseService("calibrate_imu_gyro", &LocalizationUtils::calGyroCallback, this);
-  calib_acc_srv_= nh_.advertiseService("calibrate_imu_acc", &LocalizationUtils::calAccCallback, this);
-  calib_mag_srv_= nh_.advertiseService("calibrate_imu_mag", &LocalizationUtils::calMagCallback, this);
-  calib_off_srv_= nh_.advertiseService("calibrate_imu_off", &LocalizationUtils::calOffCallback, this);
+  mavcmd_client_=nh_.serviceClient<mavros_msgs::CommandLong>("mavros/cmd/command");
+  calib_gyro_srv_= nh_.advertiseService("calibrate_imu_gyro", &LocalizationUtils::calibrateGyroscopesCallback, this);
+  calib_acc_srv_= nh_.advertiseService("calibrate_imu_acc", &LocalizationUtils::calibrateAccelerometersCallback, this);
+  calib_mag_srv_= nh_.advertiseService("calibrate_imu_mag", &LocalizationUtils::calibrateMagnetometersCallback, this);
+  calib_off_srv_= nh_.advertiseService("calibrate_imu_off", &LocalizationUtils::calibrateLevelHorizonCallback, this);
+  set_preflight_mode_srv_= nh_.advertiseService("set_preflight_mode", &LocalizationUtils::setPreflightModeCallback, this);
   
-  set_odometry_ = nh_.serviceClient<robotnik_msgs::set_odometry>("/set_odometry");
-  set_pose_ = nh_.serviceClient<robot_localization::SetPose>("/set_pose");
-  reset_odom_=nh_.advertiseService("/reset_odometry",&LocalizationUtils::resetOdomCallback,this);
+  set_odometry_ = nh_.serviceClient<robotnik_msgs::set_odometry>("set_odometry");
+  set_pose_ = nh_.serviceClient<robot_localization::SetPose>("set_pose");
+  
+  reset_odom_=nh_.advertiseService("reset_odometry",&LocalizationUtils::resetOdomCallback,this);
 }
 
-bool LocalizationUtils::calGyroCallback(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &resp){
+bool LocalizationUtils::calibrateGyroscopesCallback(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &resp){
 
   mavros_msgs::CommandLong::Request req_mavros;
   mavros_msgs::CommandLong::Response resp_mavros;
 
+  // see http://mavlink.org/messages/common for message explanation (section MAV_CMD)
   req_mavros.command=MAVLINK_CALIBRATION_COMMAND;
+  req_mavros.broadcast = false;
   req_mavros.confirmation=1;
   req_mavros.param1=1;
   req_mavros.param2=0;
@@ -117,12 +124,14 @@ bool LocalizationUtils::calGyroCallback(std_srvs::Trigger::Request &req, std_srv
   return true;
 }
 
-bool LocalizationUtils::calAccCallback(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &resp){
+bool LocalizationUtils::calibrateAccelerometersCallback(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &resp){
   
   mavros_msgs::CommandLong::Request req_mavros;
   mavros_msgs::CommandLong::Response resp_mavros;
 
+  // see http://mavlink.org/messages/common for message explanation (section MAV_CMD)
   req_mavros.command=MAVLINK_CALIBRATION_COMMAND;
+  req_mavros.broadcast = false;
   req_mavros.confirmation=1;
   req_mavros.param1=0;
   req_mavros.param2=0;
@@ -138,12 +147,14 @@ bool LocalizationUtils::calAccCallback(std_srvs::Trigger::Request &req, std_srvs
   return true;
 }
 
-bool LocalizationUtils::calMagCallback(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &resp){
+bool LocalizationUtils::calibrateMagnetometersCallback(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &resp){
   
   mavros_msgs::CommandLong::Request req_mavros;
   mavros_msgs::CommandLong::Response resp_mavros;
 
+  // see http://mavlink.org/messages/common for message explanation (section MAV_CMD)
   req_mavros.command=MAVLINK_CALIBRATION_COMMAND;
+  req_mavros.broadcast = false;
   req_mavros.confirmation=1;
   req_mavros.param1=0;
   req_mavros.param2=1;
@@ -159,12 +170,37 @@ bool LocalizationUtils::calMagCallback(std_srvs::Trigger::Request &req, std_srvs
   return true;
 }
 
-bool LocalizationUtils::calOffCallback(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &resp){
+bool LocalizationUtils::calibrateLevelHorizonCallback(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &resp){
   
   mavros_msgs::CommandLong::Request req_mavros;
   mavros_msgs::CommandLong::Response resp_mavros;
 
+  // see http://mavlink.org/messages/common for message explanation (section MAV_CMD)
   req_mavros.command=MAVLINK_CALIBRATION_COMMAND;
+  req_mavros.broadcast = false;
+  req_mavros.confirmation=1;
+  req_mavros.param1=0;
+  req_mavros.param2=0;
+  req_mavros.param3=0;
+  req_mavros.param4=0;
+  req_mavros.param5=2;
+  req_mavros.param6=0;    
+  req_mavros.param7=0;	
+
+  bool success_odom=mavcmd_client_.call(req_mavros,resp_mavros);
+
+  resp.success=resp_mavros.success; 
+  return true;
+}
+
+bool LocalizationUtils::setPreflightModeCallback(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &resp)
+{
+  mavros_msgs::CommandLong::Request req_mavros;
+  mavros_msgs::CommandLong::Response resp_mavros;
+
+  // see http://mavlink.org/messages/common for message explanation (section MAV_CMD)
+  req_mavros.command=MAVLINK_PREFLIGHT_MODE_COMMAND;
+  req_mavros.broadcast = false;
   req_mavros.confirmation=1;
   req_mavros.param1=0;
   req_mavros.param2=0;
