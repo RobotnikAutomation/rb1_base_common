@@ -6,7 +6,7 @@ footprint: [[0.25, 0.0], [0.177, 0.177], [0.0,0.25], [-0.177, 0.177], [-0.25, 0.
 #inflation_radius: 0.10
 
 obstacle_layer:
-  observation_sources:  base_front_laser
+  observation_sources:  front_laser
   front_laser: {sensor_frame: rb1_base_front_laser_link, data_type: LaserScan, topic: front_laser/scan, marking: true, clearing: true, observation_persistence: 1.0}
   front_camera: {data_type: PointCloud2, topic: front_rgbd_camera/depth/points, marking: true, clearing: true, observation_persistence: 1.0, min_obstacle_height: 0.1}
 
