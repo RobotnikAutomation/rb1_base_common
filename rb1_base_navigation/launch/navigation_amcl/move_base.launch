@@ -7,6 +7,7 @@
   <arg name="global_frame" default="$(arg prefix)map"/> 
   <arg name="odom_frame" default="$(arg prefix)odom"/> 
   <arg name="base_frame" default="$(arg prefix)base_footprint"/>
+  <arg name="laser_frame" default="$(arg prefix)front_laser_link"/>
   <arg name="scan_topic" default="front_laser/scan"/>
   
   <!-- Run move_base -->
@@ -18,18 +19,19 @@
 	<rosparam file="$(find rb1_base_navigation)/config/global_costmap_params_map.yaml" command="load" />
 	<rosparam file="$(find rb1_base_navigation)/config/teb_local_planner_params.yaml" command="load" />
         <!-- reset frame_id parameters using user input data -->
-	<param name="global_costmap/obstacle_layer/base_front_laser/sensor_frame" value="$(arg prefix)front_laser_link"/>
-	<param name="local_costmap/obstacle_layer/base_front_laser/sensor_frame" value="$(arg prefix)front_laser_link"/>
-	<param name="local_costmap/global_frame" value="$(arg prefix)odom"/>
-	<param name="local_costmap/robot_base_frame" value="$(arg prefix)base_footprint"/>
-	<param name="global_costmap/global_frame" value="$(arg prefix)map"/>
-	<param name="global_costmap/robot_base_frame" value="$(arg prefix)base_footprint"/>
-	<param name="TebLocalPlannerROS/map_frame" value="$(arg prefix)map"/>
+	<param name="global_costmap/obstacle_layer/front_laser/sensor_frame" value="$(arg laser_frame)"/>
+	<param name="local_costmap/obstacle_layer/front_laser/sensor_frame" value="$(arg laser_frame)"/>
+	<param name="global_costmap/obstacle_layer/front_laser/topic" value="$(arg scan_topic)"/>
+	<param name="local_costmap/obstacle_layer/front_laser/topic" value="$(arg scan_topic)"/>
+	<param name="local_costmap/global_frame" value="$(arg odom_frame)"/>
+	<param name="local_costmap/robot_base_frame" value="$(arg base_frame)"/>
+	<param name="global_costmap/global_frame" value="$(arg global_frame)"/>
+	<param name="global_costmap/robot_base_frame" value="$(arg base_frame)"/>
+	<param name="TebLocalPlannerROS/map_frame" value="$(arg global_frame)"/>
+	<param name="TebLocalPlannerROS/odom_topic" value="$(arg odom_topic)"/>
         <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" /> 
-        <param name="controller_frequency" value="5.0" />
-        <param name="controller_patience" value="15.0" /> 
-        <remap from="cmd_vel" to="~cmd_vel" /> 
-        <remap from="odom" to="$(arg odom_topic)" />       
+        <remap from="cmd_vel" to="$(arg cmd_vel_topic)" /> 
+        <remap from="odom" to="$(arg odom_topic)" />        
   </node>
   
 </launch>

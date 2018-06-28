@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<robot name="omnidirectional_wheel" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:property name="M_PI" value="3.1415926535897931" />
+  <!-- Wheels -->
+  <xacro:property name="omni_wheel_radius" value="0.051" /> 
+  <xacro:property name="omni_wheel_height" value="0.040" />
+  <xacro:property name="omni_wheel_mass" value="0.3" /> <!-- in kg-->
+ 
+ 
+  <xacro:macro name="cylinder_inertia" params="m r h">
+    <inertia  ixx="${m*(3*r*r+h*h)/12}" ixy = "0" ixz = "0"
+              iyy="${m*(3*r*r+h*h)/12}" iyz = "0"
+              izz="${m*r*r/2}" /> 
+  </xacro:macro>
+ 
+  <xacro:macro name="omni_wheel" params="name parent *origin hq">
+  
+<!--WHEEL TIRE -->
+    <!-- joint name="joint_${name}_wheel" type="continuous" -->
+    <joint name="joint_${name}_wheel" type="fixed">
+      <parent link="${parent}"/>
+      <child link="${name}_wheel"/>
+      <xacro:insert_block name="origin" />
+      <axis xyz="0 1 0" rpy="0 0 0" />
+      <limit effort="100" velocity="100"/>
+      <joint_properties damping="0.0" friction="0.0"/>
+    </joint>
+  
+    <link name="${name}_wheel">
+      <visual>
+        <!-- HIGH RESOLUTION WHEELS -->
+        <xacro:if value="${hq}">
+          <origin xyz="0 0 0" rpy="0 0 0" />
+          <geometry>     
+				<mesh filename="package://rb1_base_description/meshes/wheels/wheel_omni_4inch.dae" />
+          </geometry>         
+        </xacro:if>
+       <!-- LOW RESOLUTION WHEELS -->
+        <xacro:unless value="${hq}">
+          <origin xyz="0 0 0" rpy="${M_PI/2} 0 0" />
+          <geometry>           
+            <cylinder length="${omni_wheel_height}" radius="${omni_wheel_radius}" />
+          </geometry>      
+        </xacro:unless>
+      </visual>
+      
+      <!-- collision>
+      <origin xyz="0 0 0" rpy="${M_PI/2} 0 0" />
+        <geometry>
+          <cylinder length="${omni_wheel_height}" radius="${omni_wheel_radius}" />
+        </geometry>
+      </collision -->    
+      
+      <collision>
+      <origin xyz="0 0 0" rpy="${M_PI/2} 0 0" />      
+       <geometry>
+         <sphere radius="${omni_wheel_radius}"/>
+       </geometry>
+      </collision>
+      
+      <inertial>
+        <mass value="${wheel_mass}" />
+        <origin xyz="0 0 0" />
+        <cylinder_inertia  m="${omni_wheel_mass}" r="${omni_wheel_radius}" h="${omni_wheel_height}" />
+        <!-- inertia  ixx="0.001" ixy="0.0"  ixz="0.0"  iyy="0.001"  iyz="0.0"  izz="0.001" / -->
+      </inertial>
+    </link>
+
+    
+    <!-- transmission name="${name}_wheel_joint_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="joint_${name}_wheel" />
+      <actuator name="${name}_wheel_joint_motor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission -->
+
+    <gazebo reference="${name}_wheel">
+			<mu1 value="0.0"/>
+			<mu2 value="0.0"/>
+			<kp value="10000000.0" />
+			<kd value="1.0" />
+			<fdir1 value="1 0 0"/>
+            <turnGravityOff>false</turnGravityOff>
+    </gazebo>
+    
+   
+  </xacro:macro>
+
+</robot>

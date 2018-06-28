@@ -1,31 +1,35 @@
 <?xml version="1.0"?>
 <package>
   <name>rb1_base_navigation</name>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
   <description>
     This package configures the move_base stack and makes use of the gmapping and amcl algorithms to
-    move the rb1_base robot 
+    move the rb1_base robot
   </description>
-  <maintainer email="info@robotnik.es">Robotnik</maintainer>
+  
+  <maintainer email="asoriano@robotnik.es">Angel Soriano</maintainer>
+  <maintainer email="avillena@robotnik.es">Álvaro Villena</maintainer>
+  <maintainer email="dredo@robotnik.es">David Redó</maintainer>
+  <maintainer email="aarnal@robotnik.es">Alejandro Arnal</maintainer>
+  <maintainer email="mbosch@robotnik.es">Marc Bosch</maintainer>
+  <maintainer email="rnavarro@robotnik.es">Román Navarro</maintainer>
+
   <license>BSD</license>
 
   <url>http://ros.org/wiki/rb1_base_navigation</url>
+  <url type="repository">https://github.com/RobotnikAutomation/rb1_base_common.git</url>
+  <url type="bugtracker">https://github.com/RobotnikAutomation/rb1_base_common/issues</url>
+
   <author>Robotnik</author>
 
   <buildtool_depend>catkin</buildtool_depend>
-    
-  <run_depend>message_runtime</run_depend>
-  <run_depend>std_msgs</run_depend>
+
   <run_depend>move_base</run_depend>
-  <run_depend>gmapping</run_depend>
-  <run_depend>amcl</run_depend>
-  <run_depend>robot_pose_efk</run_depend>
-  <run_depend>map_server</run_depend>
-  <run_depend>rviz</run_depend>
-  <run_depend>topic_tools</run_depend>
-  <run_depend>tf</run_depend>
-     
+  <run_depend>teb_local_planner</run_depend>
+  <run_depend>costmap_prohibition_layer</run_depend>
+
+  <build_depend>move_base</build_depend>
+  <build_depend>teb_local_planner</build_depend>
+  <build_depend>costmap_prohibition_layer</build_depend>
+  
 </package>
-
-
-

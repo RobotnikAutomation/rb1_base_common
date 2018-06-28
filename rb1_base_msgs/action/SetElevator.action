@@ -1,8 +1,0 @@
-# goal definition
-int32 query
----
-# result definition
-bool result
----
-# feedback definition
-float32 time_taken
