@@ -4,7 +4,7 @@ TrajectoryPlannerROS:   # params info in http://wiki.ros.org/base_local_planner
   acc_lim_x: 2.5
   acc_lim_y: 2.5
   acc_lim_theta: 3.2
-  max_vel_x: 1.0   
+  max_vel_x: 0.5 #1.0   
   min_vel_x: 0.025   
   max_vel_theta: 1.0
   min_vel_theta: -1.0

@@ -56,6 +56,7 @@
 
   <node pkg="twist_mux" type="twist_mux" name="twist_mux">
     <rosparam command="load" file="$(find rb1_base_control)/config/twist_mux.yaml" />
+    <remap from="cart_docker/cmd_vel" to="docker/cmd_vel"/>
     <remap from="cmd_vel_out" to="robotnik_base_control/cmd_vel" />
   </node>
   

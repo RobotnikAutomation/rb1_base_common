@@ -5,17 +5,17 @@
   <arg name="x_init_pose" default="0"/>
   <arg name="y_init_pose" default="0"/>
   <arg name="z_init_pose" default="0"/>
-  <arg name="load_map" default="empty/map_empty.yaml"/>
+  <arg name="load_map" default="map2.yaml"/>
     
-  <group ns="$(arg id_robot)">
+  <group ns="$(arg id_robot)" >
       
       <arg name="prefix" default="$(arg id_robot)_"/> 
       
       <!-- Run the map server -->
-      <node name="map_server" pkg="map_server" type="map_server" args="$(find rb1_base_localization)/maps/$(arg load_map)">
+      <node name="map_server" pkg="map_server" type="map_server" args="$(find rb1_base_navigation)/maps/$(arg load_map)">
         <param name="frame_id" value="$(arg prefix)map"/>
       </node>
-     
+       
       <!-- Run move_base -->
       <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
         <rosparam file="$(find rb1_base_navigation)/config/move_base_params.yaml" command="load" />

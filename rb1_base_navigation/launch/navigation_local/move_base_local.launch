@@ -6,9 +6,9 @@
 
      <arg name="prefix" default="$(arg id_robot)_"/> 
       <!-- Run the map server -->
-      <node name="map_server" pkg="map_server" type="map_server" args="$(find rb1_base_localization)/maps/empty/map_empty.yaml">
+      <!--node name="map_server" pkg="map_server" type="map_server" args="$(find rb1_base_localization)/maps/empty/map_empty.yaml">
         <param name="frame_id" value="$(arg prefix)map"/>
-      </node>
+      </node-->
 
         <!-- Throttle the voxel grid that is being published for rviz -->
         <node ns="move_base_node/local_costmap" name="voxel_grid_throttle" pkg="topic_tools" type="throttle" args="messages voxel_grid 3.0 voxel_grid_throttled" />
