@@ -12,3 +12,8 @@ the parameter maxRange of the urdf file
 must be > than the maxUrange of the gmapping node param.
     <param name="maxUrange" value="16.0"/>
 
+Simple test:
+
+>roslaunch rb1_base_sim_bringup rb1_base_complete.launch
+
+>roslaunch rb1_base_navigation move_base_amcl.launch id_robot:=rb1_base_a

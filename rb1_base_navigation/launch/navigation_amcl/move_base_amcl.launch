@@ -5,14 +5,17 @@
   <arg name="x_init_pose" default="0"/>
   <arg name="y_init_pose" default="0"/>
   <arg name="z_init_pose" default="0"/>
-  <arg name="load_map" default="map2.yaml"/>
+  <arg name="load_map" default="willow_garage.yaml"/>
     
   <group ns="$(arg id_robot)" >
       
       <arg name="prefix" default="$(arg id_robot)_"/> 
       
       <!-- Run the map server -->
-      <node name="map_server" pkg="map_server" type="map_server" args="$(find rb1_base_navigation)/maps/$(arg load_map)">
+      <!-- node name="map_server" pkg="map_server" type="map_server" args="$(find rb1_base_navigation)/maps/$(arg load_map)">
+        <param name="frame_id" value="$(arg prefix)map"/>
+      </node -->
+      <node name="map_server" pkg="map_server" type="map_server" args="$(find rb1_base_localization)/maps/willow_garage/$(arg load_map)">
         <param name="frame_id" value="$(arg prefix)map"/>
       </node>
        
