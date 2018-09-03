@@ -3,6 +3,7 @@
 
   <arg name="sim" default="false"/>
   <arg name="cmd_vel" default="robotnik_base_control/cmd_vel"/>
+  <arg name="id_robot" default="rb1_base"/>
   <arg name="prefix" default="rb1_base_"/>
   <arg name="launch_robot_localization" default="false"/>
   <arg name="has_elevator" default="false"/>
@@ -30,10 +31,13 @@
 
 	<!-- Load joint controller configurations from YAML file to parameter server -->
 	<rosparam file="$(find rb1_base_control)/config/rb1_base_diffdrive_control.yaml" command="load"/>
-    <param name="robotnik_base_control/left_wheel" value="$(arg prefix)left_wheel_joint"/>
+        <param name="robotnik_base_control/left_wheel" value="$(arg prefix)left_wheel_joint"/>
 	<param name="robotnik_base_control/right_wheel" value="$(arg prefix)right_wheel_joint"/>
 	<param name="robotnik_base_control/base_frame_id" value="$(arg prefix)base_footprint"/>
 	<param name="robotnik_base_control/odom_frame_id" value="$(arg prefix)odom"/>
+	<param name="robotnik_elevator_controller/gazebo/robot_model" value="$(arg id_robot)"/>
+	<param name="robotnik_elevator_controller/joint/elevator_joint/name" value="$(arg prefix)elevator_platform_joint"/>
+
 	<!-- if robot_localization node is launched the controller must not publish the odom tf-->
 	<!--param if="$(arg launch_robot_localization)" name="robotnik_base_control/enable_odom_tf" value="false"/-->
 	
@@ -46,9 +50,9 @@
 						  ">
 	</node>
 	<!-- load elevator controller -->
-	<node if="$(arg has_elevator)" name="elevator_controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
-	   output="screen" ns="/$(arg id_robot)" args="--shutdown-time 1 
-					  elevator_controller"/>	
+        <node if="$(arg has_elevator)" name="elevator_controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+          output="screen" args="
+                                         robotnik_elevator_controller"/> 
 
   </group>
 

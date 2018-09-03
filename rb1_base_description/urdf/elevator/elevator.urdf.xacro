@@ -18,13 +18,13 @@
 	</joint> 
 	
 	<link name="${prefix}_base_link">
-		<!--inertial>
+		<inertial>
 			<mass value="25.0" />
 			<origin xyz="0 0 0" />
 			<inertia	ixx="0.007" ixy="0.0"  ixz="0.0"
 						iyy="0.007"  iyz="0.0"
 						izz="0.78125"/>
-		</inertial-->
+		</inertial>
 		<visual>
 			<origin xyz="0 0 0" rpy="0 0 0" />
 			<xacro:if value="${hq}">
@@ -55,14 +55,14 @@
 			<parent link="${prefix}_base_link"/>
 			<child link="${prefix}_platform_link" />
 			<axis xyz="0 0 1"/>
-			<limit effort="1.0" lower="0.0" upper="0.034" velocity="0.5"/>
+			<limit effort="10.0" lower="0.0" upper="0.034" velocity="0.5"/>
 	</joint> 
 	<link name="${prefix}_platform_link">
-		<!--inertial>
-			<mass value="0.25" />
+		<inertial>
+			<mass value="0.05" />
 			<origin xyz="0 0 0" />
 			<inertia  ixx="0.00007" ixy="0.0"  ixz="0.0"  iyy="0.00007"  iyz="0.0"  izz="0.0078" />
-		</inertial-->
+		</inertial>
 		<visual>
 			<origin xyz="0 0 0" rpy="0 0 0" />
 			<xacro:if value="${hq}">
@@ -85,10 +85,11 @@
 				<mesh filename="package://rb1_base_description/meshes/elevator/rb1_elevator_platform.dae"/>
 			</geometry>
 		</collision>
+		
 	</link>
 
-	<!--xacro:elevator_transmission prefix="${prefix}" />
-	<xacro:elevator_gazebo prefix="${prefix}" /-->
+	<xacro:elevator_transmission prefix="${prefix}" />
+	<xacro:elevator_gazebo prefix="${prefix}" />
 
 	</xacro:macro>
 	
