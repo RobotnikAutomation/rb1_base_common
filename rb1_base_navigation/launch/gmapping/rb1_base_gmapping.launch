@@ -12,6 +12,7 @@
   <arg name="map_frame" default="$(arg prefix)map"/> 
   <arg name="odom_frame" default="$(arg prefix)odom"/> 
   <arg name="base_frame" default="$(arg prefix)base_link"/> 
+  <arg name="max_urange" default="19.9"/> 
 			  
   <group ns="$(arg id_robot)">
 		  
@@ -22,7 +23,7 @@
 		  <param name="base_frame" value="$(arg base_frame)" />
 		  <param name="odom_frame" value="$(arg odom_frame)" />
 		  <param name="map_udpate_interval" value="2.0"/>
-		  <param name="maxUrange" value="30.0"/> <!-- for utm30lx laser -->
+		  <param name="maxUrange" value="$(arg max_urange)"/> <!-- for utm30lx laser -->
 		  <!--param name="maxUrange" value="5.0"/--> <!-- for urg04lx laser -->
 		  <param name="sigma" value="0.05"/>
 		  <param name="kernelSize" value="1"/>

@@ -10,11 +10,11 @@
 				<!-- for the gazebo plugin -->
 				<!--hardwareInterface>EffortJointInterface</hardwareInterface-->
 				<!-- for ros control controller -->
-				<hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+				<hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
 			</joint>            
-			<actuator name="${prefix}_platform_joint_motor">       
+			<actuator name="${prefix}_platform_joint_motor">    
+				<hardwareInterface>EffortJointInterface</hardwareInterface>    
 				<mechanicalReduction>1</mechanicalReduction>
-				<motorTorqueConstant>20</motorTorqueConstant>
 			</actuator>
 		</transmission>
 	</xacro:macro>
