@@ -110,13 +110,13 @@
 				<param name="fixed_frame" value="$(arg fixed_frame)" />
 				<param name="object_frame" value="$(arg laser_dock_middle_frame)"/>
 				<param name="scan_topic_name" value="$(arg target_topic)" />
-				<param name="min_num_cluster" type="int" value="3"/>
+				<param name="min_num_cluster" type="int" value="10"/>
 				<param name="max_num_cluser" type="int" value="50"/>
-				<param name="cluster_tolerance" value="0.1"/>
+				<param name="cluster_tolerance" value="0.05"/>
 				<param name="tag_distance" value="$(arg distance_between_reflectors)"/>
-				<param name="tag_distance_margin" value="0.2"/>
+				<param name="tag_distance_margin" value="0.1"/>
 				<param name="distance_detection" value="3.5"/>
-				<param name="desired_freq" value="5.0"/>  
+				<param name="desired_freq" value="40.0"/>  
 				<param name="filter_object_by_orientation" value="false"/>  
 			</node>
 			
