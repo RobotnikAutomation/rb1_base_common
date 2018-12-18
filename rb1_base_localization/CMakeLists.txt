@@ -50,15 +50,6 @@ include_directories(
 )
 
 ## Declare a C++ executable
-add_executable(robot_localization_utils src/robot_localization_utils.cpp)
-add_dependencies(robot_localization_utils robotnik_msgs_generate_messages_cpp)
-target_link_libraries(robot_localization_utils ${catkin_LIBRARIES})
-
-install(
-  TARGETS robot_localization_utils
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
-
 install(
   DIRECTORY launch
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
