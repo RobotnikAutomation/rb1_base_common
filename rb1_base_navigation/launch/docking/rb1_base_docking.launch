@@ -60,24 +60,28 @@
 				<param name="fixed_frame" type="string" value="$(arg fixed_frame)" />
 				
 				<param name="gain_linear_velocity_x" value="0.5" />
-				<param name="gain_angular_velocity_z" value="2.0" />
+				<param name="gain_angular_velocity_z" value="0.5" />
 				
 				<param name="maximum_linear_velocity_x" value="0.4" />
 				<param name="maximum_angular_velocity_z" value="0.7" />
 				
 				<param name="threshold_linear_velocity_x" value="0.002" />
 				<param name="threshold_linear_velocity_y" value="0.002" />
-				<param name="threshold_angular_velocity_z" value="0.05" />
+				<param name="threshold_angular_velocity_z" value="0.005" />
+				
+				<param name="goal_threshold_x" value="0.005" />
+				<param name="goal_threshold_y" value="0.005" />
+				<param name="goal_threshold_theta" value="0.06" />
 
 				<param name="initial_maximum_distance_x" value="2.5" />
 				<param name="initial_minimum_distance_x" value="0.5" />
 				
-				<param name="minimum_relative_linear_velocity_between_robot_and_goal" value="0.003" />
-				<param name="minimum_relative_angular_velocity_between_robot_and_goal" value="0.01" />
+				<param name="minimum_relative_linear_velocity_between_robot_and_goal" value="0.001" />
+				<param name="minimum_relative_angular_velocity_between_robot_and_goal" value="0.002" />
 
 				<param name="initial_maximum_arc" value="0.7" />
 				<param name="initial_maximum_yaw" value="1" />
-				<param name="offset_for_heading_adjustment" value="0.5"/>
+				<param name="offset_for_heading_adjustment" value="0.3"/>
 
 				<remap from="cmd_vel" to="docker/cmd_vel"/>
 				<param name="check_robot_is_moving_to_goal" value="true" />
@@ -150,7 +154,7 @@
 				
 				<param name="goal_threshold_x" value="0.005" />
 				<param name="goal_threshold_y" value="0.005" />
-				<param name="goal_threshold_theta" value="0.05" />
+				<param name="goal_threshold_theta" value="0.06" />
 
 				<param name="initial_maximum_distance_x" value="2.5" />
 				<param name="initial_minimum_distance_x" value="0.5" />
