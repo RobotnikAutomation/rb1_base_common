@@ -9,6 +9,8 @@
   <arg name="has_elevator" default="false"/>
   <arg name="elevator_controller" default="robotnik_elevator_controller"/>
   <arg name="fake_elevator_physics" default="false"/>
+  <arg name="wheel_diameter" default="0.1524"/>
+  
   <!-- Robot - Load joint controller configurations from YAML file to parameter server -->
   <group unless="$(arg sim)">	
 	<!-- Load joint controller configurations from YAML file to parameter server -->
@@ -18,6 +20,7 @@
 	<param name="robotnik_base_control/robot_base_frame" value="$(arg prefix)base_footprint"/>
 	<param name="robotnik_base_control/odom_frame" value="$(arg prefix)odom"/>
 	<param name="robotnik_base_control/has_elevator" value="$(arg has_elevator)"/>
+	<param name="robotnik_base_control/wheel_diameter" value="$(arg wheel_diameter)"/>
 	
 	<!-- load the controllers -->
 	<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
