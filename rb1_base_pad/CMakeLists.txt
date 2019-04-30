@@ -9,10 +9,11 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   sensor_msgs
   diagnostic_updater
+  joy
 )
 
 
-add_service_files(DIRECTORY srv 
+add_service_files(DIRECTORY srv
    FILES
     enable_disable_pad.srv
 )
@@ -26,19 +27,19 @@ generate_messages(
 
 catkin_package(
 
-  CATKIN_DEPENDS 
+  CATKIN_DEPENDS
     robotnik_msgs
-    roscpp 
-    sensor_msgs 
-    geometry_msgs 
+    roscpp
+    sensor_msgs
+    geometry_msgs
     message_runtime
     diagnostic_updater
-
+    joy
 )
 
 include_directories(
-  include 
-  ${catkin_INCLUDE_DIRS} 
+  include
+  ${catkin_INCLUDE_DIRS}
 )
 
 
@@ -59,4 +60,3 @@ install(
   DIRECTORY launch
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
-
