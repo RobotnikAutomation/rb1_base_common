@@ -19,8 +19,8 @@ robotnik_base_control:
   limits:
     elevator_down:
       linear_speed_limit: 1.5 # m/s
-      linear_acceleration_limit: 1.5 # m/s^2
-      linear_deceleration_limit: 3 # m/s^2
+      linear_acceleration_limit: 1.0 # m/s^2
+      linear_deceleration_limit: 2.5 # m/s^2
       angular_speed_limit: 3 # rad/s
       angular_acceleration_limit: 3 # rad/s^2
       angular_deceleration_limit: 3 # rad/s^2
