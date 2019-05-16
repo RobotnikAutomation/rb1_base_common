@@ -1,12 +1,13 @@
   joint_left_velocity_controller:
-#    type: velocity_controllers/JointVelocityController
-    type: effort_controllers/JointEffortController
-    joint: joint_left_wheel
+    type: velocity_controllers/JointVelocityController
+#    type: effort_controllers/JointEffortController
+    joint: rb1_base_left_wheel_joint
     pid: {p: 100.0, i: 0.01, d: 10.0}
 
   joint_right_velocity_controller:
-    type: effort_controllers/JointEffortController
-    joint: joint_right_wheel
+    type: velocity_controllers/JointVelocityController
+#    type: effort_controllers/JointEffortController
+    joint: rb1_base_right_wheel_joint
     pid: {p: 100.0, i: 0.01, d: 10.0}
  
   elevator_controller:
