@@ -58,7 +58,7 @@
   	
 	<xacro:arg name="prefix" default="rb1_"/>
   
-	<!-- Gazebo ros control pluggins -->
+	<!-- Gazebo ros control plugins -->
 	<xacro:ros_control/>
 	
 	<xacro:gazebo_colors prefix="$(arg prefix)"/>
