@@ -31,7 +31,6 @@
  * \brief Allows to use a pad with the roboy controller, sending the messages received from the joystick device
  */
 
-
 #include <ros/ros.h>
 #include <sensor_msgs/Joy.h>
 #include <geometry_msgs/Twist.h>
@@ -49,18 +48,22 @@
 #include <robotnik_msgs/SetElevator.h>
 #include <robotnik_msgs/ElevatorAction.h>
 
-#define DEFAULT_NUM_OF_BUTTONS		16
-#define DEFAULT_AXIS_LINEAR_X		1
-#define DEFAULT_AXIS_LINEAR_Y       0
-#define DEFAULT_AXIS_ANGULAR		2
-#define DEFAULT_AXIS_LINEAR_Z       3	
-#define DEFAULT_SCALE_LINEAR		1.0
-#define DEFAULT_SCALE_ANGULAR		2.0
-#define DEFAULT_SCALE_LINEAR_Z      1.0 
+#include <robot_local_control_msgs/SetControlState.h>
+#include <robot_local_control_msgs/Status.h>
+#include <marker_mapping/InitPoseFromMarker.h>
 
-#define ITERATIONS_AFTER_DEADMAN    3.0
+#define DEFAULT_NUM_OF_BUTTONS 16
+#define DEFAULT_AXIS_LINEAR_X 1
+#define DEFAULT_AXIS_LINEAR_Y 0
+#define DEFAULT_AXIS_ANGULAR 2
+#define DEFAULT_AXIS_LINEAR_Z 3
+#define DEFAULT_SCALE_LINEAR 1.0
+#define DEFAULT_SCALE_ANGULAR 2.0
+#define DEFAULT_SCALE_LINEAR_Z 1.0
 
-#define JOY_ERROR_TIME					1.0
+#define ITERATIONS_AFTER_DEADMAN 3.0
+
+#define JOY_ERROR_TIME 1.0
 
 //!//////////////////////////////////////////////////////////////////////
 //!                               NOTE:                                //
@@ -69,21 +72,20 @@
 //! 								       //
 //!//////////////////////////////////////////////////////////////////////
 
-
 class RB1BasePad
 {
-	public:
+public:
 	RB1BasePad();
 	void Update();
 
-	private:
-	void padCallback(const sensor_msgs::Joy::ConstPtr& joy);
-	bool EnableDisablePad(rb1_base_pad::enable_disable_pad::Request &req, rb1_base_pad::enable_disable_pad::Response &res );
+private:
+	void padCallback(const sensor_msgs::Joy::ConstPtr &joy);
+	bool EnableDisablePad(rb1_base_pad::enable_disable_pad::Request &req, rb1_base_pad::enable_disable_pad::Response &res);
 
 	ros::NodeHandle nh_;
 
 	int linear_x_, linear_y_, linear_z_, angular_;
-	double l_scale_, a_scale_, l_scale_z_; 
+	double l_scale_, a_scale_, l_scale_z_;
 	//! It will publish into command velocity (for the robot) and the ptz_state (for the pantilt)
 	ros::Publisher vel_pub_, ptz_pub_;
 	//! It will be suscribed to the joystick
@@ -94,28 +96,36 @@ class RB1BasePad
 	std::string cmd_service_io_;
 	//! Name of the service where to actuate the elevator
 	std::string elevator_service_name_;
-	//! Name of the topic where it will be publishing the pant-tilt values	
+	//! Name of service where to set control mode
+	std::string control_mode_service_name_;
+	//! Name of service where to initialize pose
+	std::string initialize_pose_service_name_;
+	//! Name of the topic where it will be publishing the pant-tilt values
 	std::string cmd_topic_ptz_;
 	//! If it is True, it will check the timeout message
 	bool check_message_timeout_;
 	double current_vel;
 	//! Number of the DEADMAN button
 	int dead_man_button_;
-	//! Number of the button for increase or decrease the speed max of the joystick	
+	//! Number of the button for increase or decrease the speed max of the joystick
 	int speed_up_button_, speed_down_button_;
 	int button_output_1_, button_output_2_;
-    int button_raise_elevator_, button_lower_elevator_, button_stop_elevator_,axis_elevator_;
+	int button_raise_elevator_, button_lower_elevator_, button_stop_elevator_, axis_elevator_;
 	int output_1_, output_2_;
 	bool bOutput1, bOutput2;
 	//! button to change kinematic mode
 	int button_kinematic_mode_;
+	//! button to change control mode
+	int button_control_mode_;
+	//! button to initialize pose
+	int button_initialize_pose_;
 	//! kinematic mode
 	int kinematic_mode_;
 	//! Service to modify the kinematic mode
-	ros::ServiceClient setKinematicMode;  
+	ros::ServiceClient setKinematicMode;
 	//! Name of the service to change the mode
 	std::string cmd_set_mode_;
-    //! button to start the homing service
+	//! button to start the homing service
 	int button_home_;
 	//! Service to start homing
 	ros::ServiceClient doHome;
@@ -127,46 +137,48 @@ class RB1BasePad
 	// ros::ServiceServer enable_disable_srv_;
 
 	//! Service to modify the digital outputs
-	ros::ServiceClient set_digital_outputs_client_;  
+	ros::ServiceClient set_digital_outputs_client_;
 	//! Service to activate the elevator
-	ros::ServiceClient set_elevator_client_;  
+	ros::ServiceClient set_elevator_client_;
+	//! Service to set mode autonomous/manual in robot local control
+	ros::ServiceClient set_control_mode_rlc_client_;
+	//! Service to call pose initialization robot local control
+	ros::ServiceClient initialize_pose_client_;
 	//! Number of buttons of the joystick
 	int num_of_buttons_;
 	//! Pointer to a vector for controlling the event when pushing the buttons
 	bool bRegisteredButtonEvent[DEFAULT_NUM_OF_BUTTONS];
 	// DIAGNOSTICS
 	//! Diagnostic to control the frequency of the published command velocity topic
-	diagnostic_updater::HeaderlessTopicDiagnostic *pub_command_freq; 
-	//! Diagnostic to control the reception frequency of the subscribed joy topic 
-	diagnostic_updater::HeaderlessTopicDiagnostic *sus_joy_freq; 
+	diagnostic_updater::HeaderlessTopicDiagnostic *pub_command_freq;
+	//! Diagnostic to control the reception frequency of the subscribed joy topic
+	diagnostic_updater::HeaderlessTopicDiagnostic *sus_joy_freq;
 	//! General status diagnostic updater
-	diagnostic_updater::Updater updater_pad;	
+	diagnostic_updater::Updater updater_pad;
 	//! Diagnostics min freq
-	double min_freq_command, min_freq_joy; // 
+	double min_freq_command, min_freq_joy; //
 	//! Diagnostics max freq
-	double max_freq_command, max_freq_joy; // 	
+	double max_freq_command, max_freq_joy; //
 	//! Flag to enable/disable the communication with the publishers topics
 	// bool bEnable;
-    //! Client of the sound play service
-    //  sound_play::SoundClient sc;
+	//! Client of the sound play service
+	//  sound_play::SoundClient sc;
 	//! Pan & tilt increment (degrees)
 	int pan_increment_, tilt_increment_;
 };
 
-
-RB1BasePad::RB1BasePad():
-  linear_x_(1),
-  linear_y_(0),
-  angular_(2),
-  linear_z_(3)
+RB1BasePad::RB1BasePad() : linear_x_(1),
+						   linear_y_(0),
+						   angular_(2),
+						   linear_z_(3)
 {
 	current_vel = 0.1;
-	// 
+	//
 	nh_.param("num_of_buttons", num_of_buttons_, DEFAULT_NUM_OF_BUTTONS);
 
-    // MOTION CONF
+	// MOTION CONF
 	nh_.param("axis_linear_x", linear_x_, DEFAULT_AXIS_LINEAR_X);
-    nh_.param("axis_linear_y", linear_y_, DEFAULT_AXIS_LINEAR_Y);
+	nh_.param("axis_linear_y", linear_y_, DEFAULT_AXIS_LINEAR_Y);
 	nh_.param("axis_linear_z", linear_z_, DEFAULT_AXIS_LINEAR_Z);
 	nh_.param("axis_angular", angular_, DEFAULT_AXIS_ANGULAR);
 	nh_.param("scale_angular", a_scale_, DEFAULT_SCALE_ANGULAR);
@@ -174,79 +186,87 @@ RB1BasePad::RB1BasePad():
 	nh_.param("scale_linear_z", l_scale_z_, DEFAULT_SCALE_LINEAR_Z);
 	nh_.param("cmd_topic_vel", cmd_topic_vel_, cmd_topic_vel_);
 	nh_.param("button_dead_man", dead_man_button_, dead_man_button_);
-	nh_.param("button_speed_up", speed_up_button_, speed_up_button_);  //4 Thrustmaster
+	nh_.param("button_speed_up", speed_up_button_, speed_up_button_);		//4 Thrustmaster
 	nh_.param("button_speed_down", speed_down_button_, speed_down_button_); //5 Thrustmaster
-	
+
 	// DIGITAL OUTPUTS CONF
 	nh_.param("cmd_service_io", cmd_service_io_, cmd_service_io_);
 	nh_.param("button_output_1", button_output_1_, button_output_1_);
 	nh_.param("button_output_2", button_output_2_, button_output_2_);
 	nh_.param("output_1", output_1_, output_1_);
 	nh_.param("output_2", output_2_, output_2_);
-    // PANTILT CONF
+	// PANTILT CONF
 	nh_.param("cmd_topic_ptz", cmd_topic_ptz_, cmd_topic_ptz_);
 	nh_.param("button_ptz_tilt_up", ptz_tilt_up_, ptz_tilt_up_);
 	nh_.param("button_ptz_tilt_down", ptz_tilt_down_, ptz_tilt_down_);
 	nh_.param("button_ptz_pan_right", ptz_pan_right_, ptz_pan_right_);
 	nh_.param("button_ptz_pan_left", ptz_pan_left_, ptz_pan_left_);
-    nh_.param("button_home", button_home_, button_home_);
+	nh_.param("button_home", button_home_, button_home_);
 	nh_.param("pan_increment", pan_increment_, 1);
-	nh_.param("tilt_increment",tilt_increment_, 1);
-	nh_.param("button_lower_elevator",button_lower_elevator_, 6);
-	nh_.param("button_raise_elevator",button_raise_elevator_, 4);
-	nh_.param("button_stop_elevator",button_stop_elevator_, 16);
-    nh_.param("axis_elevator",axis_elevator_, 1);
-    nh_.param("cmd_service_home", cmd_home_, cmd_home_);
-	nh_.param("check_message_timeout", check_message_timeout_, check_message_timeout_); 
-    nh_.param<std::string>("elevator_service_name", elevator_service_name_, "set_elevator");
-	
-	ROS_INFO("RB1BasePad num_of_buttons_ = %d", num_of_buttons_);	
-	for(int i = 0; i < num_of_buttons_; i++){
+	nh_.param("tilt_increment", tilt_increment_, 1);
+	nh_.param("button_lower_elevator", button_lower_elevator_, 6);
+	nh_.param("button_raise_elevator", button_raise_elevator_, 4);
+	nh_.param("button_stop_elevator", button_stop_elevator_, 16);
+	nh_.param("control_mode", button_control_mode_, 6);
+	nh_.param("initialize_pose", button_initialize_pose_, 4);
+
+	nh_.param("axis_elevator", axis_elevator_, 1);
+	nh_.param("cmd_service_home", cmd_home_, cmd_home_);
+	nh_.param("check_message_timeout", check_message_timeout_, check_message_timeout_);
+	nh_.param<std::string>("elevator_service_name", elevator_service_name_, "set_elevator");
+	nh_.param<std::string>("control_mode_service_name", control_mode_service_name_, "set_control_mode");
+
+	nh_.param<std::string>("initialize_pose_service_name", initialize_pose_service_name_, "initialize_pose");
+	ROS_INFO("RB1BasePad num_of_buttons_ = %d", num_of_buttons_);
+	for (int i = 0; i < num_of_buttons_; i++)
+	{
 		bRegisteredButtonEvent[i] = false;
 		ROS_INFO("bREG %d", i);
-    }
+	}
 
-  	// Publish through the node handle Twist type messages to the guardian_controller/command topic
+	// Publish through the node handle Twist type messages to the guardian_controller/command topic
 	vel_pub_ = nh_.advertise<geometry_msgs::Twist>(cmd_topic_vel_, 1);
 	//  Publishes msgs for the pant-tilt cam
-    ptz_pub_ = nh_.advertise<robotnik_msgs::ptz>(cmd_topic_ptz_, 1);
+	ptz_pub_ = nh_.advertise<robotnik_msgs::ptz>(cmd_topic_ptz_, 1);
 
- 	// Listen through the node handle sensor_msgs::Joy messages from joystick 
-    // (these are the references that we will sent to cmd_vel)
+	// Listen through the node handle sensor_msgs::Joy messages from joystick
+	// (these are the references that we will sent to cmd_vel)
 	pad_sub_ = nh_.subscribe<sensor_msgs::Joy>("joy", 10, &RB1BasePad::padCallback, this);
-	
- 	// Request service to activate / deactivate digital I/O
+
+	// Request service to activate / deactivate digital I/O
 	set_digital_outputs_client_ = nh_.serviceClient<robotnik_msgs::set_digital_output>(cmd_service_io_);
 	set_elevator_client_ = nh_.serviceClient<robotnik_msgs::SetElevator>(elevator_service_name_);
-	
+	set_control_mode_rlc_client_ =
+		nh_.serviceClient<robot_local_control_msgs::SetControlState>(control_mode_service_name_);
+	initialize_pose_client_ =
+		nh_.serviceClient<marker_mapping::InitPoseFromMarker>(initialize_pose_service_name_);
 	bOutput1 = bOutput2 = false;
 
-    // Request service to start homing
+	// Request service to start homing
 	doHome = nh_.serviceClient<robotnik_msgs::home>(cmd_home_);
 
 	// Diagnostics
 	updater_pad.setHardwareID("None");
-	// Topics freq control 
+	// Topics freq control
 	min_freq_command = min_freq_joy = 5.0;
 	max_freq_command = max_freq_joy = 50.0;
 	sus_joy_freq = new diagnostic_updater::HeaderlessTopicDiagnostic("/joy", updater_pad,
-	                    diagnostic_updater::FrequencyStatusParam(&min_freq_joy, &max_freq_joy, 0.1, 10));
+																	 diagnostic_updater::FrequencyStatusParam(&min_freq_joy, &max_freq_joy, 0.1, 10));
 
 	pub_command_freq = new diagnostic_updater::HeaderlessTopicDiagnostic(cmd_topic_vel_.c_str(), updater_pad,
-	                    diagnostic_updater::FrequencyStatusParam(&min_freq_command, &max_freq_command, 0.1, 10));
+																		 diagnostic_updater::FrequencyStatusParam(&min_freq_command, &max_freq_command, 0.1, 10));
 
 	// Advertises new service to enable/disable the pad
 	// enable_disable_srv_ = nh_.advertiseService("/rb1_base_pad/enable_disable_pad",  &RB1BasePad::EnableDisablePad, this);
 	// bEnable = true;	// Communication flag enabled by default
-
 }
-
 
 /*
  *	\brief Updates the diagnostic component. Diagnostics
  *
  */
-void RB1BasePad::Update(){
+void RB1BasePad::Update()
+{
 	updater_pad.update();
 }
 
@@ -265,115 +285,232 @@ bool RB1BasePad::EnableDisablePad(rb1_base_pad::enable_disable_pad::Request &req
 }
 */
 
-void RB1BasePad::padCallback(const sensor_msgs::Joy::ConstPtr& joy)
+void RB1BasePad::padCallback(const sensor_msgs::Joy::ConstPtr &joy)
 {
 	geometry_msgs::Twist vel;
 	robotnik_msgs::ptz ptz;
 	bool ptzEvent = false;
 	static int send_iterations_after_dead_man = 0;
-	
+
 	// Checks the ROS time to avoid noise in the pad
-	if(check_message_timeout_ && ((ros::Time::now() - joy->header.stamp).toSec() > JOY_ERROR_TIME))
+	if (check_message_timeout_ && ((ros::Time::now() - joy->header.stamp).toSec() > JOY_ERROR_TIME))
 		return;
 
-	vel.angular.x = 0.0;  vel.angular.y = 0.0; vel.angular.z = 0.0;
-	vel.linear.x = 0.0;   vel.linear.y = 0.0; vel.linear.z = 0.0;
+	vel.angular.x = 0.0;
+	vel.angular.y = 0.0;
+	vel.angular.z = 0.0;
+	vel.linear.x = 0.0;
+	vel.linear.y = 0.0;
+	vel.linear.z = 0.0;
 
-  	// Actions dependant on dead-man button
- 	if (joy->buttons[dead_man_button_] == 1) {
+	// Actions dependant on dead-man button
+	if (joy->buttons[dead_man_button_] == 1)
+	{
 		//ROS_ERROR("RB1BasePad::padCallback: DEADMAN button %d", dead_man_button_);
 		// Set the current velocity level
-		if ( joy->buttons[speed_down_button_] == 1 ){
-			if(!bRegisteredButtonEvent[speed_down_button_]) 
-				if(current_vel > 0.1){
-		  			current_vel = current_vel - 0.1;
+		if (joy->buttons[speed_down_button_] == 1)
+		{
+			if (!bRegisteredButtonEvent[speed_down_button_])
+				if (current_vel > 0.1)
+				{
+					current_vel = current_vel - 0.1;
 					bRegisteredButtonEvent[speed_down_button_] = true;
-					ROS_INFO("Velocity: %f%%", current_vel*100.0);	
-					char buf[50]="\0";
- 					int percent = (int) (current_vel*100.0);
-					sprintf(buf," %d percent", percent);
-                    // sc.say(buf);
-				}	 	
-		}else{
+					ROS_INFO("Velocity: %f%%", current_vel * 100.0);
+					char buf[50] = "\0";
+					int percent = (int)(current_vel * 100.0);
+					sprintf(buf, " %d percent", percent);
+					// sc.say(buf);
+				}
+		}
+		else
+		{
 			bRegisteredButtonEvent[speed_down_button_] = false;
-		 }
-		 
-		if (joy->buttons[speed_up_button_] == 1){
-			if(!bRegisteredButtonEvent[speed_up_button_])
-				if(current_vel < 0.9){
+		}
+
+		if (joy->buttons[speed_up_button_] == 1)
+		{
+			if (!bRegisteredButtonEvent[speed_up_button_])
+				if (current_vel < 0.9)
+				{
 					current_vel = current_vel + 0.1;
 					bRegisteredButtonEvent[speed_up_button_] = true;
-			 	 	ROS_INFO("Velocity: %f%%", current_vel*100.0);
-  					char buf[50]="\0";
-					int percent = (int) (current_vel*100.0);
-					sprintf(buf," %d percent", percent);
-                    // sc.say(buf);
+					ROS_INFO("Velocity: %f%%", current_vel * 100.0);
+					char buf[50] = "\0";
+					int percent = (int)(current_vel * 100.0);
+					sprintf(buf, " %d percent", percent);
+					// sc.say(buf);
 				}
-		  
-		}else{
+		}
+		else
+		{
 			bRegisteredButtonEvent[speed_up_button_] = false;
 		}
-		 
-		vel.angular.x = current_vel*(a_scale_*joy->axes[angular_]);
-		vel.angular.y = current_vel*(a_scale_*joy->axes[angular_]);
-		vel.angular.z = current_vel*(a_scale_*joy->axes[angular_]);
-		vel.linear.x = current_vel*l_scale_*joy->axes[linear_x_];
-		vel.linear.y = current_vel*l_scale_*joy->axes[linear_y_];
-		vel.linear.z = current_vel*l_scale_z_*joy->axes[linear_z_];
+
+		vel.angular.x = current_vel * (a_scale_ * joy->axes[angular_]);
+		vel.angular.y = current_vel * (a_scale_ * joy->axes[angular_]);
+		vel.angular.z = current_vel * (a_scale_ * joy->axes[angular_]);
+		vel.linear.x = current_vel * l_scale_ * joy->axes[linear_x_];
+		vel.linear.y = current_vel * l_scale_ * joy->axes[linear_y_];
+		vel.linear.z = current_vel * l_scale_z_ * joy->axes[linear_z_];
 
 		// ELEVATOR
-        if (joy->axes[axis_elevator_]>0.99){
-            //ROS_INFO("RB1BasePad::padCallback: button %d calling service:%s RAISE", button_stop_elevator_,elevator_service_name_.c_str());
-            robotnik_msgs::SetElevator elevator_msg_srv;
+		if (joy->axes[axis_elevator_] > 0.99)
+		{
+			//ROS_INFO("RB1BasePad::padCallback: button %d calling service:%s RAISE", button_stop_elevator_,elevator_service_name_.c_str());
+			robotnik_msgs::SetElevator elevator_msg_srv;
 
-            elevator_msg_srv.request.action.action = robotnik_msgs::ElevatorAction::RAISE;
-            set_elevator_client_.call( elevator_msg_srv );
+			elevator_msg_srv.request.action.action = robotnik_msgs::ElevatorAction::RAISE;
+			set_elevator_client_.call(elevator_msg_srv);
+		}
 
-        }
+		if (joy->axes[axis_elevator_] < -0.99)
+		{
+			//ROS_INFO("RB1BasePad::padCallback: button %d calling service:%s LOWER", button_stop_elevator_,elevator_service_name_.c_str());
+			robotnik_msgs::SetElevator elevator_msg_srv;
 
-        if (joy->axes[axis_elevator_]<-0.99){
-            //ROS_INFO("RB1BasePad::padCallback: button %d calling service:%s LOWER", button_stop_elevator_,elevator_service_name_.c_str());
-            robotnik_msgs::SetElevator elevator_msg_srv;
-
-            elevator_msg_srv.request.action.action = robotnik_msgs::ElevatorAction::LOWER;
-            set_elevator_client_.call( elevator_msg_srv );
-        }
+			elevator_msg_srv.request.action.action = robotnik_msgs::ElevatorAction::LOWER;
+			set_elevator_client_.call(elevator_msg_srv);
+		}
 	}
-   	else {
-		vel.angular.x = 0.0;	vel.angular.y = 0.0; vel.angular.z = 0.0;
-		vel.linear.x = 0.0; vel.linear.y = 0.0; vel.linear.z = 0.0;
+	else
+	{
+		vel.angular.x = 0.0;
+		vel.angular.y = 0.0;
+		vel.angular.z = 0.0;
+		vel.linear.x = 0.0;
+		vel.linear.y = 0.0;
+		vel.linear.z = 0.0;
 	}
 
-	sus_joy_freq->tick();	// Ticks the reception of joy events
+	// to set control mode
+	static bool registered_dead_man_for_control_mode = false;
+	static bool set_mode_to_autonomous = false;
 
-        // Publish only with deadman button pushed for twist use
-        if (joy->buttons[dead_man_button_] == 1) {
-            send_iterations_after_dead_man = ITERATIONS_AFTER_DEADMAN;
-            if (ptzEvent) ptz_pub_.publish(ptz);
-            vel_pub_.publish(vel);
-            pub_command_freq->tick();
-        } else { // send some 0 if deadman is released
-            if (send_iterations_after_dead_man >0) {
-                send_iterations_after_dead_man--;
-                vel_pub_.publish(vel);
-                pub_command_freq->tick();
-            }
-        }
+	if (joy->buttons[dead_man_button_] == 1)
+	{
+		if (registered_dead_man_for_control_mode == false)
+		{
+			bool success = false;
+			if (set_control_mode_rlc_client_.exists() == true)
+			{
+				robot_local_control_msgs::SetControlState control_mode;
+				control_mode.request.command = robot_local_control_msgs::Status::CONTROL_STATE_MANUAL;
+				success = set_control_mode_rlc_client_.call(control_mode);
+			}
+			else
+			{
+				success = false;
+			}
+			if (success == false)
+			{
+				ROS_ERROR_STREAM("Pad: Cannot set control mode to manual. Service name: " << set_control_mode_rlc_client_.getService());
+			}
+			else
+			{
+				ROS_INFO_STREAM("Pad: switched mode to manual");
+			}
+		}
+		if (registered_dead_man_for_control_mode == true and set_mode_to_autonomous == false and joy->buttons[button_control_mode_] == 1)
+		{
+			bool success = false;
+			if (set_control_mode_rlc_client_.exists() == true)
+			{
+				robot_local_control_msgs::SetControlState control_mode;
+				control_mode.request.command = robot_local_control_msgs::Status::CONTROL_STATE_AUTO;
+				success = set_control_mode_rlc_client_.call(control_mode);
+			}
+			else
+			{
+				success = false;
+			}
+			if (success == false)
+			{
+				ROS_ERROR_STREAM("Pad: Cannot set control mode to auto");
+			}
+			else
+			{
+				ROS_INFO_STREAM("Pad: switched mode to auto");
+			}
+			set_mode_to_autonomous = success;
+		}
+		registered_dead_man_for_control_mode = true;
+	}
+	else
+	{
+		registered_dead_man_for_control_mode = false;
+		set_mode_to_autonomous = false;
+	}
+
+	static bool initialized_pose = false;
+
+	if (joy->buttons[dead_man_button_] == 1)
+	{
+		if (initialized_pose == false and joy->buttons[button_initialize_pose_] == 1)
+		{
+			initialized_pose = true;
+			bool success = false;
+			marker_mapping::InitPoseFromMarker init_pose;
+			if (initialize_pose_client_.exists() == true)
+			{
+				success = initialize_pose_client_.call(init_pose);
+			}
+			else
+			{
+				success = false;
+			}
+			if (success == false)
+			{
+				ROS_ERROR_STREAM("Pad: Cannot call to initialize pose. Service name: " << initialize_pose_client_.getService());
+			}
+			else if (init_pose.response.ret == false)
+			{
+				ROS_ERROR_STREAM("Pad: Call resulted in error. Service name: " << initialize_pose_client_.getService());
+			}
+			else
+			{
+				ROS_INFO_STREAM("Pad: initialized pose");
+			}
+		}
+	}
+	else
+	{
+		initialized_pose = false;
+	}
+
+	sus_joy_freq->tick(); // Ticks the reception of joy events
+
+	// Publish only with deadman button pushed for twist use
+	if (joy->buttons[dead_man_button_] == 1)
+	{
+		send_iterations_after_dead_man = ITERATIONS_AFTER_DEADMAN;
+		if (ptzEvent)
+			ptz_pub_.publish(ptz);
+		vel_pub_.publish(vel);
+		pub_command_freq->tick();
+	}
+	else
+	{ // send some 0 if deadman is released
+		if (send_iterations_after_dead_man > 0)
+		{
+			send_iterations_after_dead_man--;
+			vel_pub_.publish(vel);
+			pub_command_freq->tick();
+		}
+	}
 }
 
-
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
 	ros::init(argc, argv, "rb1_base_pad");
 	RB1BasePad rb1_base_pad;
 
 	ros::Rate r(50.0);
 
-	while( ros::ok() ){
+	while (ros::ok())
+	{
 		// UPDATING DIAGNOSTICS
 		rb1_base_pad.Update();
 		ros::spinOnce();
 		r.sleep();
-		}
+	}
 }
-
