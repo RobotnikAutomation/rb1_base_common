@@ -7,14 +7,22 @@ topics:
   topic   : move_base/cmd_vel
   timeout : 0.5
   priority: 2
-- name    : docker
-  topic   : docker/cmd_vel
+- name    : dockers
+  topic   : dockers/cmd_vel
   timeout : 0.5
   priority: 2
 - name    : move
   topic   : move/cmd_vel
   timeout : 0.5
-  priority: 2  
+  priority: 2 
+#- name    : cart_docker
+#  topic   : cart_docker/cmd_vel
+#  timeout : 0.5
+#  priority: 2 
+#- name    : pp_docker
+#  topic   : pp_docker/cmd_vel
+#  timeout : 0.5
+#  priority: 2  
 - name    : external
   topic   : cmd_vel
   timeout : 0.5
