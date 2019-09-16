@@ -6,7 +6,7 @@ joint_brw_velocity_controller:
   joint: rb1_right_wheel_joint
 
 robotnik_base_control:
-  type: rb1_controller/RB1BaseController
+  type: rb1_base_controller/RB1BaseController
   joint:
     right_wheel_joint:
         name: rb1_right_wheel_joint
@@ -15,6 +15,20 @@ robotnik_base_control:
         name: rb1_left_wheel_joint
         max_speed: 27.27 # rad/s
   limits:
+    elevator_down:
+      linear_speed_limit: 1.5 # m/s
+      linear_acceleration_limit: 1.0 # m/s^2
+      linear_deceleration_limit: 2.5 # m/s^2
+      angular_speed_limit: 3 # rad/s
+      angular_acceleration_limit: 3 # rad/s^2
+      angular_deceleration_limit: 3 # rad/s^2
+    elevator_up:
+      linear_speed_limit: 1.5 # m/s
+      linear_acceleration_limit: 0.5 # 1.5 for same as elevator_down # m/s^2
+      linear_deceleration_limit: 2.0 # 3.0 for same as elevator_down # m/s^2
+      angular_speed_limit: 3 # rad/s
+      angular_acceleration_limit: 1.0 # 3.0 for same as elevator_down # rad/s^2
+      angular_deceleration_limit: 2.0 # 3.0 for same as elevator_down # rad/s^2
     # how to deccelerate in case of hard_brake. 
     hard_brake: 
       linear_speed_limit: 1.5 # m/s
