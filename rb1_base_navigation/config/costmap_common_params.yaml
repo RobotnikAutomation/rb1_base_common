@@ -3,11 +3,11 @@ publish_frequency: 1.0
 footprint: [[0.25, 0.0], [0.177, 0.177], [0.0,0.25], [-0.177, 0.177], [-0.25, 0.0], [-0.177, -0.177], [0.0, -0.25], [0.177, -0.177] ]
 
 inflation_layer:
-  inflation_radius: 0.5
+  inflation_radius: 0.3
 
 obstacle_layer:
   obstacle_range: 2.5
-  raytrace_range: 3.0
+  raytrace_range: 5.5
   observation_sources: front_laser
   front_laser:
     sensor_frame: rb1_base_front_laser_link
@@ -22,7 +22,6 @@ rgbd_obstacle_layer:
   raytrace_range: 5.5
   observation_sources: front_rgbd_to_scan
   front_rgbd_to_scan:
-    sensor_frame: rb1_front_rgbd_camera_depth_optical_scan_frame
     data_type: LaserScan
     topic: front_rgbd_camera/point_cloud_scan_filtered
     marking: true
@@ -34,7 +33,7 @@ rgbd_head_obstacle_layer:
   raytrace_range: 5.5
   observation_sources: head_rgbd_to_scan
   head_rgbd_to_scan:
-    sensor_frame: rb1_torso_rgbd_camera_depth_optical_scan_frame
+    sensor_frame: rb1_torso_rgbd_camera_link
     data_type: LaserScan
     topic: torso_rgbd_camera/point_cloud_scan_filtered
     marking: true

@@ -9,9 +9,9 @@
   <arg name="base_frame" default="$(arg prefix)base_footprint"/>
   <arg name="laser_frame" default="$(arg prefix)front_laser_link"/>
   <arg name="scan_topic" default="front_laser/scan"/>
-  <arg name="front_camera_frame" default="$(arg prefix)front_rgbd_camera_depth_optical_frame"/>
-  <arg name="front_rgbd_to_scan_topic" default="torso_rgbd_camera/point_cloud_scan_filtered"/>
-  <arg name="head_camera_frame" default="$(arg prefix)torso_rgbd_camera_depth_optical_frame"/>
+  <arg name="front_camera_frame" default="$(arg prefix)front_rgbd_camera_link"/>
+  <arg name="front_rgbd_to_scan_topic" default="front_rgbd_camera/point_cloud_scan_filtered"/>
+  <arg name="head_camera_frame" default="$(arg prefix)torso_rgbd_camera_link"/>
   <arg name="head_rgbd_to_scan_topic" default="torso_rgbd_camera/point_cloud_scan_filtered"/>
   
   <!-- Run move_base -->
