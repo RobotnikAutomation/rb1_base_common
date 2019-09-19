@@ -62,7 +62,7 @@
 	<!-- Here we create the robot elements using the xacro:macros imported at the beggining of this file -->
 		
 	<!-- BASE -->
-	<xacro:rb1_base name="rb1_base" publish_bf="true" hq="${hq}" />
+	<xacro:rb1_base_v2 name="rb1_base" publish_bf="true" hq="${hq}" />
 	
 	<!-- RUBBER WHEELS -->
 	<xacro:rubber_wheel name="right" parent="base_link" reflect="false" hq="${hq}">
