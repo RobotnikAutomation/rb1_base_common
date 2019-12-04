@@ -35,7 +35,7 @@
   <group if="$(arg sim)">	
 
 	<!-- Load joint controller configurations from YAML file to parameter server -->
-	<rosparam file="$(find rb1_base_control)/config/$(arg prefix)diffdrive_control.yaml" command="load"/>
+	<rosparam file="$(find rb1_base_control)/config/rb1_base_diffdrive_control.yaml" command="load"/>
     <param name="robotnik_base_control/left_wheel" value="$(arg prefix)left_wheel_joint"/>
 	<param name="robotnik_base_control/right_wheel" value="$(arg prefix)right_wheel_joint"/>
 	<param name="robotnik_base_control/base_frame_id" value="$(arg prefix)base_footprint"/>
