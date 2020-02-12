@@ -36,5 +36,5 @@ elevator_service_name: robotnik_base_control/set_elevator
 control_mode_service_name: robot_local_control/set_control_mode
 control_mode: 6
 
-initialize_pose_service_name: marker_mapping/init_pose_from_marker
+initialize_pose_service_name: frame_mapping/init_pose_from_frame
 initialize_pose: 4

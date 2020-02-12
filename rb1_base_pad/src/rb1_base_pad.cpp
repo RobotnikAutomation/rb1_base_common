@@ -50,7 +50,7 @@
 
 #include <robot_local_control_msgs/SetControlState.h>
 #include <robot_local_control_msgs/Status.h>
-#include <marker_mapping/InitPoseFromMarker.h>
+#include <marker_mapping/InitPoseFromFrame.h>
 
 #define DEFAULT_NUM_OF_BUTTONS 16
 #define DEFAULT_AXIS_LINEAR_X 1
@@ -239,7 +239,7 @@ RB1BasePad::RB1BasePad() : linear_x_(1),
 	set_control_mode_rlc_client_ =
 		nh_.serviceClient<robot_local_control_msgs::SetControlState>(control_mode_service_name_);
 	initialize_pose_client_ =
-		nh_.serviceClient<marker_mapping::InitPoseFromMarker>(initialize_pose_service_name_);
+		nh_.serviceClient<marker_mapping::InitPoseFromFrame>(initialize_pose_service_name_);
 	bOutput1 = bOutput2 = false;
 
 	// Request service to start homing
@@ -449,7 +449,7 @@ void RB1BasePad::padCallback(const sensor_msgs::Joy::ConstPtr &joy)
 		{
 			initialized_pose = true;
 			bool success = false;
-			marker_mapping::InitPoseFromMarker init_pose;
+			marker_mapping::InitPoseFromFrame init_pose;
 			if (initialize_pose_client_.exists() == true)
 			{
 				success = initialize_pose_client_.call(init_pose);
@@ -462,7 +462,7 @@ void RB1BasePad::padCallback(const sensor_msgs::Joy::ConstPtr &joy)
 			{
 				ROS_ERROR_STREAM("Pad: Cannot call to initialize pose. Service name: " << initialize_pose_client_.getService());
 			}
-			else if (init_pose.response.ret == false)
+			else if (init_pose.response.success == false)
 			{
 				ROS_ERROR_STREAM("Pad: Call resulted in error. Service name: " << initialize_pose_client_.getService());
 			}
