@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <launch>
-  <!-- TEB LOCAL PLANNER -->	
-  <arg name="prefix" default="rb1_base_"/> 
+  <!-- TEB LOCAL PLANNER -->
+  <arg name="prefix" default="robot_"/>
   <arg name="cmd_vel_topic" default="move_base/cmd_vel"/> <!-- using twist mux -->
-  <arg name="odom_topic" default="robotnik_base_control/odom"/> 
-  <arg name="global_frame" default="$(arg prefix)map"/> 
-  <arg name="odom_frame" default="$(arg prefix)odom"/> 
+  <arg name="odom_topic" default="robotnik_base_control/odom"/>
+  <arg name="global_frame" default="$(arg prefix)map"/>
+  <arg name="odom_frame" default="$(arg prefix)odom"/>
   <arg name="base_frame" default="$(arg prefix)base_footprint"/>
   <arg name="laser_frame" default="$(arg prefix)front_laser_link"/>
   <arg name="scan_topic" default="front_laser/scan"/>
@@ -13,7 +13,7 @@
   <arg name="front_rgbd_to_scan_topic" default="front_rgbd_camera/point_cloud_scan_filtered"/>
   <arg name="head_camera_frame" default="$(arg prefix)torso_rgbd_camera_link"/>
   <arg name="head_rgbd_to_scan_topic" default="torso_rgbd_camera/point_cloud_scan_filtered"/>
-  
+
   <!-- Run move_base -->
   <node pkg="move_base" type="move_base" respawn="false" name="move_base">
     <rosparam file="$(find rb1_base_navigation)/config/move_base_params.yaml" command="load" />
@@ -42,9 +42,9 @@
     <param name="global_costmap/robot_base_frame" value="$(arg base_frame)"/>
     <param name="TebLocalPlannerROS/map_frame" value="$(arg global_frame)"/>
     <param name="TebLocalPlannerROS/odom_topic" value="$(arg odom_topic)"/>
-    <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" /> 
-    <remap from="cmd_vel" to="$(arg cmd_vel_topic)" /> 
-    <remap from="odom" to="$(arg odom_topic)" />        
+    <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+    <remap from="cmd_vel" to="$(arg cmd_vel_topic)" />
+    <remap from="odom" to="$(arg odom_topic)" />
   </node>
-  
+
 </launch>

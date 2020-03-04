@@ -6,7 +6,7 @@
 
 <launch>
 
-	<arg name="id_robot" default="rb1_base"/>
+	<arg name="id_robot" default="robot"/>
 	<arg name="prefix" default="$(arg id_robot)_"/>
 	<arg name="scan_topic" default="front_laser/scan"/>
 	<arg name="map_frame" default="$(arg prefix)map"/>

@@ -1,4 +1,4 @@
 markers:
 - object: 1
-  name: rb1_base_noisy_marker_docking_station
+  name: robot_noisy_marker_docking_station
   size: 0.12

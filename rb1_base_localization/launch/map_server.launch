@@ -2,7 +2,7 @@
 <launch>
         <!-- maps inside the folder rb1_base_localization/maps -->
 	<arg name="map_file" default="$(find rb1_base_localization)/maps/empty/map_empty.yaml"/>
-	<arg name="prefix" default="rb1_base_"/>
+	<arg name="prefix" default="robot_"/>
 	<arg name="frame_id" default="$(arg prefix)map"/>
 
 	<!-- Run the map server -->

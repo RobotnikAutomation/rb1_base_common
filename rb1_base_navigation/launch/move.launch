@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-  <arg name="id_robot" default="$(optenv ROBOT_ID rb1_base)"/>
+  <arg name="id_robot" default="$(optenv ROBOT_ID robot)"/>
   <arg name="prefix" default="$(arg id_robot)_"/>
 
   <arg name="odom_frame" default="$(arg prefix)odom"/>
