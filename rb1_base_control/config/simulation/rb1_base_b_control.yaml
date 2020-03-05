@@ -1,21 +1,21 @@
 joint_blw_velocity_controller:
   type: velocity_controllers/JointVelocityController
-  joint: robot_left_wheel_joint
+  joint: robot_b_left_wheel_joint
 joint_brw_velocity_controller:
   type: velocity_controllers/JointVelocityController
-  joint: robot_right_wheel_joint
+  joint: robot_b_right_wheel_joint
 
 robotnik_base_control:
   type: rb1_base_controller/RB1BaseController
   joint:
     right_wheel_joint:
-        name: robot_right_wheel_joint
+        name: robot_b_right_wheel_joint
         max_speed: 27.27 # rad/s
     left_wheel_joint:
-        name: robot_left_wheel_joint
+        name: robot_b_left_wheel_joint
         max_speed: 27.27 # rad/s
     elevator_joint:
-        name: robot_elevator_platform_joint
+        name: robot_b_elevator_platform_joint
   limits:
     elevator_down:
       linear_speed_limit: 1.5 # m/s
@@ -42,8 +42,8 @@ robotnik_base_control:
       angular_deceleration_limit: 6.0 # rad/s^2
   # TODO: remove this parameter, as it will be controlled by the limits above
   hard_brake: false
-  odom_frame: robot_odom
-  robot_base_frame: robot_base_footprint
+  odom_frame: robot_b_odom
+  robot_base_frame: robot_b_base_footprint
   odom_broadcast_tf: true
   odom_topic: 'robotnik_base_control/odom'
   track_width: 0.421 # 0.543
