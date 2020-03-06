@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot name="rb1_base" xmlns:xacro="http://www.ros.org/wiki/xacro"> 
+<robot name="rb1_base" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <xacro:macro name="rb1_base_v0" params="prefix publish_bf hq">
 
@@ -22,7 +22,7 @@
        <origin xyz="0 0 ${wheel_radius - wheel_offset_z}" rpy="0 0 0" />
       <parent link="${prefix}base_footprint"/>
       <child link="${prefix}base_link" />
-    </joint>    
+    </joint>
   </xacro:if>
 
   <!-- BASE_LINK -->
@@ -30,7 +30,7 @@
     <inertial>
       <mass value="25.0" />
       <origin xyz="0 0 0" />
-      <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="1.0"  iyz="0.0"  izz="1.0" />
+      <inertia  ixx="0.605" ixy="0.0"  ixz="0.0"  iyy="0.5435"  iyz="0.0"  izz="0.981" />
     </inertial>
     <visual>
        <origin xyz="0 0 0" rpy="0 0 0" />
@@ -47,7 +47,7 @@
        <material name="darkgrey">
          <color rgba="0.1 0.1 0.1 1"/>
        </material>
-    </visual>  
+    </visual>
     <collision>
        <origin xyz="0 0 0" rpy="0 0 0 " />
        <geometry>
@@ -58,4 +58,3 @@
 
   </xacro:macro>
 </robot>
-

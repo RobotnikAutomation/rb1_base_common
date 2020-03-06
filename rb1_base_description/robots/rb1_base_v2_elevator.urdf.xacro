@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
-<robot name="rb1_base" xmlns:xacro="http://www.ros.org/wiki/xacro"> 
+<robot name="rb1_base" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 	<!-- ***************** -->
 	<!-- IMPORTED ELEMENTS -->
 	<!-- ***************** -->
-	
+
 	<!-- First we import all posible elements defined in the urdf.xacro files. All these elements are defined as macro:xacros -->
 
 	<!-- IMPORT RB1 BASE ELEMENTS -->
@@ -18,61 +18,61 @@
 
 	<!-- IMPORT SENSORS -->
 	<xacro:include filename="$(find robotnik_sensors)/urdf/all_sensors.urdf.xacro"/>
-	
+
 	<!-- IMPORT ELEVATOR -->
 	<xacro:include filename="$(find rb1_base_description)/urdf/elevator/elevator.urdf.xacro"/>
-	
+
 	<!-- ***************** -->
 	<!-- GLOBAL PARAMETERS -->
-	<!-- ***************** -->  
+	<!-- ***************** -->
 	<xacro:property name="PI" value="3.1415926535897931"/>
-  
+
 	<!-- ***************** -->
 	<!-- WHEELS PARAMETERS -->
 	<!-- ***************** -->
 	<!-- FOR RUBBER WHEEL -->
 	<xacro:property name="wheel_offset_x" value="0.0" />    <!-- x,y,z in translation from base_link to the center of the wheel -->
-	<xacro:property name="wheel_offset_y" value="0.2165" />    
+	<xacro:property name="wheel_offset_y" value="0.2165" />
 	<xacro:property name="wheel_offset_z" value="0.0512" />
-	
+
 	<!-- FOR OMNI WHEEL -->
 	<xacro:property name="omni_back_x" value="0.195" />
 	<xacro:property name="omni_back_y" value="0.0" />
 	<xacro:property name="omni_back_z" value="0.0258" />
-	
-	<xacro:property name="omni_front_x" value="0.133" /> 
-	<xacro:property name="omni_front_y" value="0.148" />  
+
+	<xacro:property name="omni_front_x" value="0.133" />
+	<xacro:property name="omni_front_y" value="0.148" />
 	<xacro:property name="omni_front_z" value="0.0258" />
-	
+
 	<!-- ******************* -->
 	<!-- ELEVATOR PARAMETERS -->
 	<!-- ******************* -->
-	
-	<xacro:property name="elevator_x" value="0.0" /> 
-	<xacro:property name="elevator_y" value="0.0" />  
+
+	<xacro:property name="elevator_x" value="0.0" />
+	<xacro:property name="elevator_y" value="0.0" />
 	<xacro:property name="elevator_z" value="0.213" />
-	
+
 	<!-- Flag to select the high or low quality model -->
 	<xacro:property name="hq" value="true" />
-	
+
 	<!-- *************** -->
 	<!-- ROBOT COMPONENTS -->
 	<!-- *************** -->
 
 	<!-- Here we create the robot elements using the xacro:macros imported at the beggining of this file -->
-		
+
 	<!-- BASE -->
 	<xacro:rb1_base name="rb1_base" publish_bf="true" hq="${hq}" />
-	
+
 	<!-- RUBBER WHEELS -->
 	<xacro:rubber_wheel name="right" parent="base_link" reflect="false" hq="${hq}">
 		<origin xyz="${wheel_offset_x} -${wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0"/>
 	</xacro:rubber_wheel>
-  
+
 	<xacro:rubber_wheel name="left" parent="base_link" reflect="true" hq="${hq}">
 		<origin xyz="${wheel_offset_x} ${wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0"/>
 	</xacro:rubber_wheel>
-	
+
 	<!-- OMNI WHEELS -->
 	<xacro:omni_wheel name="omni_back" parent="base_link" hq="${hq}">
 		<origin xyz="-${omni_back_x} ${omni_back_y} ${omni_back_z}" rpy="0 0 0"/>
@@ -85,7 +85,7 @@
 	<xacro:omni_wheel name="omni_front_right" parent="base_link" hq="${hq}">
 		<origin xyz="${omni_front_x} -${omni_front_y} ${omni_front_z}" rpy="0 0 0"/>
 	</xacro:omni_wheel>
-	
+
 	<!-- ELEVATOR_PLATFORM -->
 	<xacro:elevator_platform parent="base_link" hq="${hq}">
 		<origin xyz="${elevator_x} -${elevator_y} ${elevator_z}" rpy="0 0 0"/>
@@ -104,33 +104,32 @@
 	<!-- xacro:sensor_hokuyo_ust10lx name="front_laser" parent="base_link">
 		<origin xyz="0.223 0.0 0.159" rpy="0 0 0"/>
 	</xacro:sensor_hokuyo_ust10lx -->
-	
+
 	<!-- Name the components as base_front_laser or base_laser or front_laser or
 	a name which identify uniquely the component within the robot -->
 
 	<xacro:sensor_rplidar_a2 name="base_front_laser" parent="base_link">
 		<origin xyz="0.210 0.0 0.199" rpy="3.1415 0 0"/>
-	</xacro:sensor_rplidar_a2> 	
-	
+	</xacro:sensor_rplidar_a2>
+
 	<!-- CAMERA -->
-	<!--xacro:sensor_orbbec_astra name="base_front_camera" parent="base_link">        
+	<!--xacro:sensor_orbbec_astra name="base_front_camera" parent="base_link">
 		<origin xyz="0.234 0.0125 0.107" rpy="0 0 0"/>
-	</xacro:sensor_orbbec_astra-->  
+	</xacro:sensor_orbbec_astra-->
 
 	<!-- xacro:sensor_kinect name="front_camera" parent="base_link">
-		<origin xyz="0.6 0.0 0.102" rpy="0 0 0"/> 
-	</xacro:sensor_kinect -->   
-	
+		<origin xyz="0.6 0.0 0.102" rpy="0 0 0"/>
+	</xacro:sensor_kinect -->
+
 	<!-- IMU -->
 	<xacro:sensor_imu name="imu" parent="base_link">
 		<origin xyz="-0.18 0.0 0.170" rpy="0 0 0"/>
 	</xacro:sensor_imu>
-	
+
 	<!-- ************** -->
 	<!-- GAZEBO PLUGINS -->
 	<!-- ************** -->
 	<xacro:ros_control />
-	<!--xacro:gazebo_differencial_drive /--> 
-		
-</robot>
+	<!--xacro:gazebo_differencial_drive /-->
 
+</robot>
