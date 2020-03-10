@@ -48,7 +48,7 @@
   <node name="pp_docker" pkg="robotnik_docker" type="purepursuit_docker_node" respawn="false" output="screen">
     <param name="robot_base_frame" type="string" value="$(arg robot_base_frame)" />
     <param name="fixed_frame" type="string" value="$(arg fixed_frame)" />
-    <rosparam command="load" file="$(find summit_xl_navigation)/config/docking/pp_docker.yaml"/>
+    <rosparam command="load" file="$(find rb1_base_navigation)/config/docking/pp_docker.yaml"/>
     <remap from="cmd_vel" to="docker/cmd_vel"/>
   </node>
 

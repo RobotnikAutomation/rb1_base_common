@@ -26,7 +26,7 @@
   </node>
 
   <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="$(arg camera)_laser_filter">
-    <rosparam command="load" file="$(find summit_xl_navigation)/config/rgbd_to_scan_filter.yaml" />
+    <rosparam command="load" file="$(find rb1_base_navigation)/config/rgbd_to_scan_filter.yaml" />
     <remap from="scan" to="$(arg camera)/point_cloud_scan"/>
     <remap from="scan_filtered" to="$(arg camera)/point_cloud_scan_filtered"/>
   </node>

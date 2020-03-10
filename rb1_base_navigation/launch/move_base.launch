@@ -27,7 +27,7 @@
     <!-- Topics argumments -->
     <arg name="cmd_vel_topic" value="$(arg cmd_vel_topic)"/>
     <arg name="odom_topic" value="$(arg odom_topic)"/>
-    <arg name="scan_topic" value="$(arg front_scan_topic)"/>
+    <arg name="scan_topic" value="$(arg scan_topic)"/>
     <arg name="front_rgbd_to_scan_topic" value="$(arg front_rgbd_to_scan_topic)"/>
     <arg name="head_rgbd_to_scan_topic" value="$(arg head_rgbd_to_scan_topic)"/>
 

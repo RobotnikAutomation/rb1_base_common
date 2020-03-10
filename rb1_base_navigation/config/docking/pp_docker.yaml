@@ -10,6 +10,8 @@ minimum_relative_angular_velocity_between_robot_and_goal:  0.005
 check_initial_limits:  false
 # initial_maximum_distance_x:  1.0
 # initial_minimum_distance_x:  0.5
+# initial_maximum_distance_y:  0.0
+# initial_minimum_distance_y:  0.0
 # initial_maximum_arc:  0.52
 # initial_maximum_yaw:  0.52
 

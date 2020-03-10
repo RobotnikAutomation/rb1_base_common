@@ -14,6 +14,8 @@ goal_threshold_theta: 0.06
 check_initial_limits: true
 initial_maximum_distance_x: 2.5
 initial_minimum_distance_x: 0.5
+initial_maximum_distance_y: 0.15
+initial_minimum_distance_y: 0.0
 
 minimum_relative_linear_velocity_between_robot_and_goal: 0.001
 minimum_relative_angular_velocity_between_robot_and_goal: 0.002
