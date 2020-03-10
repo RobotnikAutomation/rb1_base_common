@@ -10,6 +10,8 @@
 
   <buildtool_depend>catkin</buildtool_depend>
   <exec_depend>marker_mapping</exec_depend>
+  <exec_depend>rostful</exec_depend>
+  <exec_depend>robot_local_control</exec_depend>
 
   <export>
 
