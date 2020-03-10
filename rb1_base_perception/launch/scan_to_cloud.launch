@@ -3,7 +3,7 @@
 
   <arg name="id_robot" default="robot"/>
   <arg name="filter_config_file" default="default_intensity_filter"/>
-  <arg name="config_path" default="$(find summit_xl_perception)/config/laser/$(arg filter_config_file).yaml"/>
+  <arg name="config_path" default="$(find rb1_base_perception)/config/laser/$(arg filter_config_file).yaml"/>
   <arg name="apply_filter" default="true"/>
   <arg name="source_topic" default="front_laser/scan" />
   <arg name="target_topic" default="front_laser/cloud_filtered_scan" />

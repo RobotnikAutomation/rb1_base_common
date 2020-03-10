@@ -16,7 +16,7 @@
 
   <!-- In case we want to use or combine serveral markers size -->
   <arg name="has_special_markers" default="false" />
-  <arg name="markers_file" default="$(find summit_xl_perception)/config/ar_markers.yaml" />
+  <arg name="markers_file" default="$(find rb1_base_perception)/config/ar_markers.yaml" />
 
 
   <node name="$(arg camera_locator_node_name)" pkg="robotnik_locator" type="alvar_locator_node" clear_params="true">
