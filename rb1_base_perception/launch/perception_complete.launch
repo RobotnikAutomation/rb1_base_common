@@ -13,11 +13,16 @@
   <arg name="camera_topic" default="$(optenv ROBOT_PERCEPTION_CAMERA_TOPIC front_rgbd_camera/rgb/image_raw)" />
   <arg name="camera_info_topic" default="$(optenv ROBOT_PERCEPTION_CAMERA_INFO_TOPIC front_rgbd_camera/rgb/camera_info)" />
   <arg name="cloud_topic" default="perception_filtered_points"/>
-  <arg name="two_tag_locator_node_name" default="charger_laser_locator"/>
-	<arg name="object_frame" default="$(arg prefix)docking_station_laser"/>
+  <arg name="charger_two_tag_locator_node_name" default="charger_laser_locator"/>
+	<arg name="charger_object_frame" default="$(arg prefix)docking_station_laser"/>
+  <arg name="cart_two_tag_locator_node_name" default="cart_laser_locator"/>
+	<arg name="cart_object_frame" default="$(arg prefix)cart_laser"/>
 
   <arg name="docking_station_tag_distance" default="$(optenv ROBOT_DOCKING_STATION_TAG_DISTANCE 0.3)"/>
   <arg name="docking_station_tag_max_distance_detection" default="$(optenv ROBOT_DOCKING_STATION_TAG_MAX_DISTANCE_DETECTION 3.5)"/>
+
+  <arg name="cart_tag_distance" default="$(optenv ROBOT_CART_TAG_DISTANCE 0.55)"/>
+  <arg name="cart_tag_max_distance_detection" default="$(optenv ROBOT_CART_TAG_MAX_DISTANCE_DETECTION 3.5)"/>
 
   <group ns="$(arg id_robot)">
 
@@ -41,12 +46,44 @@
       <!-- Launch laser locator to detect charger using reflectors -->
       <include file="$(find rb1_base_perception)/launch/two_tags_locator.launch">
         <arg name="id_robot" value="$(arg id_robot)"/>
-        <arg name="two_tag_locator_node_name" value="$(arg two_tag_locator_node_name)"/>
-      	<arg name="object_frame" value="$(arg object_frame)"/>
+        <arg name="two_tag_locator_node_name" value="$(arg charger_two_tag_locator_node_name)"/>
+      	<arg name="object_frame" value="$(arg charger_object_frame)"/>
       	<arg name="input_topic_name" value="$(arg cloud_topic)"/>
         <arg name="tag_distance" value="$(arg docking_station_tag_distance)"/>
         <arg name="tag_max_distance_detection" value="$(arg docking_station_tag_max_distance_detection)"/>
       </include>
+
+      <!-- Launch laser locator to detect carts using reflectors -->
+      <include file="$(find rb1_base_perception)/launch/two_tags_locator.launch">
+        <arg name="id_robot" value="$(arg id_robot)"/>
+        <arg name="two_tag_locator_node_name" value="$(arg cart_two_tag_locator_node_name)"/>
+      	<arg name="object_frame" value="$(arg cart_object_frame)"/>
+      	<arg name="input_topic_name" value="$(arg cloud_topic)"/>
+        <arg name="tag_distance" value="$(arg cart_tag_distance)"/>
+        <arg name="tag_max_distance_detection" value="$(arg cart_tag_max_distance_detection)"/>
+      </include>
+
+      <node name="cart_locator" pkg="robotnik_locator" type="multi_merge_locator_node" output="screen" respawn="true">
+        <remap from="laser_locator/named_objects" to="cart_laser_locator/named_objects" />
+        <param name="robot_base_frame" value="$(arg prefix)base_link"/>
+        <param name="fixed_frame" value="$(arg prefix)odom" />
+        <param name="object_frame" value="$(arg prefix)noisy_cart"/>
+        <param name="distance_threshold" value="0.3"/>
+      </node>
+
+      <node name="cart_pose_filter" pkg="robotnik_pose_filter" type="tf_multi_pose_filter_node" respawn="false" output="screen" clear_params="true">
+        <param name="filter_position_sensitivity"       type="double" value="0.5" />
+        <param name="filter_orientation_sensitivity"    type="double" value="0.1" />
+        <param name="source_frame" type="string" value="$(arg prefix)odom" />
+        <param name="target_frame" type="string" value="$(arg prefix)noisy_cart([0-9]+)" />
+        <param name="filtered_source_frame" type="string" value="$(arg prefix)odom" />
+        <param name="filtered_target_frame" type="string" value="$(arg prefix)cart" />
+        <param name="two_d_mode" type="bool" value="true" />
+        <param name="transform_timeout" type="double" value="5" />
+        <!-- as now we are getting the position using the laser, we don't need to rotate the transform -->
+        <rosparam param="apply_transform">[0.0, 0.0, 0.0, 0.0, 0.0, 1.5707]</rosparam>
+      </node>
+
     </group>
 
   </group>
