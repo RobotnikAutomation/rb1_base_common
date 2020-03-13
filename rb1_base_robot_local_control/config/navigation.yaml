@@ -47,7 +47,7 @@ ChargeComponent:
   dock_offset_x: -0.70
   move_namespace: move
   step_in_distance: 0.06 # Indicates the distance that the robot is going to move in x-axis after the docking. If 0.0 then no move action is done
-  set_to_standby: false # If 'true' then the lasers will be in standby after the docking
+  set_laser_to_standby: false # If 'true' then the lasers will be in standby after the docking
   move:
     max_velocity:
       linear_x: 0.015
