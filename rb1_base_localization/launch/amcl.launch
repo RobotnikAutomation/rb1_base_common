@@ -5,6 +5,7 @@
 <arg name="x_init_pose" default="0"/>
 <arg name="y_init_pose" default="0"/>
 <arg name="z_init_pose" default="0"/>
+<arg name="init_yaw" default="0"/>
 <arg name="scan_topic" default="front_laser/scan"/>
 <arg name="map_topic" default="map"/>
 <arg name="global_frame" default="$(arg prefix)map"/>
@@ -55,7 +56,7 @@
   <param name="initial_pose_x" value ="$(arg x_init_pose)"/>
   <param name="initial_pose_y" value ="$(arg y_init_pose)"/>
   <param name="initial_pose_z" value ="$(arg z_init_pose)"/>
-  <param name="initial_pose_a" value ="0.0"/>
+  <param name="initial_pose_a" value ="$(arg init_yaw)"/>
 
 </node>
 
