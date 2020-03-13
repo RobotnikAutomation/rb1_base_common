@@ -14,6 +14,8 @@ components:
  - MoveComponent
  - ChargeComponent
  - UnchargeComponent
+ - PickComponent
+ - PlaceComponent
 
 GoToComponent:
   type: robot_local_control_procedures/GoToMoveBase
@@ -70,3 +72,40 @@ UnchargeComponent:
       linear_x: 0.025
       linear_y: 0.025
       angular_z: 0.1
+
+PickComponent:
+  type: robot_local_control_procedures/Pick
+  desired_freq: 1.0
+  has_laser_safety: false
+  step_in_distance: 0.0
+  dock_offset_x: 0.0
+  dock_frame: robot_cart
+  robot_dock_frame: robot_base_footprint
+  docker_namespace: diff_docker
+  docker_state_topic: diff_docker/state
+  move_namespace: move
+  move_state_topic: move/state
+  action_namespace: move_base
+  elevator_namespace: robotnik_base_control/set_elevator
+  elevator_status_topic: robotnik_base_control/elevator_status
+  elevator_up_footprint: '[[0.35,-0.35],[0.35,0.35],[-0.35,0.35],[-0.35,-0.35]]'
+  laser_safety_mode_dock: docking_cart
+  laser_safety_mode_raised: cart
+  set_dynamic_footprint: true
+
+PlaceComponent:
+  type: robot_local_control_procedures/Place
+  desired_freq: 1.0
+  has_laser_safety: false
+  step_out_distance: 0.0
+  move_namespace: move
+  move_state_topic: move/state
+  action_namespace: move_base
+  elevator_namespace: robotnik_base_control/set_elevator
+  elevator_status_topic: robotnik_base_control/elevator_status
+  elevator_down_footprint: 0.3
+  set_dynamic_footprint: true
+  laser_safety_mode_dock: docking_cart
+  laser_safety_mode_standard: standard
+  turnabout_under_trolley: true
+  # rotation: 3.14
