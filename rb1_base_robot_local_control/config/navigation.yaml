@@ -88,7 +88,7 @@ PickComponent:
   action_namespace: move_base
   elevator_namespace: robotnik_base_control/set_elevator
   elevator_status_topic: robotnik_base_control/elevator_status
-  elevator_up_footprint: '[[0.35,-0.35],[0.35,0.35],[-0.35,0.35],[-0.35,-0.35]]'
+  elevator_up_footprint: '[[0.35,-0.35],[0.35,0.35],[-0.35,0.35],[-0.35,-0.35]]' # elevator_up_footprint: 0.3 to set radius
   laser_safety_mode_dock: docking_cart
   laser_safety_mode_raised: cart
   set_dynamic_footprint: true
@@ -103,7 +103,7 @@ PlaceComponent:
   action_namespace: move_base
   elevator_namespace: robotnik_base_control/set_elevator
   elevator_status_topic: robotnik_base_control/elevator_status
-  elevator_down_footprint: 0.3
+  elevator_down_footprint: '0.3' # elevator_down_footprint: '[[0.35,-0.35],[0.35,0.35],[-0.35,0.35],[-0.35,-0.35]]' to set polygon
   set_dynamic_footprint: true
   laser_safety_mode_dock: docking_cart
   laser_safety_mode_standard: standard
