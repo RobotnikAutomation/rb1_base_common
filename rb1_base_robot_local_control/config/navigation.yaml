@@ -24,7 +24,7 @@ GoToComponent:
   global_frame: robot_map
   base_frame: robot_base_footprint
   default_yaw_tolerance: 0.1 # when goal has orientation. if orientation is invalid, goal tolerance is changed to 3.14
-  has_safety_laser: true
+  has_safety_laser: false
   yaw_tolerance: 0.1
   xy_tolerance: 0.15
   preemptable: false
@@ -39,7 +39,7 @@ MoveComponent:
 ChargeComponent:
   type: robot_local_control_procedures/Charge
   desired_freq: 5.0
-  has_laser_safety: true # determines if the robot has safety_lasers and the safety zone must be changed
+  has_laser_safety: false # determines if the robot has safety_lasers and the safety zone must be changed
   docker_namespace: pp_docker
   dock_frame: robot_docking_station_laser_for_base_frame #robot_docking_station_laser_filtered
   laser_mode_at_begining: docking_station
@@ -62,7 +62,7 @@ ChargeComponent:
 UnchargeComponent:
   type: robot_local_control_procedures/Uncharge
   desired_freq: 5.0
-  has_laser_safety: true # determines if the robot has safety_lasers and the safety zone must be changed
+  has_laser_safety: false # determines if the robot has safety_lasers and the safety zone must be changed
   move_namespace: move
   laser_mode_at_finish: standard
   step_back_distance: 0.35 # Indicates the distance that the robot is going to move backwards. If 0.0 then no rotation action is done
