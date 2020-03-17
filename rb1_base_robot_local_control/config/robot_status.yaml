@@ -4,8 +4,10 @@ desired_freq: 1.0
 odom_topic: robotnik_base_control/odom
 battery_estimator_topic: battery_estimator/data
 base_hw_emergency_stop_topic: robotnik_base_hw/emergency_stop
+has_elevator: true
 elevator_topic: robotnik_base_control/elevator_status
 battery_docking_status_topic: charge_manager/docking_status
+has_safety_module: false
 safety_status_topic: safety_module/status
 
 
