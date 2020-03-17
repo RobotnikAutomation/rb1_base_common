@@ -5,7 +5,7 @@ maximum_linear_velocity_x:  0.2
 maximum_angular_velocity_z:  0.7
 
 minimum_relative_linear_velocity_between_robot_and_goal:  0.01
-minimum_relative_angular_velocity_between_robot_and_goal:  0.005
+minimum_relative_angular_velocity_between_robot_and_goal:  0.0
 
 check_initial_limits:  false
 # initial_maximum_distance_x:  1.0
@@ -19,7 +19,7 @@ check_robot_is_moving_to_goal:  true
 robot_moving_to_goal_delay:  30.0
 
 tf_timeout:  2.0
-free_goal_velocity:  true
+free_goal_velocity:  false
 
 goal_threshold_x:  0.01
 goal_threshold_y:  0.01
