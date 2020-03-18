@@ -21,7 +21,7 @@
   <arg name="docking_station_tag_distance" default="$(optenv ROBOT_DOCKING_STATION_TAG_DISTANCE 0.3)"/>
   <arg name="docking_station_tag_max_distance_detection" default="$(optenv ROBOT_DOCKING_STATION_TAG_MAX_DISTANCE_DETECTION 3.5)"/>
 
-  <arg name="cart_tag_distance" default="$(optenv ROBOT_CART_TAG_DISTANCE 0.55)"/>
+  <arg name="cart_tag_distance" default="$(optenv ROBOT_CART_TAG_DISTANCE 0.6)"/>
   <arg name="cart_tag_max_distance_detection" default="$(optenv ROBOT_CART_TAG_MAX_DISTANCE_DETECTION 3.5)"/>
 
   <arg name="merge_locator_distance_threshold" default="0.3"/>
