@@ -16,15 +16,16 @@
 	<arg name="fixed_frame" default="$(arg prefix)odom"/>
 	<arg name="robot_base_frame" default="$(arg prefix)base_footprint"/>
 	<arg name="object_frame" default="$(arg prefix)tag"/>
-	<arg name="filtered_object_frame" default="$(arg object_frame)_filtered"/>
+  <arg name="noisy_object_frame" default="$(arg object_frame)_noisy"/>
+	<arg name="filtered_object_frame" default="$(arg object_frame)"/>
 
 	<arg name="input_topic_name" default="front_laser/cloud_reflector" />
 
 
-  <node pkg="robotnik_locator" type="two_tag_laser_locator_node" name="$(arg two_tag_locator_node_name)" clear_params="true">
+  <node pkg="robotnik_locator" type="multi_two_tag_laser_locator_node" name="$(arg two_tag_locator_node_name)" clear_params="true">
     <param name="robot_base_frame" value="$(arg robot_base_frame)"/>
     <param name="fixed_frame" value="$(arg fixed_frame)" />
-    <param name="object_frame" value="$(arg object_frame)"/>
+    <param name="object_frame" value="$(arg noisy_object_frame)"/>
     <param name="input_topic_name" value="$(arg input_topic_name)" />
     <param name="min_num_cluster" type="int" value="$(arg min_num_cluster)"/>
     <param name="max_num_cluster" type="int" value="$(arg max_num_cluster)"/>
@@ -40,7 +41,7 @@
     <param name="filter_position_sensitivity"       type="double" value="0.8" />
     <param name="filter_orientation_sensitivity"    type="double" value="0.2" />
     <param name="source_frame" type="string" value="$(arg fixed_frame)" />
-    <param name="target_frame" type="string" value="$(arg object_frame)" />
+    <param name="target_frame" type="string" value="$(arg noisy_object_frame)" />
     <param name="filtered_source_frame" type="string" value="$(arg fixed_frame)" />
     <param name="filtered_target_frame" type="string" value="$(arg filtered_object_frame)" />
     <param name="two_d_mode" type="bool" value="false" />
