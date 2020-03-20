@@ -80,6 +80,7 @@ PickComponent:
   step_in_distance: 0.0
   dock_offset_x: 0.0
   dock_frame: robot_cart
+  generic_dock_frame: robot_cart_([0-9]+)
   robot_dock_frame: robot_base_footprint
   docker_namespace: pp_docker
   docker_state_topic: pp_docker/state
