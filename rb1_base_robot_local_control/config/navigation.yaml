@@ -41,10 +41,11 @@ ChargeComponent:
   desired_freq: 5.0
   has_laser_safety: false # determines if the robot has safety_lasers and the safety zone must be changed
   docker_namespace: pp_docker
-  dock_frame: robot_docking_station_laser_for_base_frame #robot_docking_station_laser_filtered
+  dock_frame: robot_docking_station
+  generic_dock_frame: robot_docking_station_([0-9]+)
   laser_mode_at_begining: docking_station
   robot_dock_frame: robot_base_footprint
-  dock_offset_x: -0.70
+  dock_offset_x: -0.45 # 0.25 robot radius + 0.25 docking station reflector to contacts - 0.05 to mimic previous working config
   move_namespace: move
   step_in_distance: 0.06 # Indicates the distance that the robot is going to move in x-axis after the docking. If 0.0 then no move action is done
   set_laser_to_standby: false # If 'true' then the lasers will be in standby after the docking
