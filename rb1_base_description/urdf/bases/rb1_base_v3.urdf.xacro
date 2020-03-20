@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot name="rb1_base" xmlns:xacro="http://www.ros.org/wiki/xacro"> 
+<robot name="rb1_base" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <xacro:macro name="rb1_base_v3" params="prefix publish_bf hq">
 
@@ -10,27 +10,27 @@
   <!-- BASE FOOTPRINT -->
   <xacro:if value="${publish_bf}">
     <link name="${prefix}base_footprint">
-      <visual>
+      <!--visual>
           <origin xyz="0 0 0" rpy="0 0 0" />
           <geometry>
              <box size="0.001 0.001 0.001" />
           </geometry>
-      </visual>
+      </visual-->
     </link>
 
     <joint name="${prefix}base_footprint_joint" type="fixed">
        <origin xyz="0 0 ${wheel_radius - wheel_offset_z}" rpy="0 0 0" />
       <parent link="${prefix}base_footprint"/>
       <child link="${prefix}base_link" />
-    </joint>    
+    </joint>
   </xacro:if>
 
   <!-- BASE_LINK -->
   <link name="${prefix}base_link">
     <inertial>
-      <mass value="26.0" />
+      <mass value="25.0" />
       <origin xyz="0 0 0" />
-      <inertia  ixx="0.007" ixy="0.0"  ixz="0.0"  iyy="0.007"  iyz="0.0"  izz="0.78" />
+      <inertia  ixx="0.605" ixy="0.0"  ixz="0.0"  iyy="0.5435"  iyz="0.0"  izz="0.981" />
     </inertial>
     <visual>
        <origin xyz="0 0 0" rpy="0 0 0" />
@@ -47,20 +47,20 @@
        <material name="darkgrey">
          <color rgba="0.1 0.1 0.1 1"/>
        </material>
-    </visual>  
-    <collision>
+    </visual>
+    <!--collision>
        <origin xyz="0 0 0" rpy="0 0 0 " />
        <geometry>
          <mesh filename="package://rb1_base_description/meshes/bases/rb1_base_v3.dae"/>
        </geometry>
-    </collision>
+    </collision-->
   </link>
-  
+
   <joint name="${prefix}front_cover_joint" type="fixed">
      <origin xyz="0.220 0.0 0.004" rpy="0 0 0 " />
      <parent link="${prefix}base_link"/>
      <child link="${prefix}front_cover_link" />
-  </joint>    
+  </joint>
 
   <!-- FRONT COVER -->
   <link name="${prefix}front_cover_link">
@@ -84,7 +84,7 @@
        <material name="black">
          <color rgba="0.0 0.0 0.0 1"/>
        </material>
-    </visual>  
+    </visual>
     <collision>
        <origin xyz="0 0 0" rpy="0 0 0 " />
        <geometry>
@@ -97,7 +97,7 @@
      <origin xyz="0.0 0.0 0.243" rpy="0 0 0 " />
      <parent link="${prefix}base_footprint"/>
      <child link="${prefix}top_cover_link" />
-  </joint>    
+  </joint>
 
   <!-- FRONT COVER -->
   <link name="${prefix}top_cover_link">
@@ -121,7 +121,7 @@
        <material name="black">
          <color rgba="0.0 0.0 0.0 1"/>
        </material>
-    </visual>  
+    </visual>
     <collision>
        <origin xyz="0 0 0" rpy="0 0 0 " />
        <geometry>
@@ -129,14 +129,14 @@
        </geometry>
     </collision>
   </link>
-	
- 
+
+
   <!-- DOCKING CONTACTS -->
   <joint name="${prefix}base_docking_joint" type="fixed">
      <origin xyz="0.030 0.000 0.068" rpy="0 0 0 " />
      <parent link="${prefix}front_cover_link"/>
      <child link="${prefix}base_docking_contact_link" />
-  </joint>    
+  </joint>
 
   <!-- DOCKING LINK -->
   <link name="${prefix}base_docking_contact_link" />
@@ -144,4 +144,3 @@
 
   </xacro:macro>
 </robot>
-
