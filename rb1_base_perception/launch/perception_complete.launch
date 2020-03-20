@@ -61,7 +61,7 @@
       </include>
 
       <!-- Launch laser locator to detect carts using reflectors -->
-      <include file="$(find rb1_base_perception)/launch/two_tags_locator.launch">
+      <include file="$(find rb1_base_perception)/launch/multi_two_tags_locator.launch">
         <arg name="id_robot" value="$(arg id_robot)"/>
         <arg name="two_tag_locator_node_name" value="$(arg cart_two_tag_locator_node_name)"/>
       	<arg name="object_frame" value="$(arg cart_object_frame)"/>
