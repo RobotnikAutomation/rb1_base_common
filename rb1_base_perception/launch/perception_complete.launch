@@ -13,8 +13,9 @@
   <arg name="camera_topic" default="$(optenv ROBOT_PERCEPTION_CAMERA_TOPIC front_rgbd_camera/rgb/image_raw)" />
   <arg name="camera_info_topic" default="$(optenv ROBOT_PERCEPTION_CAMERA_INFO_TOPIC front_rgbd_camera/rgb/camera_info)" />
   <arg name="cloud_topic" default="perception_filtered_points"/>
-  <arg name="charger_two_tag_locator_node_name" default="charger_laser_locator"/>
-	<arg name="charger_object_frame" default="$(arg prefix)docking_station_laser"/>
+
+  <arg name="docking_station_two_tag_locator_node_name" default="docking_station_laser_locator"/>
+	<arg name="docking_station_object_frame" default="$(arg prefix)docking_station_laser"/>
   <arg name="cart_two_tag_locator_node_name" default="cart_laser_locator"/>
 	<arg name="cart_object_frame" default="$(arg prefix)cart_laser"/>
 
@@ -24,12 +25,19 @@
   <arg name="cart_tag_distance" default="$(optenv ROBOT_CART_TAG_DISTANCE 0.6)"/>
   <arg name="cart_tag_max_distance_detection" default="$(optenv ROBOT_CART_TAG_MAX_DISTANCE_DETECTION 3.5)"/>
 
-  <arg name="merge_locator_distance_threshold" default="0.3"/>
-  <arg name="merge_locator_ar_marker_frame" default="robot_ar_marker_noisy_([0-9]+)"/>
-  <arg name="merge_locator_cart_laser_frame" default="robot_cart_laser_noisy_([0-9]+)"/>
-  <arg name="merge_locator_position_x_source" default="camera"/>
-  <arg name="merge_locator_position_y_source" default="laser"/>
-  <arg name="merge_locator_orientation_source" default="laser"/>
+  <arg name="docking_merge_locator_distance_threshold" default="0.1"/>
+  <arg name="docking_merge_locator_ar_marker_frame" default="robot_ar_marker_noisy_([0-9]+)"/>
+  <arg name="docking_merge_locator_laser_frame" default="robot_docking_station_laser_noisy_([0-9]+)"/>
+  <arg name="docking_merge_locator_position_x_source" default="laser"/>
+  <arg name="docking_merge_locator_position_y_source" default="laser"/>
+  <arg name="docking_merge_locator_orientation_source" default="laser"/>
+
+  <arg name="cart_merge_locator_distance_threshold" default="0.3"/>
+  <arg name="cart_merge_locator_ar_marker_frame" default="robot_ar_marker_noisy_([0-9]+)"/>
+  <arg name="cart_merge_locator_laser_frame" default="robot_cart_laser_noisy_([0-9]+)"/>
+  <arg name="cart_merge_locator_position_x_source" default="camera"/>
+  <arg name="cart_merge_locator_position_y_source" default="laser"/>
+  <arg name="cart_merge_locator_orientation_source" default="laser"/>
 
   <group ns="$(arg id_robot)">
 
@@ -50,14 +58,26 @@
         <arg name="target_frame" value="$(arg prefix)odom"/>
       </include>
 
-      <!-- Launch laser locator to detect charger using reflectors -->
-      <include file="$(find rb1_base_perception)/launch/two_tags_locator.launch">
+      <!-- Launch laser locator to detect docking_station using reflectors -->
+      <include file="$(find rb1_base_perception)/launch/multi_two_tags_locator.launch">
         <arg name="id_robot" value="$(arg id_robot)"/>
-        <arg name="two_tag_locator_node_name" value="$(arg charger_two_tag_locator_node_name)"/>
-      	<arg name="object_frame" value="$(arg charger_object_frame)"/>
+        <arg name="two_tag_locator_node_name" value="$(arg docking_station_two_tag_locator_node_name)"/>
+      	<arg name="object_frame" value="$(arg docking_station_object_frame)"/>
       	<arg name="input_topic_name" value="$(arg cloud_topic)"/>
         <arg name="tag_distance" value="$(arg docking_station_tag_distance)"/>
         <arg name="tag_max_distance_detection" value="$(arg docking_station_tag_max_distance_detection)"/>
+      </include>
+
+      <!-- Launch merge_locator to publish docking station merged detections from camera and laser -->
+      <include file="$(find rb1_base_perception)/launch/merge_locator.launch">
+        <arg name="id_robot" value="$(arg id_robot)"/>
+        <arg name="merged_object" value="docking_station"/>
+        <arg name="distance_threshold" value="$(arg docking_merge_locator_distance_threshold)"/>
+        <arg name="ar_marker_frame" value="$(arg docking_merge_locator_ar_marker_frame)"/>
+        <arg name="laser_frame" value="$(arg docking_merge_locator_laser_frame)"/>
+        <arg name="position_x_source" value="$(arg docking_merge_locator_position_x_source)"/>
+        <arg name="position_y_source" value="$(arg docking_merge_locator_position_y_source)"/>
+        <arg name="orientation_source" value="$(arg docking_merge_locator_orientation_source)"/>
       </include>
 
       <!-- Launch laser locator to detect carts using reflectors -->
@@ -73,12 +93,13 @@
       <!-- Launch merge_locator to publish cart merging detections from camera and laser -->
       <include file="$(find rb1_base_perception)/launch/merge_locator.launch">
         <arg name="id_robot" value="$(arg id_robot)"/>
-        <arg name="distance_threshold" value="$(arg merge_locator_distance_threshold)"/>
-      	<arg name="ar_marker_frame" value="$(arg merge_locator_ar_marker_frame)"/>
-      	<arg name="cart_laser_frame" value="$(arg merge_locator_cart_laser_frame)"/>
-        <arg name="position_x_source" value="$(arg merge_locator_position_x_source)"/>
-        <arg name="position_y_source" value="$(arg merge_locator_position_y_source)"/>
-        <arg name="orientation_source" value="$(arg merge_locator_orientation_source)"/>
+        <arg name="merged_object" value="cart"/>
+        <arg name="distance_threshold" value="$(arg cart_merge_locator_distance_threshold)"/>
+      	<arg name="ar_marker_frame" value="$(arg cart_merge_locator_ar_marker_frame)"/>
+      	<arg name="laser_frame" value="$(arg cart_merge_locator_laser_frame)"/>
+        <arg name="position_x_source" value="$(arg cart_merge_locator_position_x_source)"/>
+        <arg name="position_y_source" value="$(arg cart_merge_locator_position_y_source)"/>
+        <arg name="orientation_source" value="$(arg cart_merge_locator_orientation_source)"/>
       </include>
 
     </group>
