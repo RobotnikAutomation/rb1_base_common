@@ -3,7 +3,7 @@
 
   <arg name="id_robot" default="$(optenv ROBOT_ID robot)"/>
   <arg name="charge_docker_namespace" default="$(optenv ROBOT_RLC_CHARGE_DOCKER_NAMESPACE pp_docker)"/>
-  <arg name="charge_dock_offset_x" default="$(optenv ROBOT_RLC_CHARGE_DOCK_OFFSET_X 0.65)"/>
+  <!-- <arg name="charge_dock_offset_x" default="$(optenv ROBOT_RLC_CHARGE_DOCK_OFFSET_X 0.65)"/> -->
   <arg name="prefix" default="$(arg id_robot)_" />
   <arg name="global_frame" default="$(arg prefix)map" />
 
@@ -22,7 +22,7 @@
 
       <rosparam file="$(find rb1_base_robot_local_control)/config/navigation.yaml" command="load" ns="NavigationComponent"/>
       <param name="NavigationComponent/ChargeComponent/docker_namespace" value="$(arg charge_docker_namespace)" />
-      <param name="NavigationComponent/ChargeComponent/dock_offset_x" value="$(arg charge_dock_offset_x)"/>
+      <!-- <param name="NavigationComponent/ChargeComponent/dock_offset_x" value="$(arg charge_dock_offset_x)"/> -->
 
       <rosparam file="$(find rb1_base_robot_local_control)/config/localization.yaml" command="load" ns="LocalizationComponent"/>
       <rosparam file="$(find rb1_base_robot_local_control)/config/operation.yaml" command="load" ns="OperationComponent"/>
