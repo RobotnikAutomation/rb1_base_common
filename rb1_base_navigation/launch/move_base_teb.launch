@@ -8,7 +8,6 @@
   <arg name="odom_topic" default="robotnik_base_control/odom"/>
   <arg name="scan_topic" default="front_laser/scan"/>
   <arg name="front_rgbd_to_scan_topic" default="front_rgbd_camera/point_cloud_scan_filtered"/>
-  <arg name="head_rgbd_to_scan_topic" default="torso_rgbd_camera/point_cloud_scan_filtered"/>
 
   <!-- Frames arguments -->
   <arg name="global_frame" default="$(arg prefix)map"/>
@@ -16,7 +15,6 @@
   <arg name="base_frame" default="$(arg prefix)base_footprint"/>
   <arg name="laser_frame" default="$(arg prefix)front_laser_link"/>
   <arg name="front_camera_frame" default="$(arg prefix)front_rgbd_camera_link"/>
-  <arg name="head_camera_frame" default="$(arg prefix)torso_rgbd_camera_link"/>
 
 
   <!-- Run move_base -->
@@ -34,8 +32,6 @@
     <param name="global_costmap/obstacle_layer/front_laser/topic" value="$(arg scan_topic)"/>
     <param name="global_costmap/rgbd_obstacle_layer/front_rgbd_to_scan/sensor_frame" value="$(arg front_camera_frame)"/>
     <param name="global_costmap/rgbd_obstacle_layer/front_rgbd_to_scan/topic" value="$(arg front_rgbd_to_scan_topic)"/>
-    <param name="global_costmap/rgbd_head_obstacle_layer/head_rgbd_to_scan/sensor_frame" value="$(arg head_camera_frame)"/>
-    <param name="global_costmap/rgbd_head_obstacle_layer/head_rgbd_to_scan/topic" value="$(arg head_rgbd_to_scan_topic)"/>
     <param name="global_costmap/global_frame" value="$(arg global_frame)"/>
     <param name="global_costmap/robot_base_frame" value="$(arg base_frame)"/>
 
@@ -46,8 +42,6 @@
     <param name="local_costmap/obstacle_layer/front_laser/topic" value="$(arg scan_topic)"/>
     <param name="local_costmap/rgbd_obstacle_layer/front_rgbd_to_scan/sensor_frame" value="$(arg front_camera_frame)"/>
     <param name="local_costmap/rgbd_obstacle_layer/front_rgbd_to_scan/topic" value="$(arg front_rgbd_to_scan_topic)"/>
-    <param name="local_costmap/rgbd_head_obstacle_layer/head_rgbd_to_scan/sensor_frame" value="$(arg head_camera_frame)"/>
-    <param name="local_costmap/rgbd_head_obstacle_layer/head_rgbd_to_scan/topic" value="$(arg head_rgbd_to_scan_topic)"/>
     <param name="local_costmap/global_frame" value="$(arg odom_frame)"/>
     <param name="local_costmap/robot_base_frame" value="$(arg base_frame)"/>
 

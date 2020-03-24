@@ -27,15 +27,3 @@ rgbd_obstacle_layer:
     marking: true
     clearing: true
     observation_persistence: 5.0
-
-rgbd_head_obstacle_layer:
-  obstacle_range: 2.5
-  raytrace_range: 5.5
-  observation_sources: head_rgbd_to_scan
-  head_rgbd_to_scan:
-    sensor_frame: robot_torso_rgbd_camera_link
-    data_type: LaserScan
-    topic: torso_rgbd_camera/point_cloud_scan_filtered
-    marking: true
-    clearing: true
-    observation_persistence: 5.0
