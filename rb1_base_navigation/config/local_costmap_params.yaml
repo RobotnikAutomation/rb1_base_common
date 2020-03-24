@@ -21,8 +21,5 @@ local_costmap:
       name: rgbd_obstacle_layer
       type: "costmap_2d::ObstacleLayer"
     -
-      name: rgbd_head_obstacle_layer
-      type: "costmap_2d::ObstacleLayer"
-    -
       name: inflation_layer
       type: "costmap_2d::InflationLayer"
