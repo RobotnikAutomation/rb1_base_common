@@ -69,13 +69,3 @@
     elevator_position_down: 0.0
     # delay time to perform the elevation
     elevation_action_time: 1.0
-    # params for the pickup avoiding Gazebo physics
-    gazebo:
-      # if true, the carts will be raised avoiding contact
-      disable_gazebo_physics_for_pickup: true
-      pickup_service: "/elevator_fake_pickup_gazebo/simple_pick"
-      place_service: "/elevator_fake_pickup_gazebo/simple_place"
-      # model id used in Gazebo
-      robot_model: "robot"
-      # distance in z to move the picked cart (disabled)
-      # elevation_offset_z: 0.07

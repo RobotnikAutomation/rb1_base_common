@@ -7,7 +7,6 @@
   <arg name="prefix" default="robot_"/>
   <arg name="has_elevator" default="false"/>
   <arg name="elevator_controller" default="robotnik_elevator_controller"/>
-  <arg name="fake_elevator_physics" default="false"/>
   <arg name="wheel_diameter" default="0.1524"/>
 
   <!-- Robot - Load joint controller configurations from YAML file to parameter server -->
@@ -41,7 +40,6 @@
   	<param name="robotnik_base_control/odom_frame_id" value="$(arg prefix)odom"/>
   	<param name="robotnik_elevator_controller/gazebo/robot_model" value="$(arg id_robot)"/>
   	<param name="robotnik_elevator_controller/joint/elevator_joint/name" value="$(arg prefix)elevator_platform_joint"/>
-    <param name="robotnik_elevator_controller/gazebo/disable_gazebo_physics_for_pickup" value="$(arg fake_elevator_physics)"/>
 
   	<!-- load the controllers -->
   	<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
