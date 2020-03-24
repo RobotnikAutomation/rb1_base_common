@@ -20,6 +20,7 @@
 
 
   <node name="$(arg camera_locator_node_name)" pkg="robotnik_locator" type="alvar_locator_node" clear_params="true">
+    <param name="prefix" type="string" value="$(arg prefix)"/>
     <param name="desired_freq" type="double" value="10"/>
     <!-- frame to which input is transformed -->
     <param name="robot_base_frame" type="string" value="$(arg robot_base_frame)"/>

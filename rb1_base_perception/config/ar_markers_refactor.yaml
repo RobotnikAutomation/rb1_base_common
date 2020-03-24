@@ -1,5 +1,5 @@
-# This file is loaded when reflector locator is not running.
-# Used to remap from robot_ar_marker_# to robot_cart_#, robot_docking_station_# or any other
+# This file is loaded when reflector locator is running.
+# Used just to change QR sizes and publish them with the same name (default: robot_ar_locator_#)
 
 # TODO: Using regular expressions might allow us to remove id_type field
 
@@ -20,12 +20,10 @@
 # "size": Default value is 0.115
 
 markers:
-- id_type: single
-  id: 1
-  type: docking_station
-  size: 0.115
-
+# - id_type: single
+#   id: 11
+#   size: 0.08
+#
 - id_type: range
-  id: 2, 10
-  type: cart
+  id: 1, 10
   size: 0.115
