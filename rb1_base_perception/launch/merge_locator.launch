@@ -5,8 +5,8 @@
   <arg name="distance_threshold" default="0.1"/>
   <arg name="ar_marker_frame" default="robot_ar_marker_noisy_([0-9]+)"/>
   <arg name="laser_frame" default="robot_cart_laser_noisy_([0-9]+)"/>
-  <arg name="position_x_source" default="camera"/>
-  <arg name="position_y_source" default="laser"/>
+  <arg name="position_x_source" default="laser"/>
+  <arg name="position_y_source" default="camera"/>
   <arg name="orientation_source" default="laser"/>
   <arg name="merged_object" default="cart"/>
   <arg name="object_frame" default="$(arg prefix)noisy_$(arg merged_object)"/>
