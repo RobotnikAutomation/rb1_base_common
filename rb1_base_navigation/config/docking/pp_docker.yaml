@@ -18,7 +18,7 @@ check_initial_limits:  false
 check_robot_is_moving_to_goal:  true
 robot_moving_to_goal_delay:  30.0
 
-tf_timeout:  2.0
+tf_timeout:  15.0 # If free_flight_mode is false, this should be high to avoid timeouts
 free_goal_velocity:  false
 
 goal_threshold_x:  0.01
@@ -35,6 +35,6 @@ kr:  0.2
 look_ahead:  0.3
 # k_angular_to_linear_factor:  1.05
 pre_dock_point_distance: -1.0
-free_flight_mode:  true
-tf_update_frequency: 0.5
-tf_update_min_distance: 0.8
+free_flight_mode:  false
+tf_update_frequency: 1.0
+tf_update_min_distance: 0.75
