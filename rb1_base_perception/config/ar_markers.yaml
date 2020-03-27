@@ -17,7 +17,7 @@
 #           Frequently used types are 'cart' and 'docking_station'
 #   - "exact_name": marker will be published exactly as specified here (e.g. init_localization_marker).
 #           Normally used with a single id object
-# "size": Default value is 0.115
+# "size": Default value is 0.12
 
 markers:
 - id_type: single
