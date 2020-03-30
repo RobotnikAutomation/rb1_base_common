@@ -29,7 +29,8 @@
       <rosparam file="$(find rb1_base_robot_local_control)/config/control.yaml" command="load" ns="ControlComponent"/>
       <param name="robot_id" value="$(arg id_robot)" />
     </node>
+
+    <include file="$(find rb1_base_robot_local_control)/launch/marker_mapping.launch"/>
   </group>
 
-  <include file="$(find rb1_base_robot_local_control)/launch/marker_mapping.launch"/>
 </launch>
