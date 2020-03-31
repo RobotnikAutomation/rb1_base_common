@@ -11,26 +11,24 @@
   <arg unless="$(arg debug)" name="launch_prefix" value="" />
   <arg     if="$(arg debug)" name="launch_prefix" value="terminator -m -x gdb --args" /> <!-- para depurar en la misma maquina -->
 
-  <group ns="$(arg id_robot)">
-    <node name="robot_local_control" pkg="robot_local_control" type="robot_local_control_node" output="screen" launch-prefix="$(arg launch_prefix)">
-      <rosparam file="$(find rb1_base_robot_local_control)/config/base_configuration.yaml" command="load" />
-      <param name="odom_frame" value="$(arg prefix)odom" />
-      <param name="base_frame" value="$(arg prefix)base_footprint" />
-      <param name="global_frame" value="$(arg global_frame)" />
+  <node name="robot_local_control" pkg="robot_local_control" type="robot_local_control_node" output="screen" launch-prefix="$(arg launch_prefix)">
+    <rosparam file="$(find rb1_base_robot_local_control)/config/base_configuration.yaml" command="load" />
+    <param name="odom_frame" value="$(arg prefix)odom" />
+    <param name="base_frame" value="$(arg prefix)base_footprint" />
+    <param name="global_frame" value="$(arg global_frame)" />
 
-      <rosparam file="$(find rb1_base_robot_local_control)/config/robot_status.yaml" command="load" ns="RobotStatusComponent" />
+    <rosparam file="$(find rb1_base_robot_local_control)/config/robot_status.yaml" command="load" ns="RobotStatusComponent" />
 
-      <rosparam file="$(find rb1_base_robot_local_control)/config/navigation.yaml" command="load" ns="NavigationComponent"/>
-      <param name="NavigationComponent/ChargeComponent/docker_namespace" value="$(arg charge_docker_namespace)" />
-      <!-- <param name="NavigationComponent/ChargeComponent/dock_offset_x" value="$(arg charge_dock_offset_x)"/> -->
+    <rosparam file="$(find rb1_base_robot_local_control)/config/navigation.yaml" command="load" ns="NavigationComponent"/>
+    <param name="NavigationComponent/ChargeComponent/docker_namespace" value="$(arg charge_docker_namespace)" />
+    <!-- <param name="NavigationComponent/ChargeComponent/dock_offset_x" value="$(arg charge_dock_offset_x)"/> -->
 
-      <rosparam file="$(find rb1_base_robot_local_control)/config/localization.yaml" command="load" ns="LocalizationComponent"/>
-      <rosparam file="$(find rb1_base_robot_local_control)/config/operation.yaml" command="load" ns="OperationComponent"/>
-      <rosparam file="$(find rb1_base_robot_local_control)/config/control.yaml" command="load" ns="ControlComponent"/>
-      <param name="robot_id" value="$(arg id_robot)" />
-    </node>
+    <rosparam file="$(find rb1_base_robot_local_control)/config/localization.yaml" command="load" ns="LocalizationComponent"/>
+    <rosparam file="$(find rb1_base_robot_local_control)/config/operation.yaml" command="load" ns="OperationComponent"/>
+    <rosparam file="$(find rb1_base_robot_local_control)/config/control.yaml" command="load" ns="ControlComponent"/>
+    <param name="robot_id" value="$(arg id_robot)" />
+  </node>
 
-    <include file="$(find rb1_base_robot_local_control)/launch/marker_mapping.launch"/>
-  </group>
+  <include file="$(find rb1_base_robot_local_control)/launch/marker_mapping.launch"/>
 
 </launch>

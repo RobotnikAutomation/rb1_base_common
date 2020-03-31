@@ -9,23 +9,23 @@
 
   <node pkg="rostful" type="server" name="$(arg node_name)" args="--host $(arg host) -p $(arg port)
 
-      --topics $(arg id_robot)/robot_local_control/state
+      --topics robot_local_control/state
 
-      --services $(arg id_robot)/robot_local_control/NavigationComponent/GoToComponent/query_state
-                 $(arg id_robot)/robot_local_control/NavigationComponent/GoToComponent/add
-                 $(arg id_robot)/robot_local_control/NavigationComponent/GoToComponent/cancel
+      --services robot_local_control/NavigationComponent/GoToComponent/query_state
+                 robot_local_control/NavigationComponent/GoToComponent/add
+                 robot_local_control/NavigationComponent/GoToComponent/cancel
 
-                 $(arg id_robot)/robot_local_control/NavigationComponent/MoveComponent/query_state
-                 $(arg id_robot)/robot_local_control/NavigationComponent/MoveComponent/add
-                 $(arg id_robot)/robot_local_control/NavigationComponent/MoveComponent/cancel
+                 robot_local_control/NavigationComponent/MoveComponent/query_state
+                 robot_local_control/NavigationComponent/MoveComponent/add
+                 robot_local_control/NavigationComponent/MoveComponent/cancel
 
-                 $(arg id_robot)/robot_local_control/NavigationComponent/ChargeComponent/query_state
-                 $(arg id_robot)/robot_local_control/NavigationComponent/ChargeComponent/add
-                 $(arg id_robot)/robot_local_control/NavigationComponent/ChargeComponent/cancel
+                 robot_local_control/NavigationComponent/ChargeComponent/query_state
+                 robot_local_control/NavigationComponent/ChargeComponent/add
+                 robot_local_control/NavigationComponent/ChargeComponent/cancel
 
-                 $(arg id_robot)/robot_local_control/NavigationComponent/UnchargeComponent/query_state
-                 $(arg id_robot)/robot_local_control/NavigationComponent/UnchargeComponent/add
-                 $(arg id_robot)/robot_local_control/NavigationComponent/UnchargeComponent/cancel">
+                 robot_local_control/NavigationComponent/UnchargeComponent/query_state
+                 robot_local_control/NavigationComponent/UnchargeComponent/add
+                 robot_local_control/NavigationComponent/UnchargeComponent/cancel">
 
     <param name="init_delay" value="$(arg init_delay)"/>
   </node>
