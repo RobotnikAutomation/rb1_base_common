@@ -1,26 +1,40 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-<!-- ROS CONTROL GAZEBO PLUGIN -->
+	<!-- ROS CONTROL GAZEBO PLUGIN -->
 	<xacro:macro name="ros_control">
-	   <gazebo>
-      <plugin name="ros_control" filename="libgazebo_ros_control.so">
-        <!--robotNamespace>/rb1</robotNamespace-->
-        <robotParam>robot_description</robotParam>
-        <controlPeriod>0.001</controlPeriod>
-	      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+		<gazebo>
+			<plugin name="ros_control" filename="libgazebo_ros_control.so">
+				<!--robotNamespace>/rb1</robotNamespace-->
+				<robotParam>robot_description</robotParam>
+				<controlPeriod>0.001</controlPeriod>
+				<robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
 				<legacyModeNS>true</legacyModeNS>
-      </plugin>
-   </gazebo>
-   </xacro:macro>
+			</plugin>
+		</gazebo>
+	</xacro:macro>
 
-   <xacro:macro name="gazebo_colors" params="prefix">
+	<xacro:macro name="skid_steering" params="prefix publish_tf">
+		<gazebo>
+			<plugin name="skid_steering" filename="libgazebo_ros_planar_move.so">
+				<commandTopic>robotnik_base_control/cmd_vel</commandTopic>
+				<odometryTopic>robotnik_base_control/odom</odometryTopic>
+				<odometryFrame>${prefix}odom</odometryFrame>
+				<odometryRate>50.0</odometryRate>
+				<robotBaseFrame>${prefix}base_footprint</robotBaseFrame>
+				<publishTF>${publish_tf}</publishTF>
+				<enableYAxis>false</enableYAxis>
+			</plugin>
+		</gazebo>
+	</xacro:macro>
+
+	<xacro:macro name="gazebo_colors" params="prefix">
 		<gazebo reference="$(arg prefix)base_footprint">
 			<material>Gazebo/Green</material>
 		</gazebo>
 
 		<gazebo reference="$(arg prefix)base_link">
-			<material>Gazebo/Grey</material>
+			<material>Gazebo/Black</material>
 		</gazebo>
 
 		<gazebo reference="$(arg prefix)front_cover_link">
