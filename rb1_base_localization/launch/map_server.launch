@@ -6,7 +6,7 @@
 	<arg name="frame_id" default="$(arg prefix)map"/>
 
 	<!-- Run the map server -->
-	<node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)">
+	<node name="$(arg frame_id)_server" pkg="map_server" type="map_server" args="$(arg map_file)">
 		<param name="frame_id" value="$(arg frame_id)"/>
 	</node>
 
