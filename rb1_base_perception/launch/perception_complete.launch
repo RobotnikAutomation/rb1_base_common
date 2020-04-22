@@ -31,7 +31,7 @@
   <arg name="docking_merge_locator_position_y_source" default="laser"/>
   <arg name="docking_merge_locator_orientation_source" default="laser"/>
 
-  <arg name="cart_merge_locator_distance_threshold" default="0.3"/>
+  <arg name="cart_merge_locator_distance_threshold" default="0.35"/>
   <arg name="cart_merge_locator_ar_marker_frame" default="robot_ar_marker_noisy_([0-9]+)"/>
   <arg name="cart_merge_locator_laser_frame" default="robot_cart_laser_noisy_([0-9]+)"/>
   <arg name="cart_merge_locator_position_x_source" default="laser"/>
