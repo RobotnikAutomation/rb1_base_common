@@ -20,8 +20,9 @@
     <rosparam file="$(find rb1_base_robot_local_control)/config/robot_status.yaml" command="load" ns="RobotStatusComponent" />
 
     <rosparam file="$(find rb1_base_robot_local_control)/config/navigation.yaml" command="load" ns="NavigationComponent"/>
-    <param name="NavigationComponent/ChargeComponent/docker_namespace" value="$(arg charge_docker_namespace)" />
-    <!-- <param name="NavigationComponent/ChargeComponent/dock_offset_x" value="$(arg charge_dock_offset_x)"/> -->
+      <param name="NavigationComponent/ChargeComponent/docker_namespace" value="$(arg charge_docker_namespace)" />
+      <param name="NavigationComponent/GoToComponent/global_frame" value="$(arg global_frame)" />
+      <!-- <param name="NavigationComponent/ChargeComponent/dock_offset_x" value="$(arg charge_dock_offset_x)"/> -->
 
     <rosparam file="$(find rb1_base_robot_local_control)/config/localization.yaml" command="load" ns="LocalizationComponent"/>
     <rosparam file="$(find rb1_base_robot_local_control)/config/operation.yaml" command="load" ns="OperationComponent"/>
