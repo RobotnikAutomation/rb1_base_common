@@ -18,7 +18,7 @@
   <remap from="map" to="$(arg map_topic)"/>
 
   <!-- Publish scans from best pose at a max of 10 Hz -->
-  <param name="use_map_topic" value="false"/>
+  <param name="use_map_topic" value="true"/>
   <param name="odom_model_type" value="$(arg odom_model_type)"/>
   <param name="odom_alpha5" value="0.1"/>
   <param name="transform_tolerance" value="0.2" />
