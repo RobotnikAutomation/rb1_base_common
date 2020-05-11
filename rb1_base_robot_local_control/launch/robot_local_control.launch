@@ -27,6 +27,7 @@
     <rosparam file="$(find rb1_base_robot_local_control)/config/localization.yaml" command="load" ns="LocalizationComponent"/>
     <rosparam file="$(find rb1_base_robot_local_control)/config/operation.yaml" command="load" ns="OperationComponent"/>
     <rosparam file="$(find rb1_base_robot_local_control)/config/control.yaml" command="load" ns="ControlComponent"/>
+    <rosparam file="$(find rb1_base_robot_local_control)/config/process_manager.yaml" command="load" ns="ProcessManagerComponent"/>
     <param name="robot_id" value="$(arg id_robot)" />
   </node>
 
