@@ -37,6 +37,8 @@
   <arg name="cart_merge_locator_position_x_source" default="laser"/>
   <arg name="cart_merge_locator_position_y_source" default="camera"/>
   <arg name="cart_merge_locator_orientation_source" default="laser"/>
+  
+  <group ns="$(arg id_robot)">
 
   <group if="$(arg run_reflector_locator)">
 
@@ -143,6 +145,8 @@
     </node>
 
     <!-- Add additional pose filters depending on the names defined on the markers_file -->
+  </group>
+  
   </group>
 
 </launch>
