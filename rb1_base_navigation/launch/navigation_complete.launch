@@ -9,6 +9,7 @@
   <arg name="run_laser_filters" default="$(optenv ROBOT_RUN_LASER_FILTERS true)"/>
 
   <!-- Move arguments-->
+  <group ns="$(arg id_robot)">
 
   <include if="$(arg has_docker)" file="$(find rb1_base_navigation)/launch/rb1_base_docking.launch">
     <arg name="id_robot" value="$(arg id_robot)"/>
@@ -26,5 +27,7 @@
     <arg name="output_scan" value="front_laser/filtered_scan"/>
     <arg name="config_file" value="scan_filter.yaml"/>
   </include>
+  
+  </group>
 
 </launch>
