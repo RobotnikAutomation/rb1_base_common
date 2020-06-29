@@ -45,9 +45,9 @@ ChargeComponent:
   generic_dock_frame: robot_docking_station_([0-9]+)
   laser_mode_at_begining: docking_station
   robot_dock_frame: robot_base_footprint
-  dock_offset_x: -0.45 # 0.25 robot radius + 0.25 docking station reflector to contacts - 0.05 to mimic previous working config
+  dock_offset_x: -0.49 # 0.25 robot radius + 0.25 docking station reflector to contacts - 0.05 to mimic previous working config
   move_namespace: move
-  step_in_distance: 0.06 # Indicates the distance that the robot is going to move in x-axis after the docking. If 0.0 then no move action is done
+  step_in_distance: 0.1 # Indicates the distance that the robot is going to move in x-axis after the docking. If 0.0 then no move action is done
   set_laser_to_standby: false # If 'true' then the lasers will be in standby after the docking
   move:
     max_velocity:
