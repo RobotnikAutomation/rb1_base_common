@@ -41,7 +41,7 @@ ChargeComponent:
   desired_freq: 5.0
   has_laser_safety: false # determines if the robot has safety_lasers and the safety zone must be changed
   docker_namespace: pp_docker
-  dock_frame: robot_docking_station
+  dock_frame: robot_docking_station_laser
   generic_dock_frame: robot_docking_station_([0-9]+)
   laser_mode_at_begining: docking_station
   robot_dock_frame: robot_base_footprint
