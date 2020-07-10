@@ -1,0 +1,53 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/jose/catkin_ws/rb1_ws/devel/include/**",
+        "/opt/ros/kinetic/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/sensors/ros_astra_camera/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/private/battery_manager/battery_estimation/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/private/battery_manager/charge_manager/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/navigation/eband_local_planner/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/simulation/gazebo_ros_pkgs/gazebo_plugins/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/simulation/gazebo_ros_pkgs/gazebo_ros/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/simulation/gazebo_ros_pkgs/gazebo_ros_control/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/navigation/robotnik_localization/icp_pose_corrector/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/imu/imu_tools/imu_complementary_filter/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/imu/imu_tools/imu_filter_madgwick/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/imu/imu_manager/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/navigation/robotnik_localization/localization_checker/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/imu/myahrs_driver/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/private/robot_local_control/procedures/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/robot/rb1_base_robot/rb1_base_controller/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/others/rcomponent/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/private/robot_local_control/robot_local_control/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/private/robot_local_control/robot_local_control_components/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/private/robot_local_control/robot_local_control_dummy_components/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/private/robot_local_control/robot_local_control_procedures/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/navigation/robot_localization_utils/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/private/robotnik_base_hw_lib/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/simulation/robotnik_base_hw_sim/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/private/robotnik_navigation/robotnik_docker/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/simulation/robotnik_elevator_interface/robotnik_elevator_component/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/simulation/robotnik_gazebo_plugins/robotnik_gazebo_ground_truth_odom/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/private/robotnik_navigation/robotnik_detection/robotnik_locator/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/private/robotnik_navigation/robotnik_move/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/private/robotnik_navigation/robotnik_pose_filter/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/navigation/robotnik_purepursuit_planner/robotnik_pp_planner/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/private/robotnik_navigation/robotnik_safety_controller/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/private/robotnik_navigation/robotnik_velocity_limiter/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/private/robot_local_control/service_shifter/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/sensors/ublox/ublox_gps/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/sensors/ublox/ublox_msgs/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/sensors/ublox/ublox_serialization/include/**",
+        "/home/jose/catkin_ws/rb1_ws/src/rb1_packages/web/web_video_server/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS"
+    }
+  ]
+}

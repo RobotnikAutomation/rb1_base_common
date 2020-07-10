@@ -118,7 +118,8 @@
 
 	<xacro:ur3_robot prefix="$(arg prefix)right_arm_" joint_limited="true"
 		shoulder_pan_lower_limit="${-pi}" shoulder_pan_upper_limit="${pi}"
-		wrist_3_lower_limit="${-pi}" wrist_3_upper_limit="${pi}">
+		wrist_3_lower_limit="${-pi}" wrist_3_upper_limit="${pi}"
+		kinematics_file="${load_yaml('$(find rb1_base_control)/config/ur3_calibration.yaml')}">
 	</xacro:ur3_robot>
 
 	<joint name="$(arg prefix)right_arm_base_joint" type="fixed">
@@ -129,7 +130,8 @@
 
 	<xacro:ur3_robot prefix="$(arg prefix)left_arm_" joint_limited="true"
 		shoulder_pan_lower_limit="${-pi}" shoulder_pan_upper_limit="${pi}"
-		wrist_3_lower_limit="${-pi}" wrist_3_upper_limit="${pi}">
+		wrist_3_lower_limit="${-pi}" wrist_3_upper_limit="${pi}"
+		kinematics_file="${load_yaml('$(find rb1_base_control)/config/ur3_calibration.yaml')}">
 	</xacro:ur3_robot>
 
 	<joint name="$(arg prefix)left_arm_base_joint" type="fixed">
