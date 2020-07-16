@@ -57,6 +57,8 @@
 	<xacro:rb1_base_v3 prefix="$(arg prefix)" publish_bf="true" hq="${hq}" />
 
 	<xacro:arg name="prefix" default="rb1_"/>
+	<xacro:arg name="use_gpu_for_simulation" default="false" />
+	<xacro:property name="gpu" value="$(arg use_gpu_for_simulation)" />
 
 	<!-- Gazebo ros control plugins -->
 	<xacro:ros_control/>
