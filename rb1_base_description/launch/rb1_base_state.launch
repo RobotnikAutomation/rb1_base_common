@@ -2,8 +2,9 @@
 <launch>
   <arg name="version" default="rb1_base_std.urdf.xacro" />
   <arg name="prefix" default="rb1_base"/>
+  <arg name="use_gpu_for_simulation" default="$(optenv USE_GPU_FOR_SIMULATION true)" />
 
-  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find rb1_base_description)/robots/$(arg version)' prefix:=$(arg prefix)" />
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find rb1_base_description)/robots/$(arg version)' prefix:=$(arg prefix) use_gpu_for_simulation:=$(arg use_gpu_for_simulation)" />
 
   <!-- publish tfs through the robot_state_publisher -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
