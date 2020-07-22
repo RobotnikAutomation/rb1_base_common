@@ -7,7 +7,8 @@
   <arg name="node_name" default="rlc_rostful_server"/>
   <arg name="init_delay" default="1"/>
 
-  <node pkg="rostful" type="server" name="$(arg node_name)" args="--host $(arg host) -p $(arg port)
+  <group ns="$(arg id_robot)">
+    <node pkg="rostful" type="server" name="$(arg node_name)" args="--host $(arg host) -p $(arg port)
 
       --topics robot_local_control/state
 
@@ -35,7 +36,9 @@
                  robot_local_control/NavigationComponent/UnchargeComponent/add
                  robot_local_control/NavigationComponent/UnchargeComponent/cancel">
 
-    <param name="init_delay" value="$(arg init_delay)"/>
-  </node>
+      <param name="init_delay" value="$(arg init_delay)"/>
+    </node>
+
+  </group>
 
 </launch>
