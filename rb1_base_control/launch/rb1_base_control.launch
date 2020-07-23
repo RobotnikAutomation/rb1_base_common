@@ -72,12 +72,12 @@
 	<!-- load arm controller -->
 	<group if="$(arg sim_arm_control)">
 
-		<rosparam file="$(find rb1_base_control)/config/ur_left_controllers.yaml" command="load" subst_value="true" ns="left_arm"/>
+		<rosparam file="$(find rb1_base_control)/config/ur_left_arm_controllers.yaml" command="load" subst_value="true" ns="left_arm"/>
 		<node name="controller_spawner_left_arm" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="
 			$(arg left_arm_controllers)
 		"/>
 
-		<rosparam file="$(find rb1_base_control)/config/ur_right_controllers.yaml" command="load" subst_value="true" ns="right_arm"/>
+		<rosparam file="$(find rb1_base_control)/config/ur_right_arm_controllers.yaml" command="load" subst_value="true" ns="right_arm"/>
 		<node name="controller_spawner_right_arm" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="
 			$(arg right_arm_controllers)
 		"/>
