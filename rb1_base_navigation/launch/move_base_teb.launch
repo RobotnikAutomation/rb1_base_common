@@ -18,7 +18,7 @@
 
 
   <!-- Run move_base -->
-  <node pkg="move_base" type="move_base" respawn="false" name="move_base">
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
     <remap from="cmd_vel" to="$(arg cmd_vel_topic)" />
     <remap from="odom" to="$(arg odom_topic)" />
 
