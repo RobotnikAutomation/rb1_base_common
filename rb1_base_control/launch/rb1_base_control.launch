@@ -16,7 +16,7 @@
     <!-- Load joint controller configurations from YAML file to parameter server -->
     <rosparam
       command="load"
-      file="$(find rb1_base_control)/config/$(arg prefix)control.yaml"
+      file="$(find rb1_base_control)/config/rb1_base_control.yaml"
       subst_value="true"
     />
     <param name="robotnik_base_control/joint/left_wheel_joint/name" value="$(arg prefix)left_wheel_joint"/>
@@ -47,7 +47,7 @@
     <!-- Load joint controller configurations from YAML file to parameter server -->
     <rosparam
       command="load"
-      file="$(find rb1_base_control)/config/$(arg prefix)diffdrive_control.yaml"
+      file="$(find rb1_base_control)/config/rb1_base_diffdrive_control.yaml"
       subst_value="true"
     />
     <param name="robotnik_base_control/left_wheel" value="$(arg prefix)left_wheel_joint"/>
