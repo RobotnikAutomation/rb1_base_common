@@ -20,6 +20,7 @@ button_ptz_pan_right: 6
 button_ptz_pan_left: 6
 button_ptz_zoom_wide: 9
 button_ptz_zoom_tele: 8
+button_override_safety: 4
 axis_elevator: 10
 button_home: 6
 tilt_increment: 5
@@ -28,6 +29,7 @@ zoom_increment: 300
 button_kinematic_mode: 7
 joystick_dead_zone: "true" #useful for x-wam
 cmd_service_home:  robot_controller/home
+cmd_override_safety:  safety_module/set_named_output
 check_message_timeout: true
 
 axis_elevator: 10

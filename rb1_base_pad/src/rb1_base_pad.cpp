@@ -48,6 +48,7 @@
 #include <diagnostic_updater/publisher.h>
 #include <robotnik_msgs/SetElevator.h>
 #include <robotnik_msgs/ElevatorAction.h>
+#include <robotnik_msgs/SetNamedDigitalOutput.h>
 
 #define DEFAULT_NUM_OF_BUTTONS		16
 #define DEFAULT_AXIS_LINEAR_X		1
@@ -151,6 +152,12 @@ class RB1BasePad
     //  sound_play::SoundClient sc;
 	//! Pan & tilt increment (degrees)
 	int pan_increment_, tilt_increment_;
+
+	// Safety params
+	bool overrided_;
+	int override_safety_button_;
+	std::string cmd_override_safety_;
+	ros::ServiceClient override_safety_client_;  
 };
 
 
@@ -176,6 +183,8 @@ RB1BasePad::RB1BasePad():
 	nh_.param("button_dead_man", dead_man_button_, dead_man_button_);
 	nh_.param("button_speed_up", speed_up_button_, speed_up_button_);  //4 Thrustmaster
 	nh_.param("button_speed_down", speed_down_button_, speed_down_button_); //5 Thrustmaster
+	nh_.param("button_override_safety", override_safety_button_, override_safety_button_);
+	nh_.param("cmd_override_safety", cmd_override_safety_, cmd_override_safety_);
 	
 	// DIGITAL OUTPUTS CONF
 	nh_.param("cmd_service_io", cmd_service_io_, cmd_service_io_);
@@ -239,6 +248,9 @@ RB1BasePad::RB1BasePad():
 	// enable_disable_srv_ = nh_.advertiseService("/rb1_base_pad/enable_disable_pad",  &RB1BasePad::EnableDisablePad, this);
 	// bEnable = true;	// Communication flag enabled by default
 
+	overrided_ = false;
+	override_safety_client_ = nh_.serviceClient<robotnik_msgs::SetNamedDigitalOutput>(cmd_override_safety_);
+
 }
 
 
@@ -297,7 +309,33 @@ void RB1BasePad::padCallback(const sensor_msgs::Joy::ConstPtr& joy)
 		}else{
 			bRegisteredButtonEvent[speed_down_button_] = false;
 		 }
-		 
+		
+		if (joy->buttons[override_safety_button_] == 1)
+		{
+			if (overrided_ == false)
+			{
+				robotnik_msgs::SetNamedDigitalOutput override_safety;
+				override_safety.request.name = "laser_override";
+				override_safety.request.value = true;
+	            override_safety_client_.call( override_safety );
+
+				overrided_ = true;
+			}
+		}
+		else
+		{
+			if (overrided_ == true)
+			{
+
+				robotnik_msgs::SetNamedDigitalOutput override_safety;
+				override_safety.request.name = "laser_override";
+				override_safety.request.value = false;
+	            override_safety_client_.call( override_safety );
+
+				overrided_ = false;
+			}
+		}
+
 		if (joy->buttons[speed_up_button_] == 1){
 			if(!bRegisteredButtonEvent[speed_up_button_])
 				if(current_vel < 0.9){
@@ -357,6 +395,15 @@ void RB1BasePad::padCallback(const sensor_msgs::Joy::ConstPtr& joy)
                 send_iterations_after_dead_man--;
                 vel_pub_.publish(vel);
                 pub_command_freq->tick();
+				if (overrided_ = true)
+				{
+					robotnik_msgs::SetNamedDigitalOutput override_safety;
+					override_safety.request.name = "laser_override";
+					override_safety.request.value = false;
+					override_safety_client_.call( override_safety );
+
+					overrided_ = false;
+				}
             }
         }
 }
