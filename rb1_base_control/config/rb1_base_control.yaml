@@ -13,7 +13,7 @@ robotnik_base_control:
         max_speed: 27.27 # rad/s
     left_wheel_joint:
         name: rb1_base_left_wheel_joint
-        max_speed: 27.27 # rad/s    
+        max_speed: 27.27 # rad/s
     elevator_joint:
         name: rb1_base_elevator_platform_joint
   limits:
@@ -32,8 +32,8 @@ robotnik_base_control:
       angular_acceleration_limit: 1.0 # 3.0 for same as elevator_down # rad/s^2
       angular_deceleration_limit: 2.0 # 3.0 for same as elevator_down # rad/s^2
     # TODO: still not implemented!
-    # how to deccelerate in case of hard_brake. 
-    hard_brake: 
+    # how to deccelerate in case of hard_brake.
+    hard_brake:
       linear_speed_limit: 1.5 # m/s
       linear_acceleration_limit: 1.5 # m/s^2
       linear_deceleration_limit: 4 # m/s^2
@@ -64,13 +64,13 @@ robotnik_base_control:
   elevator_position_up: 0.03 # linear height (m)
   elevator_position_down: 0.0
   elevator_digital_output_up: 3
-  elevator_digital_output_down: 2 
+  elevator_digital_output_down: 2
   elevator_digital_input_up: 3
   elevator_digital_input_down: 2
   reverse_logic: true # Make sure what logic is your robot using
 
 joint_read_state_controller:
-  type: joint_state_controller/JointStateController 
+  type: joint_state_controller/JointStateController
   publish_rate: 100.0
 
 
