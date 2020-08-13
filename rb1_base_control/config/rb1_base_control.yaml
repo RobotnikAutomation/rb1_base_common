@@ -9,13 +9,13 @@ robotnik_base_control:
   type: rb1_base_controller/RB1BaseController
   joint:
     right_wheel_joint:
-        name: rb1_base_right_wheel_joint
-        max_speed: 27.27  # rad/s
+      name: rb1_base_right_wheel_joint
+      max_speed: 27.27  # rad/s
     left_wheel_joint:
-        name: rb1_base_left_wheel_joint
-        max_speed: 27.27  # rad/s
+      name: rb1_base_left_wheel_joint
+      max_speed: 27.27  # rad/s
     elevator_joint:
-        name: rb1_base_elevator_platform_joint
+      name: rb1_base_elevator_platform_joint
   limits:
     elevator_down:
       linear_speed_limit: 1.5  # m/s
@@ -52,7 +52,7 @@ robotnik_base_control:
   imu_watchdog_duration: 0.1
   imu_topic: 'imu/data'
   odom_publish_frequency: 100
-  cmd_vel        : 'robotnik_base_control/cmd_vel'
+  cmd_vel: 'robotnik_base_control/cmd_vel'
   motion_odometry: true
   in_motion_timer: 2.0
   position_covariance: 0.0000001
@@ -72,6 +72,3 @@ robotnik_base_control:
 joint_read_state_controller:
   type: joint_state_controller/JointStateController
   publish_rate: 100.0
-
-
-
