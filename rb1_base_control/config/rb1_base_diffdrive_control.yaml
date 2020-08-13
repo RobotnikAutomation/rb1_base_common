@@ -8,14 +8,14 @@
     type: effort_controllers/JointEffortController
     joint: joint_right_wheel
     pid: {p: 100.0, i: 0.01, d: 10.0}
- 
+
   elevator_controller:
     type:  effort_controllers/JointEffortController
     joint: rb1_base_a_elevator_platform_joint
     pid: {p: 10.0, i: 0.1, d: 0.0}
 
   joint_read_state_controller:
-    type: joint_state_controller/JointStateController 
+    type: joint_state_controller/JointStateController
     publish_rate: 100.0
 
   robotnik_base_control:
@@ -31,7 +31,7 @@
     # URDF if not specified as a parameter
     wheel_separation : 0.433
     wheel_radius : 0.0762
-    
+
     # Wheel separation and radius multipliers
     wheel_separation_multiplier: 1.0 # default: 1.0
     wheel_radius_multiplier    : 1.0 # default: 1.0
@@ -62,7 +62,7 @@
 
   robotnik_elevator_controller:
     type        : "robotnik_elevator_controller/RobotnikElevatorController"
-    joint:    
+    joint:
       elevator_joint:
         name: rb1_base_a_elevator_platform_joint
     elevator_position_up: 10
@@ -78,7 +78,7 @@
       # model id used in Gazebo
       robot_model: "rb1_base_a"
       # distance in z to move the picked cart (disabled)
-      # elevation_offset_z: 0.07  
- 
+      # elevation_offset_z: 0.07
+
 
 
