@@ -67,8 +67,15 @@
 	>
 	</node>
 	<!-- load elevator controller -->
-        <node if="$(arg has_elevator)" name="elevator_controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
-          output="screen" args="$(arg elevator_controller)"/>
+    <node
+       	if="$(arg has_elevator)"
+       	name="elevator_controller_spawner"
+       	pkg="controller_manager"
+       	type="spawner"
+       	respawn="false"
+        output="screen"
+        args="$(arg elevator_controller)"
+    />
 
   </group>
 
