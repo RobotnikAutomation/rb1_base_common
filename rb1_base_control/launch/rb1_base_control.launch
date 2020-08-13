@@ -44,6 +44,7 @@
       file="$(find rb1_base_control)/config/rb1_base_diffdrive_control.yaml"
       subst_value="true"
     />
+    <!--
     <param name="robotnik_base_control/left_wheel" value="$(arg prefix)left_wheel_joint"/>
     <param name="robotnik_base_control/right_wheel" value="$(arg prefix)right_wheel_joint"/>
     <param name="robotnik_base_control/base_frame_id" value="$(arg prefix)base_footprint"/>
@@ -51,6 +52,7 @@
     <param name="robotnik_elevator_controller/gazebo/robot_model" value="$(arg id_robot)"/>
     <param name="robotnik_elevator_controller/joint/elevator_joint/name" value="$(arg prefix)elevator_platform_joint"/>
     <param name="robotnik_elevator_controller/gazebo/disable_gazebo_physics_for_pickup" value="$(arg fake_elevator_physics)"/>
+    -->
     <!-- if robot_localization node is launched the controller must not publish the odom tf-->
     <!--param if="$(arg launch_robot_localization)" name="robotnik_base_control/enable_odom_tf" value="false"/-->
 
