@@ -23,11 +23,17 @@
 	<param name="robotnik_base_control/wheel_diameter" value="$(arg wheel_diameter)"/>
 
 	<!-- load the controllers -->
-	<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
-		output="screen" args="
-						  robotnik_base_control
-						  joint_read_state_controller
-						  ">
+	<node
+		name="controller_spawner"
+		pkg="controller_manager"
+		type="spawner"
+		respawn="false"
+		output="screen"
+		args="
+			robotnik_base_control
+			joint_read_state_controller
+			"
+	>
 	</node>
   </group>
 
