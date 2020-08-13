@@ -14,7 +14,7 @@
   <!-- Robot - Load joint controller configurations from YAML file to parameter server -->
   <group unless="$(arg sim)">
 	<!-- Load joint controller configurations from YAML file to parameter server -->
-	<rosparam file="$(find rb1_base_control)/config/$(arg prefix)control.yaml" command="load"/>
+	<rosparam file="$(find rb1_base_control)/config/$(arg prefix)control.yaml" command="load" subst_value="true"/>
 	<param name="robotnik_base_control/joint/left_wheel_joint/name" value="$(arg prefix)left_wheel_joint"/>
 	<param name="robotnik_base_control/joint/right_wheel_joint/name" value="$(arg prefix)right_wheel_joint"/>
 	<param name="robotnik_base_control/robot_base_frame" value="$(arg prefix)base_footprint"/>
