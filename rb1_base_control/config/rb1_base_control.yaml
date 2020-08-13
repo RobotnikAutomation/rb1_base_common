@@ -1,19 +1,19 @@
 ---
 joint_blw_velocity_controller:
   type: velocity_controllers/JointVelocityController
-  joint: rb1_base_left_wheel_joint
+  joint: $(arg prefix)left_wheel_joint
 joint_brw_velocity_controller:
   type: velocity_controllers/JointVelocityController
-  joint: rb1_base_right_wheel_joint
+  joint: $(arg prefix)right_wheel_joint
 
 robotnik_base_control:
   type: rb1_base_controller/RB1BaseController
   joint:
     right_wheel_joint:
-      name: rb1_base_right_wheel_joint
+      name: $(arg prefix)right_wheel_joint
       max_speed: 27.27  # rad/s
     left_wheel_joint:
-      name: rb1_base_left_wheel_joint
+      name: $(arg prefix)left_wheel_joint
       max_speed: 27.27  # rad/s
     elevator_joint:
       name: rb1_base_elevator_platform_joint
@@ -43,12 +43,12 @@ robotnik_base_control:
       angular_deceleration_limit: 6.0  # rad/s^2
   # TODO: remove this parameter, as it will be controlled by the limits above
   hard_brake: false
-  odom_frame: rb1_base_odom
-  robot_base_frame: rb1_base_base_footprint
+  odom_frame: $(arg prefix)odom
+  robot_base_frame: $(arg prefix)base_footprint
   odom_broadcast_tf: true
   odom_topic: 'robotnik_base_control/odom'
   track_width: 0.421  # 0.543
-  wheel_diameter: 0.1524
+  wheel_diameter: $(arg wheel_diameter)
   cmd_watchdog_duration: 0.5
   imu_watchdog_duration: 0.1
   imu_topic: 'imu/data'
@@ -61,7 +61,7 @@ robotnik_base_control:
   linear_velocity_covariance: 0.0000000001
   angular_velocity_covariance: 0.0000000001
   set_digital_output_service_hw: robotnik_base_hw/set_digital_output
-  has_elevator: true
+  has_elevator: $(arg has_elevator)
   elevator_position_up: 0.03  # linear height (m)
   elevator_position_down: 0.0
   elevator_digital_output_up: 3
