@@ -54,11 +54,17 @@
 
 
 	<!-- load the controllers -->
-	<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
-		output="screen" args="
-						  robotnik_base_control
-						  joint_read_state_controller
-						  ">
+	<node
+		name="controller_spawner"
+		pkg="controller_manager"
+		type="spawner"
+		respawn="false"
+		output="screen"
+		args="
+			robotnik_base_control
+			joint_read_state_controller
+			"
+	>
 	</node>
 	<!-- load elevator controller -->
         <node if="$(arg has_elevator)" name="elevator_controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
