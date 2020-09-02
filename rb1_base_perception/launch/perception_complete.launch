@@ -58,7 +58,7 @@
       <arg name="source_topic" value="$(arg scan_topic)"/>
       <arg name="filter_config_file" value="$(arg filter_config_file)"/>
       <arg name="target_topic" value="$(arg cloud_topic)"/>
-      <arg name="target_frame" value="$(arg prefix)odom"/>
+      <arg name="target_frame" value="$(arg prefix)base_footprint"/>
     </include>
 
     <!-- Launch laser locator to detect docking_station using reflectors -->
