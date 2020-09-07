@@ -45,7 +45,8 @@
 	<xacro:property name="omni_front_z" value="0.0270" />
 
 	<!-- Flag to select the high or low quality model -->
-	<xacro:property name="hq" value="true" />
+	<xacro:arg name="hq_models" default="true" />
+	<xacro:property name="hq" value="$(arg hq_models)" />
 
 	<!-- *************** -->
 	<!-- Robots Elements -->
