@@ -20,11 +20,11 @@
 		</gazebo>
 
 		<gazebo reference="$(arg prefix)base_link">
-			<material>Gazebo/Black</material>
+			<material>Gazebo/FlatBlack</material>
 		</gazebo>
 
 		<gazebo reference="$(arg prefix)front_cover_link">
-			<material>Gazebo/Black</material>
+			<material>Gazebo/FlatBlack</material>
 		</gazebo>
 	</xacro:macro>
 </robot>
