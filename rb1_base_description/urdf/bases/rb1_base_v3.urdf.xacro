@@ -44,8 +44,8 @@
        <mesh filename="package://rb1_base_description/meshes/bases/rb1_base_v3.stl"/>
        </geometry>
        </xacro:unless>
-       <material name="darkgrey">
-         <color rgba="0.1 0.1 0.1 1"/>
+       <material name="black">
+         <color rgba="0.0 0.0 0.0 1"/>
        </material>
     </visual>
     <collision>
