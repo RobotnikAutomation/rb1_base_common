@@ -20,7 +20,7 @@
 		</gazebo>
 
 		<gazebo reference="$(arg prefix)base_link">
-			<material>Gazebo/Grey</material>
+			<material>Gazebo/Black</material>
 		</gazebo>
 
 		<gazebo reference="$(arg prefix)front_cover_link">
