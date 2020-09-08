@@ -12,7 +12,7 @@
 	<arg name="map_frame" default="$(arg prefix)map"/>
 	<arg name="odom_frame" default="$(arg prefix)odom"/>
 	<arg name="base_frame" default="$(arg prefix)base_link"/>
-	<arg name="resolution" default="0.02"/>
+	<arg name="resolution" default="0.05"/>
 	<arg name="particles" default="30"/>
 
 
