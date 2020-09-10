@@ -7,7 +7,6 @@ project(rb1_base_navigation)
 find_package(catkin REQUIRED COMPONENTS  
 	move_base
 	teb_local_planner
-	costmap_prohibition_layer
 )
 
 
