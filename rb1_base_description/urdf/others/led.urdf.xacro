@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
+
+  <xacro:macro name="led" params="prefix">
+
+  <gazebo>
+
+    <joint name="${prefix}led_joint" type="fixed">
+      <parent>${prefix}front_case_link</parent>
+      <child>light_model::${prefix}light_link</child>
+    </joint>
+
+    <model name="light_model">
+      <pose>1.5207 0 0.68 0 0 0</pose>
+      <link name="${prefix}light_link">
+        <visual name="${prefix}led_light">
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.35 0.568 0.01</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <emissive>0 0 0 1</emissive>
+          </material>
+        </visual>
+        <light name="${prefix}led_light" type="point">
+          <pose>0 0 0 0 0 0</pose>
+          <attenuation>
+            <range>20</range>
+            <!--linear>0.10</linear-->
+          </attenuation>
+          <diffuse>0 0 0 1</diffuse>
+          <specular>0 0 0 1</specular>
+          <spot>
+            <inner_angle>0.1</inner_angle>
+            <outer_angle>0.15</outer_angle>
+            <falloff>1</falloff>
+          </spot>
+        </light>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>0.1</mass>
+          <inertia>
+            <ixx>0.0001</ixx>
+            <ixy>-0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0001</iyy>
+            <iyz>0</iyz>
+            <izz>0.0001</izz>
+          </inertia>
+  </inertial>
+      </link>
+      <!--plugin name='light_control' filename='libLedPlugin.so'>
+       <enable>true</enable>
+        <light>
+          <id>light_link/light_source</id>
+            <enable>true</enable>
+            <duration>1</duration>
+            <interval>0.5</interval>
+            <color>1 0 0</color>
+            <attenuation>
+               <range>20</range>
+               <linear>0.10</linear>
+            </attenuation>
+        </light>
+      </plugin-->
+    </model>
+  </gazebo>
+
+  </xacro:macro>
+</robot>
