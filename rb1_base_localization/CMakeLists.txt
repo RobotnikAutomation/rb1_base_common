@@ -6,7 +6,6 @@ find_package(catkin REQUIRED COMPONENTS
   mavros_msgs
   message_filters
   robot_localization
-  robotnik_msgs
   roscpp
   std_msgs
   std_srvs
@@ -27,7 +26,6 @@ catkin_package(
     mavros_msgs
     message_filters
     robot_localization
-    robotnik_msgs
     roscpp
     std_msgs
     std_srvs
