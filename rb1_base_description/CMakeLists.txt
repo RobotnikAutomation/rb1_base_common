@@ -6,6 +6,8 @@ find_package(catkin REQUIRED COMPONENTS
   xacro
   robotnik_sensors
   robot_state_publisher
+  joint_state_publisher
+  joint_state_publisher_gui
 )
 
 
