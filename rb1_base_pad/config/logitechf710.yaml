@@ -22,9 +22,9 @@ button_speed_down: 0
 button_dead_man: 5
 button_output_1: 2
 button_output_2: 1
-output_1: 10 
+output_1: 10
 output_2: 11
 
 button_kinematic_mode: 7
-cmd_service_home:  /rb1_base_controller/home
+cmd_service_home:  /robot_controller/home
 check_message_timeout: false

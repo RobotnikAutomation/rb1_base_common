@@ -17,11 +17,12 @@
   <url type="bugtracker">https://github.com/RobotnikAutomation/rb1_base_common/issues</url>
 
   <buildtool_depend>catkin</buildtool_depend>
-  
+
   <build_depend>twist_mux</build_depend>
   <build_depend>controller_manager</build_depend>
 
   <run_depend>twist_mux</run_depend>
   <run_depend>controller_manager</run_depend>
+  <run_depend>joint_state_controller</run_depend>
 
 </package>

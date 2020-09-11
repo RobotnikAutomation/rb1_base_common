@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="id_robot" default="robot"/>
+  <arg name="prefix" default="$(arg id_robot)_"/>
+
+  <!-- Topics argumments -->
+  <arg name="cmd_vel_topic" default="move_base/cmd_vel"/>
+  <arg name="odom_topic" default="robotnik_base_control/odom"/>
+  <arg name="scan_topic" default="front_laser/scan"/>
+  <arg name="front_rgbd_to_scan_topic" default="front_rgbd_camera/point_cloud_scan_filtered"/>
+
+  <!-- Frames arguments -->
+  <arg name="global_frame" default="$(arg prefix)map"/>
+  <arg name="odom_frame" default="$(arg prefix)odom"/>
+  <arg name="base_frame" default="$(arg prefix)base_footprint"/>
+  <arg name="laser_frame" default="$(arg prefix)front_laser_link"/>
+  <arg name="front_camera_frame" default="$(arg prefix)front_rgbd_camera_link"/>
+
+  <arg name="local_planner" default="$(optenv ROBOT_MOVE_BASE_LOCAL_PLANNER teb)"/>
+
+
+  <include file="$(find rb1_base_navigation)/launch/move_base_$(arg local_planner).launch">
+    <arg name="id_robot" value="$(arg id_robot)"/>
+
+    <!-- Topics argumments -->
+    <arg name="cmd_vel_topic" value="$(arg cmd_vel_topic)"/>
+    <arg name="odom_topic" value="$(arg odom_topic)"/>
+    <arg name="scan_topic" value="$(arg scan_topic)"/>
+    <arg name="front_rgbd_to_scan_topic" value="$(arg front_rgbd_to_scan_topic)"/>
+
+    <!-- Frames arguments -->
+    <arg name="global_frame" value="$(arg global_frame)"/>
+    <arg name="odom_frame" value="$(arg odom_frame)"/>
+    <arg name="base_frame" value="$(arg base_frame)"/>
+    <arg name="laser_frame" default="$(arg laser_frame)"/>
+    <arg name="front_camera_frame" default="$(arg front_camera_frame)"/>
+
+  </include>
+
+</launch>

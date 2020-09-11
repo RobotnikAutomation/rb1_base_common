@@ -1,0 +1,11 @@
+controller_list:
+  - name: "left_arm/scaled_pos_traj_controller"
+    action_ns: "follow_joint_trajectory"
+    type: FollowJointTrajectory
+    joints: [robot_left_arm_elbow_joint, robot_left_arm_shoulder_lift_joint, robot_left_arm_shoulder_pan_joint,
+    robot_left_arm_wrist_1_joint, robot_left_arm_wrist_2_joint, robot_left_arm_wrist_3_joint]
+  - name: "right_arm/scaled_pos_traj_controller"
+    action_ns: "follow_joint_trajectory"
+    type: FollowJointTrajectory
+    joints: [robot_right_arm_elbow_joint, robot_right_arm_shoulder_lift_joint, robot_right_arm_shoulder_pan_joint,
+    robot_right_arm_wrist_1_joint, robot_right_arm_wrist_2_joint, robot_right_arm_wrist_3_joint]

@@ -1,17 +1,17 @@
 pad_type: xbox360
-num_of_buttons: 17 
+num_of_buttons: 17
 axis_linear_x: 1
 axis_angular: 2
 axis_linear_z: 5
 scale_linear: 1.5
 scale_angular: 1.5
-scale_linear_z: 20.0 
+scale_linear_z: 20.0
 button_speed_up: 7
 button_speed_down: 4
 button_bumber_override: 4
 button_dead_man: 9
 button_dead_man_unsafe: 7
-cmd_service_home:  rb2_controller/home
+cmd_service_home:  robot_controller/home
 check_message_timeout: true
 
 # if -1, it uses buttons instead of axis

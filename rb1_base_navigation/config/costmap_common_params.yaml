@@ -1,14 +1,29 @@
 publish_frequency: 1.0
 
-footprint: [[0.25, 0.0], [0.177, 0.177], [0.0,0.25], [-0.177, 0.177], [-0.25, 0.0], [-0.177, -0.177], [0.0, -0.25], [0.177, -0.177] ]
+robot_radius: 0.3
 
 inflation_layer:
-  inflation_radius: 0.5
+  inflation_radius: 0.3
 
 obstacle_layer:
   obstacle_range: 2.5
-  raytrace_range: 3.0
-  observation_sources:  front_laser front_camera
-  front_laser: {sensor_frame: rb1_base_front_laser_link, data_type: LaserScan, topic: front_laser/scan, marking: true, clearing: true, observation_persistence: 0.0}
-  front_camera: {data_type: PointCloud2, topic: front_rgbd_camera/depth/points, marking: true, clearing: true, observation_persistence: 1.0, min_obstacle_height: 0.05, max_obstacle_height: 0.3}
+  raytrace_range: 5.5
+  observation_sources: front_laser
+  front_laser:
+    sensor_frame: robot_front_laser_link
+    data_type: LaserScan
+    topic: front_laser/scan
+    marking: true
+    clearing: true
+    observation_persistence: 0.0
 
+rgbd_obstacle_layer:
+  obstacle_range: 2.5
+  raytrace_range: 5.5
+  observation_sources: front_rgbd_to_scan
+  front_rgbd_to_scan:
+    data_type: LaserScan
+    topic: front_rgbd_camera/point_cloud_scan_filtered
+    marking: true
+    clearing: true
+    observation_persistence: 5.0

@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<robot name="torso_ur3" xmlns:xacro="http://www.ros.org/wiki/xacro">
+ 
+  <xacro:property name="torso_mass" value="4.0"/>
+  <xacro:property name="torso_radius" value="0.05"/>
+  <xacro:property name="torso_height" value="0.675"/>
+
+  <xacro:macro name="torso_ur3" params="prefix parent *origin">
+   
+    <joint name="${prefix}torso_joint" type="fixed">
+      <parent link="${parent}"/>
+      <child link="${prefix}torso_link"/>
+      <xacro:insert_block name="origin" />
+      <axis xyz="0 0 1" rpy="0 0 0" />
+    </joint>
+  
+    <link name="${prefix}torso_link">
+      <visual>
+       	<origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>     
+          <mesh filename="package://rb1_base_description/meshes/others/rb1_torso_ur3.dae" />
+        </geometry>         
+      
+      </visual>
+      
+      <collision>
+		    <origin xyz="0 0 0" rpy="${M_PI/2} 0 0" />
+        <geometry>
+          <mesh filename="package://rb1_base_description/meshes/others/rb1_torso_ur3.dae" />
+        </geometry>
+      </collision>    
+      <inertial>
+        <mass value="${torso_mass}" />
+        <origin xyz="0 0 0" />
+        <cylinder_inertia  m="${torso_mass}" r="${torso_radius}" h="${torso_height}" />
+      </inertial>
+    </link>
+
+    <joint name="${prefix}torso_ur3_right_joint" type="fixed">
+      <parent link="${prefix}torso_link"/>
+      <child link="${prefix}torso_ur3_right_link"/>
+      <origin xyz="0.170 -0.12625 0.95775" rpy="${-pi/4} 0 ${pi}"/>
+    </joint>
+
+    <link name="${prefix}torso_ur3_right_link">
+    </link>
+
+    <joint name="${prefix}torso_ur3_left_joint" type="fixed">
+      <parent link="${prefix}torso_link"/>
+      <child link="${prefix}torso_ur3_left_link"/>
+      <origin xyz="0.170 0.12625 0.95775" rpy="${-pi/4} 0 0"/>
+    </joint>
+
+    <link name="${prefix}torso_ur3_left_link">
+    </link>
+   
+  </xacro:macro>
+
+</robot>
