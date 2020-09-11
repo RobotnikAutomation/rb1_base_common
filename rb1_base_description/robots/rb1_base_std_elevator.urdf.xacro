@@ -24,6 +24,9 @@
     <!-- Import Elevator -->
 	<xacro:include filename="$(find rb1_base_description)/urdf/elevator/elevator.urdf.xacro"/>
 
+	<!-- Import Led -->
+	<xacro:include filename="$(find rb1_base_description)/urdf/others/led.urdf.xacro"/>
+
   
 	<!-- ***************** -->
 	<!-- Global parameters -->
@@ -111,6 +114,12 @@
     <xacro:sensor_orbbec_astra prefix="$(arg prefix)front_rgbd_camera" parent="$(arg prefix)base_link">        
         <origin xyz="0.234 0.0125 0.107" rpy="0 0 0"/>
     </xacro:sensor_orbbec_astra>  
+
+    <!-- LED -->
+    <xacro:led prefix="$(arg prefix)led" parent="$(arg prefix)base_link">
+    	<origin xyz="0.0 0.0 1.4" rpy="3.14 0 0"/>
+    </xacro:led>
+
       
 </robot>
 
