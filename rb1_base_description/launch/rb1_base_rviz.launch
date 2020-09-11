@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="version" default="rb1_base_std.urdf.xacro" />
+  <arg name="version" default="rb1_base.urdf.xacro" />
   <arg name="prefix" default="robot_"/>
   <arg name="rviz_config" default="$(find rb1_base_gazebo)/rviz/rb1_base_a_std.rviz"/>
 

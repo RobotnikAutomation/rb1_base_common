@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="version" default="rb1_base_std.urdf.xacro" />
+  <arg name="version" default="rb1_base.urdf.xacro" />
   <arg name="prefix" default="robot_"/>
 
   <param name="robot_description" command="$(find xacro)/xacro '$(find rb1_base_description)/robots/$(arg version)' prefix:=$(arg prefix)" />
