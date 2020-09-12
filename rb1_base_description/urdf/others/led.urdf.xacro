@@ -5,9 +5,9 @@
 
 <gazebo>
 
-   <model name='light_model'>
+   <model name='led_model'>
       <static>1</static>
-      <link name="light_box">
+      <link name="led_box">
 
         <visual name="${prefix}led_light">
           <pose>0.25 0 0 0 0 0</pose>
@@ -24,7 +24,7 @@
           </material>
         </visual>
 
-        <light name='light_source' type='spot'>
+        <light name='led_source' type='spot'>
           <pose frame='${prefix}_base_link'>0.25 0 0.25 0 -1.57 0</pose>
           <attenuation>
             <range>10</range>
@@ -53,10 +53,10 @@
         </inertial>
       </link>
 
-      <plugin name='light_control' filename='libFlashLightPlugin.so'>
+      <plugin name='led_control' filename='libFlashLightPlugin.so'>
         <enable>true</enable>
         <light>
-          <id>light_box/light_source</id>
+          <id>led_box/led_source</id>
           <duration>0.75</duration>
           <interval>0.5</interval>
         </light>
