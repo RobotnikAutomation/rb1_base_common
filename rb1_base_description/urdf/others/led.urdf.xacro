@@ -2,13 +2,13 @@
 <robot xmlns:xacro="http://wiki.ros.org/xacro">
 
 <xacro:macro name="led" params="prefix parent *origin">
-           
+
 <gazebo>
 
    <model name='light_model'>
       <static>1</static>
       <link name="light_box">
-      
+
         <visual name="${prefix}led_light">
           <pose>0.25 0 0 0 0 0</pose>
           <geometry>
