@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>rb1_base_navigation</name>
-  <version>1.1.0</version>
+  <version>1.12.0</version>
   <description>
     This package configures the move_base stack and makes use of the gmapping and amcl algorithms to
     move the rb1_base robot

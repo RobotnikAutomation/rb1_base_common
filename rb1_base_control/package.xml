@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>rb1_base_control</name>
-  <version>1.1.0</version>
+  <version>1.12.0</version>
   <description>The rb1_base_control package</description>
   <maintainer email="asoriano@robotnik.es">Angel Soriano</maintainer>
   <maintainer email="avillena@robotnik.es">Álvaro Villena</maintainer>
