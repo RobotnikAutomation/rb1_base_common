@@ -19,7 +19,7 @@ check_robot_is_moving_to_goal:  true
 robot_moving_to_goal_delay:  30.0
 
 tf_timeout:  15.0 # If free_flight_mode is false, this should be high to avoid timeouts
-free_goal_velocity:  false
+free_goal_velocity:  true
 
 goal_threshold_x:  0.01
 goal_threshold_y:  0.01
