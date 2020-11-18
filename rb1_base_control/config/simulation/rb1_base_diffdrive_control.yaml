@@ -1,17 +1,17 @@
   joint_left_velocity_controller:
 #    type: velocity_controllers/JointVelocityController
     type: effort_controllers/JointEffortController
-    joint: joint_left_wheel
+    joint: $(arg prefix)left_wheel_joint
     pid: {p: 100.0, i: 0.01, d: 10.0}
 
   joint_right_velocity_controller:
     type: effort_controllers/JointEffortController
-    joint: joint_right_wheel
+    joint: $(arg prefix)right_wheel_joint
     pid: {p: 100.0, i: 0.01, d: 10.0}
 
   elevator_controller:
     type:  effort_controllers/JointEffortController
-    joint: robot_elevator_platform_joint
+    joint: $(arg prefix)elevator_platform_joint
     pid: {p: 10.0, i: 0.1, d: 0.0}
 
   joint_read_state_controller:
@@ -20,8 +20,8 @@
 
   robotnik_base_control:
     type        : "diff_drive_controller/DiffDriveController"
-    left_wheel  : 'robot_left_wheel_joint'
-    right_wheel : 'robot_right_wheel_joint'
+    left_wheel  : '$(arg prefix)left_wheel_joint'
+    right_wheel : '$(arg prefix)right_wheel_joint'
     publish_rate: 50.0               # default: 50
     pose_covariance_diagonal : [0.001, 0.001, 1000000.0, 1000000.0, 1000000.0, 1000.0]
     twist_covariance_diagonal: [0.001, 0.001, 1000000.0, 1000000.0, 1000000.0, 1000.0]
@@ -29,7 +29,7 @@
     # Wheel separation and diameter. These are both optional.
     # diff_drive_controller will attempt to read either one or both from the
     # URDF if not specified as a parameter
-    wheel_separation : 0.433
+    wheel_separation : 0.436
     wheel_radius : 0.0762
 
     # Wheel separation and radius multipliers
@@ -40,8 +40,10 @@
     cmd_vel_timeout: 0.25
 
     # Base frame_id
-    base_frame_id: robot_base_footprint #default: base_link
-    odom_frame_id: robot_odom
+    base_frame_id: $(arg base_frame)
+    odom_frame_id: $(arg odom_frame)
+
+    enable_odom_tf: $(arg odom_broadcast_tf)
 
     # Velocity and acceleration limits
     # Whenever a min_* is unspecified, default to -max_*
@@ -64,7 +66,7 @@
     type        : "robotnik_elevator_controller/RobotnikElevatorController"
     joint:
       elevator_joint:
-        name: robot_elevator_platform_joint
+        name: $(arg prefix)elevator_platform_joint
     elevator_position_up: 10
     elevator_position_down: 0.0
     # delay time to perform the elevation
@@ -72,10 +74,10 @@
     # params for the pickup avoiding Gazebo physics
     gazebo:
       # if true, the carts will be raised avoiding contact
-      disable_gazebo_physics_for_pickup: true
+      disable_gazebo_physics_for_pickup: $(arg fake_elevator_physics)
       pickup_service: "/elevator_fake_pickup_gazebo/simple_pick"
       place_service: "/elevator_fake_pickup_gazebo/simple_place"
       # model id used in Gazebo
-      robot_model: "robot"
+      robot_model: $(arg id_robot)
       # distance in z to move the picked cart (disabled)
       # elevation_offset_z: 0.07

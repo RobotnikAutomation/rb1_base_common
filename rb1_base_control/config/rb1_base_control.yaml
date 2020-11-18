@@ -1,21 +1,21 @@
 joint_blw_velocity_controller:
   type: velocity_controllers/JointVelocityController
-  joint: robot_left_wheel_joint
+  joint: $(arg prefix)left_wheel_joint
 joint_brw_velocity_controller:
   type: velocity_controllers/JointVelocityController
-  joint: robot_right_wheel_joint
+  joint: $(arg prefix)right_wheel_joint
 
 robotnik_base_control:
   type: rb1_base_controller/RB1BaseController
   joint:
     right_wheel_joint:
-        name: robot_right_wheel_joint
+        name: $(arg prefix)right_wheel_joint
         max_speed: 27.27 # rad/s
     left_wheel_joint:
-        name: robot_left_wheel_joint
+        name: $(arg prefix)left_wheel_joint
         max_speed: 27.27 # rad/s
     elevator_joint:
-        name: robot_elevator_platform_joint
+        name: $(arg prefix)elevator_platform_joint
   limits:
     elevator_down:
       linear_speed_limit: 1.5 # m/s
@@ -42,15 +42,15 @@ robotnik_base_control:
       angular_deceleration_limit: 6.0 # rad/s^2
   # TODO: remove this parameter, as it will be controlled by the limits above
   hard_brake: false
-  odom_frame: robot_odom
-  robot_base_frame: robot_base_footprint
-  odom_broadcast_tf: true
+  odom_frame: $(arg odom_frame)
+  robot_base_frame: $(arg base_frame)
+  odom_broadcast_tf: $(arg odom_broadcast_tf)
   odom_topic: 'robotnik_base_control/odom'
-  track_width: 0.421 # 0.543
-  wheel_diameter: 0.1524
+  track_width: 0.436
+  wheel_diameter: $(arg wheel_diameter)
   cmd_watchdog_duration: 0.5
   imu_watchdog_duration: 0.1
-  imu_topic: 'imu/data'
+  imu_topic: $(arg imu_topic)
   odom_publish_frequency: 100
   cmd_vel        : 'robotnik_base_control/cmd_vel'
   motion_odometry: true
@@ -60,7 +60,7 @@ robotnik_base_control:
   linear_velocity_covariance: 0.0000000001
   angular_velocity_covariance: 0.0000000001
   set_digital_output_service_hw: robotnik_base_hw/set_digital_output
-  has_elevator: true
+  has_elevator: $(arg has_elevator)
   elevator_position_up: 0.03 # linear height (m)
   elevator_position_down: 0.0
   elevator_digital_output_up: 3
