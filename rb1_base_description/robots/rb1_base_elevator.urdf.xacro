@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot name="rb1_base" 
+<robot name="rb1_base"
 	xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 
@@ -63,13 +63,12 @@
 	<!-- *************** -->
 
 	<!-- Here we create the robot elements using the xacro:macros imported at the beggining of this file -->
-
-	<!-- RB-1 base -->
-	<xacro:rb1_base_v3 prefix="$(arg prefix)" publish_bf="true" hq="${hq}" />
-
 	<xacro:arg name="prefix" default="rb1_"/>
 	<xacro:arg name="ros_planar_move_plugin" default="false"/>
 
+	<!-- RB-1 base -->
+	<xacro:rb1_base_v3 prefix="$(arg prefix)" publish_bf="true" hq="${hq}" />
+  
 	<!-- Gazebo ros control pluggins -->
 	<xacro:ros_control/>
 

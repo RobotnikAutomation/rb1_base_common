@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- launch used for simulation -->
+	<arg name="id_robot" default="$(optenv ROBOT_ID robot)"/>
+	<arg name="prefix" default="$(arg id_robot)_"/>
+	<arg name="namespace" default="arm"/>
+
+
+  	<rosparam file="$(find rb1_base_control)/config/ur_arm_controllers.yaml" command="load" subst_value="true" ns="$(arg namespace)"/>
+  	<node name="controller_spawner_$(arg namespace)" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="
+  		$(arg namespace)/pos_traj_controller
+  	"/>
+
+</launch>

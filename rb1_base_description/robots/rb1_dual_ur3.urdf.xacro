@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot name="rb1_base" 
+<robot name="rb1_base"
 	xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 
@@ -58,12 +58,12 @@
 	<!-- *************** -->
 
 	<!-- Here we create the robot elements using the xacro:macros imported at the beggining of this file -->
+	<xacro:arg name="prefix" default="rb1_"/>
+	<xacro:arg name="ros_planar_move_plugin" default="false"/>
+	<xacro:arg name="load_kinematics_file" default="true"/> <!-- Necesarry for ur_description compatible with official ur drivers-->
 
 	<!-- RB-1 base -->
 	<xacro:rb1_base_v3 prefix="$(arg prefix)" publish_bf="true" hq="${hq}" />
-
-	<xacro:arg name="prefix" default="rb1_"/>
-	<xacro:arg name="ros_planar_move_plugin" default="false"/>
 
 	<!-- Gazebo ros control plugins -->
 	<xacro:ros_control/>
@@ -115,30 +115,38 @@
 	<xacro:torso_ur3 prefix="$(arg prefix)" parent="$(arg prefix)base_link">
 		<origin xyz="-0.1 0.0 0.1718" rpy="0.0 0.0 0.0"/>
 	</xacro:torso_ur3>
-
-	<xacro:ur3_robot prefix="$(arg prefix)right_arm_" joint_limited="true"
-		shoulder_pan_lower_limit="${-pi}" shoulder_pan_upper_limit="${pi}"
-		wrist_3_lower_limit="${-pi}" wrist_3_upper_limit="${pi}"
-		kinematics_file="${load_yaml('$(find rb1_base_control)/config/ur3_calibration.yaml')}">
-	</xacro:ur3_robot>
-
 	<joint name="$(arg prefix)right_arm_base_joint" type="fixed">
 		<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
 		<parent link="$(arg prefix)torso_ur3_right_link" />
 		<child link="$(arg prefix)right_arm_base_link" />
 	</joint>
-
-	<xacro:ur3_robot prefix="$(arg prefix)left_arm_" joint_limited="true"
-		shoulder_pan_lower_limit="${-pi}" shoulder_pan_upper_limit="${pi}"
-		wrist_3_lower_limit="${-pi}" wrist_3_upper_limit="${pi}"
-		kinematics_file="${load_yaml('$(find rb1_base_control)/config/ur3_calibration.yaml')}">
-	</xacro:ur3_robot>
-
 	<joint name="$(arg prefix)left_arm_base_joint" type="fixed">
 		<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
 		<parent link="$(arg prefix)torso_ur3_left_link" />
 		<child link="$(arg prefix)left_arm_base_link" />
 	</joint>
 
-</robot>
+  <xacro:if value="$(arg load_kinematics_file)">
+		<xacro:ur3_robot prefix="$(arg prefix)right_arm_" joint_limited="true"
+			shoulder_pan_lower_limit="${-pi}" shoulder_pan_upper_limit="${pi}"
+			wrist_3_lower_limit="${-pi}" wrist_3_upper_limit="${pi}"
+		  kinematics_file="${load_yaml('$(find rb1_base_control)/config/ur3_calibration.yaml')}">
+		</xacro:ur3_robot>
+		<xacro:ur3_robot prefix="$(arg prefix)left_arm_" joint_limited="true"
+			shoulder_pan_lower_limit="${-pi}" shoulder_pan_upper_limit="${pi}"
+			wrist_3_lower_limit="${-pi}" wrist_3_upper_limit="${pi}"
+			kinematics_file="${load_yaml('$(find rb1_base_control)/config/ur3_calibration.yaml')}">
+		</xacro:ur3_robot>
+	</xacro:if>
+  <xacro:unless value="$(arg load_kinematics_file)">
+		<xacro:ur3_robot prefix="$(arg prefix)right_arm_" joint_limited="true"
+			shoulder_pan_lower_limit="${-pi}" shoulder_pan_upper_limit="${pi}"
+			wrist_3_lower_limit="${-pi}" wrist_3_upper_limit="${pi}">
+		</xacro:ur3_robot>
+		<xacro:ur3_robot prefix="$(arg prefix)left_arm_" joint_limited="true"
+			shoulder_pan_lower_limit="${-pi}" shoulder_pan_upper_limit="${pi}"
+			wrist_3_lower_limit="${-pi}" wrist_3_upper_limit="${pi}">
+		</xacro:ur3_robot>
+	</xacro:unless>
 
+</robot>
