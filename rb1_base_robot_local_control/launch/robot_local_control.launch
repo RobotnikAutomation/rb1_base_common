@@ -4,6 +4,9 @@
   <arg name="id_robot" default="$(optenv ROBOT_ID robot)"/>
   <arg name="charge_docker_namespace" default="$(optenv ROBOT_RLC_CHARGE_DOCKER_NAMESPACE pp_docker)"/>
   <arg name="charge_dock_offset_x" default="$(optenv ROBOT_RLC_CHARGE_DOCK_OFFSET_X -0.49)"/>
+  <arg name="pick_dock_offset_x" default="$(optenv ROBOT_RLC_PICK_DOCK_OFFSET_X 0)"/>
+  <arg name="pick_step_in_distance" default="$(optenv ROBOT_RLC_PICK_STEP_IN_DISTANCE 0)"/>
+  <arg name="place_step_out_distance" default="$(optenv ROBOT_RLC_PLACE_STEP_OUT_DISTANCE 0)"/>
   <arg name="prefix" default="$(arg id_robot)_" />
   <arg name="global_frame" default="$(arg prefix)map" />
 
@@ -25,12 +28,15 @@
 		  <param name="NavigationComponent/ChargeComponent/docker_namespace" value="$(arg charge_docker_namespace)" />
 		  <param name="NavigationComponent/GoToComponent/global_frame" value="$(arg global_frame)" />
 		  <param name="NavigationComponent/ChargeComponent/dock_offset_x" value="$(arg charge_dock_offset_x)"/>
+		  <param name="NavigationComponent/PickComponent/dock_offset_x" value="$(arg pick_dock_offset_x)"/>
+		  <param name="NavigationComponent/PickComponent/step_in_distance" value="$(arg pick_step_in_distance)"/>
+		  <param name="NavigationComponent/PlaceComponent/step_out_distance" value="$(arg place_step_out_distance)"/>
 
-		<rosparam file="$(find rb1_base_robot_local_control)/config/localization.yaml" command="load" ns="LocalizationComponent"/>
-		<rosparam file="$(find rb1_base_robot_local_control)/config/operation.yaml" command="load" ns="OperationComponent"/>
-		<rosparam file="$(find rb1_base_robot_local_control)/config/control.yaml" command="load" ns="ControlComponent"/>
-		<rosparam file="$(find rb1_base_robot_local_control)/config/process_manager.yaml" command="load" ns="ProcessManagerComponent"/>
-		<param name="robot_id" value="$(arg id_robot)" />
+      <rosparam file="$(find rb1_base_robot_local_control)/config/localization.yaml" command="load" ns="LocalizationComponent"/>
+      <rosparam file="$(find rb1_base_robot_local_control)/config/operation.yaml" command="load" ns="OperationComponent"/>
+      <rosparam file="$(find rb1_base_robot_local_control)/config/control.yaml" command="load" ns="ControlComponent"/>
+      <rosparam file="$(find rb1_base_robot_local_control)/config/process_manager.yaml" command="load" ns="ProcessManagerComponent"/>
+      <param name="robot_id" value="$(arg id_robot)" />
 	  </node>
 
 	  <include file="$(find rb1_base_robot_local_control)/launch/marker_mapping.launch"/>

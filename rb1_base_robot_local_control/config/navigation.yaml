@@ -78,9 +78,9 @@ PickComponent:
   type: robot_local_control_procedures/Pick
   desired_freq: 1.0
   has_laser_safety: false
-  step_in_distance: 0.0
-  dock_offset_x: 0.0
-  dock_frame: robot_cart
+  step_in_distance: 0
+  dock_offset_x: 0
+  dock_frame: robot_cart_laser
   generic_dock_frame: robot_cart_([0-9]+)
   robot_dock_frame: robot_base_footprint
   docker_namespace: pp_docker
