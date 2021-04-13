@@ -19,7 +19,4 @@
 
    <node unless="$(arg run_filter)" pkg="topic_tools" type="relay" name="imu_relay" args="$(arg imu_raw) $(arg imu_filtered)" />
 
-   <!-- start the robot_localization_utils node to provide calibration services and reset odometry -->
-   <include file="$(find robot_localization_utils)/launch/rl_utils.launch"/>   
-   
 </launch>
