@@ -2,18 +2,10 @@ cmake_minimum_required(VERSION 2.8.3)
 project(rb1_base_description)
 
 find_package(catkin REQUIRED COMPONENTS
-  urdf
-  xacro
-  robotnik_sensors
-  robot_state_publisher
-  joint_state_publisher
-  joint_state_publisher_gui
+  roslaunch
 )
 
-
-catkin_package(
-  CATKIN_DEPENDS urdf xacro
-)
+catkin_package()
 
 include_directories(${catkin_INCLUDE_DIRS})
 
