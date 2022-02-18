@@ -106,7 +106,7 @@
 	<!-- SENSORS -->
 
 	<xacro:sensor_hokuyo_ust20lx prefix="$(arg prefix)front_laser" parent="$(arg prefix)base_link" prefix_topic="front_laser" gpu="$(arg gpu)">
-		<origin xyz="0.210 0.0 0.159" rpy="0 3.1416 3.1416"/>
+		<origin xyz="0.210 0.0 0.21" rpy="0 3.1416 3.1416"/>
 	</xacro:sensor_hokuyo_ust20lx>
 
 	<xacro:sensor_imu prefix="$(arg prefix)imu" parent="$(arg prefix)base_link">
