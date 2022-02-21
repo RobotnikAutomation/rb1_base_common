@@ -114,7 +114,7 @@
 	</xacro:sensor_imu>
 
 	<xacro:sensor_orbbec_astra prefix="$(arg prefix)front_rgbd_camera" parent="$(arg prefix)base_link">
-		<origin xyz="0.234 0.0125 0.107" rpy="0 0 0"/>
+		<origin xyz="0.234 0.0 0.092" rpy="0 0 0"/>
 	</xacro:sensor_orbbec_astra>
 
 	<!-- Gazebo ros control pluggins -->
