@@ -24,6 +24,7 @@
 				<robotBaseFrame>${prefix}base_footprint</robotBaseFrame>
 				<publishTF>${publish_tf}</publishTF>
 				<enableYAxis>false</enableYAxis>
+				<disablePitchAndRoll>true</disablePitchAndRoll>
 			</plugin>
 		</gazebo>
 	</xacro:macro>
