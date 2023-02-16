@@ -48,12 +48,12 @@
          <color rgba="0.1 0.1 0.1 1"/>
        </material>
     </visual>
-    <!--collision>
+    <collision>
        <origin xyz="0 0 0" rpy="0 0 0 " />
        <geometry>
          <mesh filename="package://rb1_base_description/meshes/bases/rb1_base_v3.dae"/>
        </geometry>
-    </collision-->
+    </collision>
   </link>
 
   <joint name="${prefix}front_cover_joint" type="fixed">
