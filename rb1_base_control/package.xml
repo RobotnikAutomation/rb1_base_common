@@ -1,8 +1,14 @@
 <?xml version="1.0"?>
-<package>
+<?xml-model
+    href="http://download.ros.org/schema/package_format3.xsd"
+    schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
   <name>rb1_base_control</name>
   <version>1.12.0</version>
-  <description>The rb1_base_control package</description>
+  <description>
+    The rb1_base_control package.
+  </description>
+
   <maintainer email="asoriano@robotnik.es">Angel Soriano</maintainer>
   <maintainer email="avillena@robotnik.es">Álvaro Villena</maintainer>
   <maintainer email="dredo@robotnik.es">David Redó</maintainer>
@@ -16,13 +22,15 @@
   <url type="repository">https://github.com/RobotnikAutomation/rb1_base_common.git</url>
   <url type="bugtracker">https://github.com/RobotnikAutomation/rb1_base_common/issues</url>
 
-  <buildtool_depend>catkin</buildtool_depend>
+  <buildtool_depend>ament_cmake</buildtool_depend>
 
   <build_depend>twist_mux</build_depend>
   <build_depend>controller_manager</build_depend>
 
-  <run_depend>twist_mux</run_depend>
-  <run_depend>controller_manager</run_depend>
-  <run_depend>joint_state_controller</run_depend>
-
+  <exec_depend>twist_mux</exec_depend>
+  <exec_depend>controller_manager</exec_depend>
+  <exec_depend>joint_state_broadcaster</exec_depend>
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
 </package>

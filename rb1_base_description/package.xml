@@ -1,9 +1,13 @@
 <?xml version="1.0"?>
-<package>
+<?xml-model
+    href="http://download.ros.org/schema/package_format3.xsd"
+    schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
   <name>rb1_base_description</name>
   <version>1.12.0</version>
-  <description>The rb1_base_description package</description>
-
+  <description>
+    The rb1_base_description package.
+  </description>
 
   <maintainer email="asoriano@robotnik.es">Angel Soriano</maintainer>
   <maintainer email="avillena@robotnik.es">Álvaro Villena</maintainer>
@@ -12,25 +16,24 @@
   <maintainer email="mbosch@robotnik.es">Marc Bosch</maintainer>
   <maintainer email="rnavarro@robotnik.es">Román Navarro</maintainer>
 
-  <author email="rguzman@robotnik.es">Roberto Guzmán</author>
+  <license>BSD</license>
 
   <url type="website">http://wiki.ros.org/rb1_base_description</url>
   <url type="repository">https://github.com/RobotnikAutomation/rb1_base_common.git</url>
   <url type="bugtracker">https://github.com/RobotnikAutomation/rb1_base_common/issues</url>
 
-  <license>BSD</license>
+  <author email="rguzman@robotnik.es">Roberto Guzmán</author>
 
-  <buildtool_depend>catkin</buildtool_depend>
-  <build_depend>roslaunch</build_depend>
+  <buildtool_depend>ament_cmake</buildtool_depend>
 
-  <run_depend>roslaunch</run_depend>
-  <run_depend>urdf</run_depend>
-  <run_depend>xacro</run_depend>
-  <run_depend>robotnik_sensors</run_depend>
-  <run_depend>joint_state_publisher</run_depend>
-  <run_depend>joint_state_publisher_gui</run_depend>
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+  <exec_depend>urdf</exec_depend>
+  <exec_depend>xacro</exec_depend>
+  <exec_depend>robotnik_sensors</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
 
   <export>
-
+    <build_type>ament_cmake</build_type>
   </export>
 </package>
