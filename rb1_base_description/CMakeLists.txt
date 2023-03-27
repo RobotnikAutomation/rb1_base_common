@@ -3,7 +3,7 @@ project(rb1_base_description)
 
 find_package(ament_cmake REQUIRED)
 
-install(DIRECTORY meshes urdf robots launch
+install(DIRECTORY meshes urdf robots
   DESTINATION share/${PROJECT_NAME}
 )
 
