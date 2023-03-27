@@ -1,12 +1,15 @@
 <?xml version="1.0"?>
-<package>
+<?xml-model
+    href="http://download.ros.org/schema/package_format3.xsd"
+    schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
   <name>rb1_base_navigation</name>
   <version>1.12.0</version>
   <description>
-    This package configures the move_base stack and makes use of the gmapping and amcl algorithms to
-    move the rb1_base robot
+    This package configures the move_base stack and makes use of the 
+    gmapping and amcl algorithms to move the rb1_base robot.
   </description>
-  
+
   <maintainer email="asoriano@robotnik.es">Angel Soriano</maintainer>
   <maintainer email="avillena@robotnik.es">Álvaro Villena</maintainer>
   <maintainer email="dredo@robotnik.es">David Redó</maintainer>
@@ -22,14 +25,13 @@
 
   <author>Robotnik</author>
 
-  <buildtool_depend>catkin</buildtool_depend>
+  <buildtool_depend>ament_cmake</buildtool_depend>
 
-  <run_depend>move_base</run_depend>
-  <run_depend>teb_local_planner</run_depend>
-  <run_depend>laser_filters</run_depend>
-  <run_depend>pointcloud_to_laserscan</run_depend>
+  <exec_depend>nav2_bt_navigator</exec_depend>
+  <exec_depend>laser_filters</exec_depend>
+  <exec_depend>pointcloud_to_laserscan</exec_depend>
 
-  <build_depend>move_base</build_depend>
-  <build_depend>teb_local_planner</build_depend>
-  
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
 </package>

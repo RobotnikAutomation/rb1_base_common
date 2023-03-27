@@ -1,10 +1,14 @@
 <?xml version="1.0"?>
-<package>
+<?xml-model
+    href="http://download.ros.org/schema/package_format3.xsd"
+    schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
   <name>rb1_base_common</name>
   <version>1.12.0</version>
-  <description>The rb1_base_common package. It contains rb1 base common packages used for robot control and for simulation</description>
-  
-  <author email="rguzman@robotnik.es">Roberto Guzmán</author>
+  <description>
+    The rb1_base_common package. It contains rb1 base common packages 
+    used for robot control and for simulation.
+  </description>
 
   <maintainer email="asoriano@robotnik.es">Angel Soriano</maintainer>
   <maintainer email="avillena@robotnik.es">Álvaro Villena</maintainer>
@@ -19,14 +23,14 @@
   <url type="repository">https://github.com/RobotnikAutomation/rb1_base_common.git</url>
   <url type="bugtracker">https://github.com/RobotnikAutomation/rb1_base_common/issues</url>
 
-  <buildtool_depend>catkin</buildtool_depend>
+  <author email="rguzman@robotnik.es">Roberto Guzmán</author>
   
-  <run_depend>rb1_base_description</run_depend>
-  <run_depend>rb1_base_pad</run_depend>
-  <run_depend>rb1_base_navigation</run_depend>
-  <run_depend>rb1_base_localization</run_depend>
-  <run_depend>rb1_base_control</run_depend>
+  <exec_depend>rb1_base_description</exec_depend>
+  <exec_depend>rb1_base_navigation</exec_depend>
+  <exec_depend>rb1_base_localization</exec_depend>
+  <exec_depend>rb1_base_control</exec_depend>
 
-  <export><metapackage/></export>
-
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
 </package>
