@@ -49,7 +49,9 @@
 
 	<!-- Flag to select the high or low quality model -->
 	<xacro:property name="hq" value="true" />
-	<xacro:arg name="prefix" default="robot_"/>
+	<xacro:arg name="robot_id" default="robot"/>
+	<xacro:arg name="prefix" default=""/>
+	<xacro:arg name="config_controllers" default=""/>
 	<xacro:arg name="ros_planar_move_plugin" default="false"/>
 	<xacro:arg name="gpu" default="false"/>
 	<!-- *************** -->
@@ -104,7 +106,7 @@
 	</xacro:sensor_orbbec_astra>
 
 	<!-- Gazebo ros control plugins -->
-	<xacro:ros_control/>
-
+    <xacro:include filename="$(find rb1_base_description)/urdf/ros2_control.urdf.xacro"/>
+    <xacro:ros2_control prefix="$(arg prefix)"/>
 
 </robot>
