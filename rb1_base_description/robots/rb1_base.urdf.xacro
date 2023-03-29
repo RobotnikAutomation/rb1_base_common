@@ -53,7 +53,7 @@
 
   <!-- RB-1 base -->
   <xacro:rb1_base_v3 publish_bf="true" hq="${hq}"/>
-  <xacro:gazebo_colors />
+  <!--xacro:gazebo_colors /-->
 
   <!-- WHEELS -->
   <xacro:rubber_wheel prefix="right" parent="base_link" reflect="false" hq="${hq}">
