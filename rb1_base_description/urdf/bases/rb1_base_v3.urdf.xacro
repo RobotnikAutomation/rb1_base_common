@@ -27,7 +27,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://rb1_base_description/meshes/bases/rb1_base_v3_color.dae"/>
+        <mesh filename="file://$(find rb1_base_description)/meshes/bases/rb1_base_v3_color.dae"/>
       </geometry>
     </visual>
   </link>
@@ -49,12 +49,12 @@
        <origin xyz="0 0 0" rpy="0 0 0" />
        <xacro:if value="${hq}">
        <geometry>
-	     <mesh filename="package://rb1_base_description/meshes/bases/rb1_front_cover_v3.stl"/>
+	     <mesh filename="file://$(find rb1_base_description)/meshes/bases/rb1_front_cover_v3.stl"/>
        </geometry>
        </xacro:if>
        <xacro:unless value="${hq}">
        <geometry>
-       <mesh filename="package://rb1_base_description/meshes/bases/rb1_front_cover_v3.stl"/>
+       <mesh filename="file://$(find rb1_base_description)/meshes/bases/rb1_front_cover_v3.stl"/>
        </geometry>
        </xacro:unless>
        <material name="black">
@@ -64,7 +64,7 @@
     <collision>
        <origin xyz="0 0 0" rpy="0 0 0 " />
        <geometry>
-         <mesh filename="package://rb1_base_description/meshes/bases/rb1_front_cover_v3.dae"/>
+         <mesh filename="file://$(find rb1_base_description)/meshes/bases/rb1_front_cover_v3.dae"/>
        </geometry>
     </collision>
   </link>
@@ -86,12 +86,12 @@
        <origin xyz="0 0 0" rpy="0 0 0" />
        <xacro:if value="${hq}">
 		   <geometry>
-			 <mesh filename="package://rb1_base_description/meshes/bases/rb1_top_cover_v3.stl"/>
+			 <mesh filename="file://$(find rb1_base_description)/meshes/bases/rb1_top_cover_v3.stl"/>
 		   </geometry>
        </xacro:if>
        <xacro:unless value="${hq}">
 		   <geometry>
-		   <mesh filename="package://rb1_base_description/meshes/bases/rb1_top_cover_v3.stl"/>
+		   <mesh filename="file://$(find rb1_base_description)/meshes/bases/rb1_top_cover_v3.stl"/>
 		   </geometry>
        </xacro:unless>
        <material name="black">
@@ -101,7 +101,7 @@
     <collision>
        <origin xyz="0 0 0" rpy="0 0 0 " />
        <geometry>
-         <mesh filename="package://rb1_base_description/meshes/bases/rb1_top_cover_v3.dae"/>
+         <mesh filename="file://$(find rb1_base_description)/meshes/bases/rb1_top_cover_v3.dae"/>
        </geometry>
     </collision>
   </link>
