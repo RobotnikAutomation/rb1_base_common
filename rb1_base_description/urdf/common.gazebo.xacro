@@ -19,9 +19,9 @@
 			<plugin name="skid_steering" filename="libgazebo_ros_planar_move.so">
 				<commandTopic>robotnik_base_control/cmd_vel</commandTopic>
 				<odometryTopic>robotnik_base_control/odom</odometryTopic>
-				<odometryFrame>${prefix}odom</odometryFrame>
+				<odometryFrame>odom</odometryFrame>
 				<odometryRate>50.0</odometryRate>
-				<robotBaseFrame>${prefix}base_footprint</robotBaseFrame>
+				<robotBaseFrame>base_footprint</robotBaseFrame>
 				<publishTF>${publish_tf}</publishTF>
 				<enableYAxis>false</enableYAxis>
 				<disablePitchAndRoll>true</disablePitchAndRoll>
@@ -29,17 +29,17 @@
 		</gazebo>
 	</xacro:macro>
 
-	<xacro:macro name="gazebo_colors" params="prefix">
-		<gazebo reference="$(arg prefix)base_footprint">
+	<xacro:macro name="gazebo_colors">
+		<gazebo reference="base_footprint">
 			<material>Gazebo/Green</material>
 		</gazebo>
 
-		<gazebo reference="$(arg prefix)base_link">
-			<material>Gazebo/Black</material>
+		<gazebo reference="base_link">
+			<material>Gazebo/DarkGrey</material>
 		</gazebo>
 
-		<gazebo reference="$(arg prefix)front_cover_link">
-			<material>Gazebo/Black</material>
+		<gazebo reference="front_cover_link">
+			<material>Gazebo/DarkGrey</material>
 		</gazebo>
 	</xacro:macro>
 </robot>

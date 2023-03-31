@@ -36,7 +36,7 @@ def read_params(ld : launch.LaunchDescription):
   robot_description_path = launch.substitutions.LaunchConfiguration('robot_description_path')
   robot_id = launch.substitutions.LaunchConfiguration('robot_id')
   prefix = launch.substitutions.LaunchConfiguration('prefix')
-  
+
   ld.add_action(launch.actions.DeclareLaunchArgument(
     name='environment',
     description='Read parameters from environment variables',
@@ -47,7 +47,7 @@ def read_params(ld : launch.LaunchDescription):
   ld.add_action(launch.actions.DeclareLaunchArgument(
     name='robot_description_file',
     description='Name of the file containing the robot description',
-    default_value='rb1_base_elevator.urdf.xacro',
+    default_value='rb1_base.urdf.xacro',
   ))
 
   ld.add_action(launch.actions.DeclareLaunchArgument(
@@ -104,9 +104,10 @@ def generate_launch_description():
   robot_description_content = launch.substitutions.Command([
     launch.substitutions.PathJoinSubstitution([launch.substitutions.FindExecutable(name="xacro")]),
     ' ', params['robot_description_path'],
-    ' prefix:=', params['prefix'],
+    ' robot_id:=', params['robot_id'],
+    ' prefix:=', '',
   ])
-  # Create parameter 
+  # Create parameter
   robot_description_param = launch_ros.descriptions.ParameterValue(robot_description_content, value_type=str)
 
   ld.add_action(launch_ros.actions.PushRosNamespace(namespace=params['robot_id']))
@@ -118,6 +119,8 @@ def generate_launch_description():
     output='screen',
     parameters=[{
       'robot_description': robot_description_param,
+      'publish_frequency': 100.0,
+      'frame_prefix': [params['robot_id'], '/'],
     }],
   ))
 
