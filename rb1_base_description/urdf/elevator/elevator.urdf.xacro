@@ -39,12 +39,12 @@
 			<origin xyz="0 0 0" rpy="0 0 0" />
 			<xacro:if value="${hq}">
 				<geometry>
-					<mesh filename="package://rb1_base_description/meshes/elevator/rb1_elevator_base.dae"/>
+					<mesh filename="file://$(find rb1_base_description)/meshes/elevator/rb1_elevator_base.dae"/>
 				</geometry>
 			</xacro:if>
 			<xacro:unless value="${hq}">
 				<geometry>
-					<mesh filename="package://rb1_base_description/meshes/elevator/rb1_elevator_base.stl"/>
+					<mesh filename="file://$(find rb1_base_description)/meshes/elevator/rb1_elevator_base.stl"/>
 				</geometry>
 			</xacro:unless>
 			<material name="darkgrey">
@@ -54,7 +54,7 @@
 		<collision>
 			<origin xyz="0 0 0" rpy="0 0 0 " />
 			<geometry>
-				<mesh filename="package://rb1_base_description/meshes/elevator/rb1_elevator_base.dae"/>
+				<mesh filename="file://$(find rb1_base_description)/meshes/elevator/rb1_elevator_base.dae"/>
 			</geometry>
 		</collision>
 	</link>
@@ -82,12 +82,12 @@
 			<origin xyz="0 0 0" rpy="0 0 0" />
 			<xacro:if value="${hq}">
 				<geometry>
-					<mesh filename="package://rb1_base_description/meshes/elevator/rb1_elevator_platform.dae"/>
+					<mesh filename="file://$(find rb1_base_description)/meshes/elevator/rb1_elevator_platform.dae"/>
 				</geometry>
 			</xacro:if>
 			<xacro:unless value="${hq}">
 				<geometry>
-					<mesh filename="package://rb1_base_description/meshes/elevator/rb1_elevator_platform.stl"/>
+					<mesh filename="file://$(find rb1_base_description)/meshes/elevator/rb1_elevator_platform.stl"/>
 				</geometry>
 			</xacro:unless>
 			<material name="black">
@@ -97,7 +97,7 @@
 		<collision>
 			<origin xyz="0 0 0" rpy="0 0 0 " />
 			<geometry>
-				<mesh filename="package://rb1_base_description/meshes/elevator/rb1_elevator_platform.dae"/>
+				<mesh filename="file://$(find rb1_base_description)/meshes/elevator/rb1_elevator_platform.dae"/>
 			</geometry>
 		</collision>
 		

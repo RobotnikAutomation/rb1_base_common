@@ -36,12 +36,12 @@
        <origin xyz="0 0 0" rpy="0 0 0" />
        <xacro:if value="${hq}">
        <geometry>
-         <mesh filename="package://rb1_base_description/meshes/bases/rb1v0_base.dae"/>
+         <mesh filename="file://$(find rb1_base_description)/meshes/bases/rb1v0_base.dae"/>
        </geometry>
        </xacro:if>
        <xacro:unless value="${hq}">
        <geometry>
-       <mesh filename="package://rb1_base_description/meshes/bases/rb1v0_base.stl"/>
+       <mesh filename="file://$(find rb1_base_description)/meshes/bases/rb1v0_base.stl"/>
        </geometry>
        </xacro:unless>
        <material name="darkgrey">
@@ -51,7 +51,7 @@
     <collision>
        <origin xyz="0 0 0" rpy="0 0 0 " />
        <geometry>
-         <mesh filename="package://rb1_base_description/meshes/bases/rb1v0_base.dae"/>
+         <mesh filename="file://$(find rb1_base_description)/meshes/bases/rb1v0_base.dae"/>
        </geometry>
     </collision>
   </link>
