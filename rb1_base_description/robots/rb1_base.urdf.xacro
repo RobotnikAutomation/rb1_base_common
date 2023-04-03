@@ -14,9 +14,6 @@
   <!-- Import all available sensors -->
   <xacro:include filename="$(find robotnik_sensors)/urdf/all_sensors.urdf.xacro"/>
 
-  <!-- Import Gazebo Stuff -->
-  <xacro:include filename="$(find rb1_base_description)/urdf/common.gazebo.xacro"/>
-
   <!-- Import Elevator -->
   <xacro:include filename="$(find rb1_base_description)/urdf/elevator/elevator.urdf.xacro"/>
 
@@ -56,24 +53,24 @@
   <!--xacro:gazebo_colors /-->
 
   <!-- WHEELS -->
-  <xacro:rubber_wheel prefix="right" parent="base_link" reflect="false" hq="${hq}">
+  <xacro:rubber_wheel prefix="right_" parent="base_link" reflect="false" hq="${hq}">
     <origin xyz="${wheel_offset_x} -${wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0"/>
   </xacro:rubber_wheel>
 
-  <xacro:rubber_wheel prefix="left" parent="base_link" reflect="true" hq="${hq}">
+  <xacro:rubber_wheel prefix="left_" parent="base_link" reflect="true" hq="${hq}">
     <origin xyz="${wheel_offset_x} ${wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0"/>
   </xacro:rubber_wheel>
 
   <!-- OMNI DIRECTIONAL WHEELS -->
-  <xacro:omni_wheel prefix="omni_back" parent="base_link" hq="${hq}">
+  <xacro:omni_wheel prefix="omni_back_" parent="base_link" hq="${hq}">
     <origin xyz="-${omni_back_x} ${omni_back_y} ${omni_back_z}" rpy="0 0 0"/>
   </xacro:omni_wheel>
 
-  <xacro:omni_wheel prefix="omni_front_left" parent="base_link" hq="${hq}">
+  <xacro:omni_wheel prefix="omni_front_left_" parent="base_link" hq="${hq}">
     <origin xyz="${omni_front_x} ${omni_front_y} ${omni_front_z}" rpy="0 0 0"/>
   </xacro:omni_wheel>
 
-  <xacro:omni_wheel prefix="omni_front_right" parent="base_link" hq="${hq}">
+  <xacro:omni_wheel prefix="omni_front_right_" parent="base_link" hq="${hq}">
     <origin xyz="${omni_front_x} -${omni_front_y} ${omni_front_z}" rpy="0 0 0"/>
   </xacro:omni_wheel>
 
