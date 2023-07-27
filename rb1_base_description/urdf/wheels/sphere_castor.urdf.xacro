@@ -1,0 +1,156 @@
+<?xml version="1.0"?>
+<robot name="caster" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:property name="M_PI" value="3.1415926535897931" />
+
+  <!-- Caster support parameters -->
+  <property name="caster_support_mass" value="1.5" /> <!-- in kg-->
+
+  <!-- Caster wheel parameters -->
+  <property name="caster_radius" value="0.050" />
+  <property name="caster_height" value="0.025" />
+  <property name="caster_mass" value="0.25" /> <!-- in kg-->
+
+  <!-- Caster wheel offset-->
+  <xacro:property name="caster_wheel_offset_x" value="-0.033" />
+  <!-- x,y,z in translation from caster_support to the center of the caster wheel-->
+  <xacro:property name="caster_wheel_offset_y" value="0.0" />
+  <xacro:property name="caster_wheel_offset_z" value="-0.071" />
+
+  <xacro:macro name="cylinder_inertia" params="m r h">
+    <inertia  ixx="${m*(3*r*r+h*h)/12}" ixy = "0" ixz = "0"
+              iyy="${m*(3*r*r+h*h)/12}" iyz = "0"
+              izz="${m*r*r/2}" />
+  </xacro:macro>
+
+  <xacro:macro name="sphere_castor" params="prefix parent *origin hq">
+
+  <!--CASTER SUPPORT -->
+  <joint name="${prefix}joint_support" type="continuous">
+      <parent link="${parent}"/>
+      <child link="${prefix}support"/>
+      <insert_block name="origin" />
+      <axis xyz="0 0 1" rpy="0 ${M_PI} 0" />
+      <limit effort="100" velocity="100"/>
+      <!-- joint_properties damping="1.5" friction="1.5"/ -->
+      <dynamics damping="0" friction="0.01"/>
+    </joint>
+
+    <link name="${prefix}support">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+          <geometry>
+	       <mesh filename="package://rb1_base_description/meshes/wheels/castor_wheel.stl" />
+          </geometry>
+      </visual>
+
+      <!--collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+          <geometry>
+	       <mesh filename="package://rb_theron_description/meshes/wheels/castor_wheel.dae" />
+          </geometry>
+      </collision-->
+      <inertial>
+        <mass value="${caster_support_mass}" />
+        <origin xyz="0 0 0" />
+        <cylinder_inertia  m="${caster_support_mass}" r="0.010" h="0.010" />  <!--Check these values -->
+      </inertial>
+    </link>
+
+
+
+ <xacro:macro name="sphere_wheel" params="prefix parent *origin hq">
+     <joint name="${prefix}joint_wheel" type="continuous">
+       <parent link="${parent}"/>
+       <child link="${prefix}wheel"/>
+       <insert_block name="origin" />
+       <axis xyz="0 1 0" rpy="0 0 0" />
+       <limit effort="100" velocity="100"/>
+       <joint_properties damping="0.1" friction="0.1"/>
+    </joint>
+
+    <link name="${prefix}wheel">
+      <visual>
+        <!-- HIGH RESOLUTION WHEELS -->
+     <!-- xacro:if value="${hq}">
+          <origin xyz="0 0 0" rpy="0 0 0" />
+          <geometry>
+		<mesh filename="package://rb_theron_description/meshes/wheels/mcq_prototype_castor_wheel.dae" />
+          </geometry>
+        </xacro:if -->
+       <!-- LOW RESOLUTION WHEELS -->
+       <!-- xacro:unless value="${hq}" -->
+          <origin xyz="0 0 0" rpy="${M_PI/2} 0 0" />
+          <geometry>
+            <cylinder length="${caster_height}" radius="${caster_radius}" />
+            <!-- sphere radius="${caster_radius}"/ -->
+          </geometry>
+        <!-- /xacro:unless -->
+      </visual>
+
+     <collision>
+	  <origin xyz="0 0 0" rpy="${M_PI/2} 0 0" />
+	  <!-- origin xyz="0 0 0" rpy="0 0 0" / -->
+        <geometry>
+		  <!-- mesh filename="package://rb_theron_description/meshes/wheels/mcq_prototype_castor_wheel.dae" / -->
+          <cylinder length="${caster_height}" radius="${caster_radius}" />
+          <!-- sphere radius="${caster_radius}"/ -->
+        </geometry>
+		<surface>
+          <bounce restitution_coefficient = "1"/>
+		</surface>
+      </collision>
+
+      <inertial>
+        <mass value="${caster_mass}" />
+        <origin xyz="0 0 0" />
+        <cylinder_inertia  m="${caster_mass}" r="${caster_radius}" h="${caster_height}" />
+      </inertial>
+    </link>
+
+  <!-- Transmission is important to link the joints and the controller -->
+    <!-- <transmission name="${prefix}support_joint_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${prefix}joint_support">
+          <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${prefix}support_joint_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      	<motorTorqueConstant>1</motorTorqueConstant>
+      </actuator>
+    </transmission>
+
+    <transmission name="${prefix}wheel_joint_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${prefix}joint_wheel">
+          <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${prefix}wheel_joint_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+		<motorTorqueConstant>1</motorTorqueConstant>
+      </actuator>
+    </transmission> -->
+
+    <!-- gazebo reference="${prefix}support">
+			<mu1 value="5.0"/>
+			<mu2 value="0.5"/>
+			<kp value="10000000.0" />
+			<kd value="1.0" />
+			<fdir1 value="1 0 0"/>
+      <turnGravityOff>false</turnGravityOff>
+    </gazebo -->
+
+     <gazebo reference="${prefix}_wheel">
+			<mu1 value="100.0"/>
+			<mu2 value="100.0"/>
+			<!-- kp value="10000000.0" / -->
+			<kp value="100000.0" />
+			<kd value="100.0" />
+			<!-- fdir1 value="1 0 0"/ -->
+			<material>Gazebo/Black</material>
+			<turnGravityOff>false</turnGravityOff>
+    </gazebo>
+
+ </xacro:macro>
+
+</robot>

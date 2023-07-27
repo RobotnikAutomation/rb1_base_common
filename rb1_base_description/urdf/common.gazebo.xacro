@@ -2,16 +2,43 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 	<!-- ROS CONTROL GAZEBO PLUGIN -->
-	<xacro:macro name="ros_control">
+	<!-- <xacro:macro name="ros_control">
 		<gazebo>
 			<plugin name="ros_control" filename="libgazebo_ros_control.so">
-				<!--robotNamespace>/rb1</robotNamespace-->
 				<robotParam>robot_description</robotParam>
 				<controlPeriod>0.001</controlPeriod>
 				<robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
 				<legacyModeNS>true</legacyModeNS>
 			</plugin>
 		</gazebo>
+	</xacro:macro> -->
+    
+	<xacro:macro name="ros_control_diff" params="left_joint_name right_joint_name wheel_separation_value wheel_radius_value prefix">
+	<xacro:property name="update_rate" value="20" />
+	<xacro:property name="command_topic" value="robotnik_base_control/cmd_vel" />
+	<xacro:property name="odometry_topic" value="robotnik_base_control/odom" />
+	<xacro:property name="odometry_frame" value="${prefix}odom" />
+	<xacro:property name="robot_base_frame" value="${prefix}base_footprint" />
+	<xacro:property name="max_torque" value="0.1" />
+
+
+
+	<gazebo>
+		
+	<plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+		<alwaysOn>true</alwaysOn>
+		<updateRate>10</updateRate>
+		<leftJoint>${left_joint_name}</leftJoint>
+		<rightJoint>${right_joint_name}</rightJoint>
+		<wheelSeparation>${wheel_separation_value}</wheelSeparation>
+		<wheelDiameter>${wheel_radius_value * 2}</wheelDiameter>
+		<torque>${max_torque}</torque>
+		<commandTopic>${command_topic}</commandTopic>
+		<odometryTopic>${odometry_topic}</odometryTopic>
+		<odometryFrame>${odometry_frame}</odometryFrame>
+    	<robotBaseFrame>${robot_base_frame}</robotBaseFrame>
+    </plugin>
+	</gazebo>
 	</xacro:macro>
 
 	<xacro:macro name="skid_steering" params="prefix publish_tf">

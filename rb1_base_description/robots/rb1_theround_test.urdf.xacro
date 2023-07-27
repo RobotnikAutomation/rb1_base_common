@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<robot name="rb1_base"
+	xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+
+	<!-- ***************** -->
+	<!-- Imported elements -->
+	<!-- ***************** -->
+
+	<!-- First we import all posible elements defined in the urdf.xacro files. All these elements are defined as macro:xacros -->
+
+	<!-- Import RB1 base elements -->
+	<xacro:include filename="$(find rb1_base_description)/urdf/bases/rb1_theround.urdf.xacro" />  
+	<!-- v3 name from engineering department -->
+
+	<!-- Import RB1 wheels -->
+	<xacro:include filename="$(find rb1_base_description)/urdf/wheels/rubber_wheel.urdf.xacro" />
+
+	<!-- Import casters -->
+	<xacro:include filename="$(find rb1_base_description)/urdf/wheels/castor.urdf.xacro" /> 
+
+	<!-- Import Gazebo Stuff -->
+	<xacro:include filename="$(find rb1_base_description)/urdf/common.gazebo.xacro" />
+
+
+	<!-- ***************** -->
+	<!-- Global parameters -->
+	<!-- ***************** -->
+	<xacro:property name="PI" value="3.1415926535897931"/>
+
+	<!-- Flag to select the high or low quality model -->
+	<xacro:property name="hq" value="false" />
+	<xacro:arg name="prefix" default="robot_"/>
+	<xacro:arg name="ros_planar_move_plugin" default="false"/>
+	<xacro:arg name="gpu" default="false"/>
+	<!-- *************** -->
+	<!-- Robots Elements -->
+	<!-- *************** -->
+
+	<!-- Here we create the robot elements using the xacro:macros imported at the beggining of this file -->
+	<xacro:property name="wheel_offset_x" value="0" />
+	<xacro:property name="wheel_offset_y" value="0.2304" />
+	<xacro:property name="wheel_offset_z" value="-0.0987" />
+	<xacro:property name="wheel_separation" value="0.4608" />
+    <xacro:property name="wheel_radius" value="0.076" />
+		
+	<!-- RB-1 base -->
+	<xacro:rb1_theround prefix="$(arg prefix)" publish_bf="true" hq="${hq}" />
+
+	<!-- <xacro:if value="$(arg ros_planar_move_plugin)">
+		<xacro:skid_steering prefix="$(arg prefix)" publish_tf="true"/>
+	</xacro:if> -->
+
+	<xacro:gazebo_colors prefix="$(arg prefix)"/>
+
+	<!-- WHEELS -->
+	<xacro:rubber_wheel prefix="$(arg prefix)right" parent="$(arg prefix)base_link" reflect="false" hq="${hq}">
+		<origin xyz="${wheel_offset_x} -${wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0"/>
+	</xacro:rubber_wheel>
+
+	<xacro:rubber_wheel prefix="$(arg prefix)left" parent="$(arg prefix)base_link" reflect="true" hq="${hq}">
+		<origin xyz="${wheel_offset_x} ${wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0"/>
+	</xacro:rubber_wheel>
+
+	<!-- CASTER WHEELS -->
+	<xacro:caster prefix="$(arg prefix)front_left" parent="$(arg prefix)base_link" hq="${hq}">
+  		<origin xyz="0.175 0.1725 -0.0513" rpy="0 0 0"/>
+  	</xacro:caster>
+  	<xacro:caster prefix="$(arg prefix)front_right" parent="$(arg prefix)base_link" hq="${hq}">
+  		<origin xyz="0.175 -0.1725 -0.0513" rpy="0 0 0"/>
+  	</xacro:caster>
+  	<xacro:caster prefix="$(arg prefix)rear_left" parent="$(arg prefix)base_link" hq="${hq}">
+  		<origin xyz="-0.175 0.1725 -0.0513" rpy="0 0 0"/>
+  	</xacro:caster>
+  	<xacro:caster prefix="$(arg prefix)rear_right" parent="$(arg prefix)base_link" hq="${hq}">
+  		<origin xyz="-0.175 -0.1725 -0.0513" rpy="0 0 0"/>
+  	</xacro:caster>
+
+	<!-- Gazebo ros control plugins -->
+	<xacro:ros_control_diff left_joint_name="$(arg prefix)left_wheel_joint" right_joint_name="$(arg prefix)right_wheel_joint" wheel_separation_value="${wheel_separation}" wheel_radius_value="${wheel_radius}" prefix="$(arg prefix)"/>
+
+</robot>
