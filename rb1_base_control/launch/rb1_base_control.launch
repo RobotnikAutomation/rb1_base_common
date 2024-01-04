@@ -12,7 +12,7 @@
 	<arg name="elevator_controller" default="robotnik_elevator_controller"/>
 	<arg name="fake_elevator_physics" default="false"/>
 	<arg name="wheel_diameter" default="0.1524"/>
-	<arg name="use_ros_planar_move_plugin" default="false"/>
+	<arg name="ros_planar_move_plugin" default="false"/>
 	<arg name="cmd_vel_out" default="$(optenv ROBOT_TWISTMUX_CMD_OUT robotnik_base_control/cmd_vel)"/>
 
 	<!-- Robot - Load joint controller configurations from YAML file to parameter server -->
@@ -48,12 +48,12 @@
 		<param name="robotnik_elevator_controller/gazebo/disable_gazebo_physics_for_pickup" value="$(arg fake_elevator_physics)"/>
 
 		<!-- load the controllers -->
-		<node if="$(arg use_ros_planar_move_plugin)" name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="
+		<node if="$(arg ros_planar_move_plugin)" name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="
   						  joint_read_state_controller
   						  ">
 		</node>
 
-		<node unless="$(arg use_ros_planar_move_plugin)" name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="
+		<node unless="$(arg ros_planar_move_plugin)" name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="
   						  robotnik_base_control
   						  joint_read_state_controller
   						  ">
